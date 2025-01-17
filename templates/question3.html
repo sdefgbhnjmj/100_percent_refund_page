@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수령 후 40일 이내 여부</title>
+    <title>배송 완료일을 알고 계신가요?</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,8 +36,8 @@
         label {
             font-size: 16px;
             color: #333;
-            margin-bottom: 10px;
             display: block;
+            margin-bottom: 10px;
         }
         input[type="radio"] {
             margin-right: 10px;
@@ -55,21 +55,22 @@
         button:hover {
             background-color: #45a049;
         }
+        a {
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>슬룸 제품 수령 후 (배송 완료일 기준) 40일 이내인가요?</h1>
+        <h1>슬룸 제품 수령일을 (배송 완료일) 알고 계신가요?</h1>
         <form method="POST">
             <div class="options">
                 <label>
-                    <input type="radio" name="within_40_days" value="예" required> 예
+                    <input type="radio" name="know_delivery_date" value="예" required> 예
                 </label>
                 <label>
-                    <input type="radio" name="within_40_days" value="아니오"> 아니오
-                </label>
-                <label>
-                    <input type="radio" name="within_40_days" value="모름"> 모름
+                    <input type="radio" name="know_delivery_date" value="아니오"> 아니오
                 </label>
             </div>
             <button type="submit">다음</button>
