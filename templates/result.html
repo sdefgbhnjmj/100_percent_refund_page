@@ -1,14 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>결과 페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결과</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <h1>신청 결과</h1>
-    <p>{{ message }}</p>
-    <p>환불 희망 제품: {{ product }}</p>
-    <p>구매처: {{ store }}</p>
-    <p>사용 여부: {{ used }}</p>
-    <a href="/">다시 하기</a>
+    <div class="container">
+        <h1>결과</h1>
+        {% if data.message %}
+            <p>{{ data.message }}</p>
+        {% endif %}
+        {% if data.after_30_days and data.after_40_days %}
+            <p>30일 이후: {{ data.after_30_days.strftime('%Y-%m-%d') }}</p>
+            <p>40일 이내: {{ data.after_40_days.strftime('%Y-%m-%d') }}</p>
+        {% endif %}
+        <button><a href="/question4">다시 입력하기</a></button>
+    </div>
 </body>
 </html>
