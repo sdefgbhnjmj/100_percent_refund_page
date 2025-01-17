@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30일 사용 여부</title>
+    <title>배송 완료일 입력</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,20 +28,14 @@
             font-size: 24px;
             color: #333;
             margin-bottom: 20px;
-            text-align: center;
         }
-        .options {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        label {
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
             font-size: 16px;
-            color: #333;
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="radio"] {
-            margin-right: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         button {
             background-color: #4CAF50;
@@ -56,23 +50,14 @@
         button:hover {
             background-color: #45a049;
         }
-        a {
-            text-decoration: none;
-            color: white;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>슬룸 제품을 30일 동안 꾸준히 사용하셨나요?</h1>
-        <form method="POST" class="options">
-            <label>
-                <input type="radio" name="consistent_use" value="예" required> 예
-            </label>
-            <label>
-                <input type="radio" name="consistent_use" value="아니오"> 아니오
-            </label>
-            <button type="submit">다음</button>
+        <h1>슬룸 제품 수령일을 (배송 완료일) 입력해주세요.</h1>
+        <form method="POST">
+            <input type="date" name="delivery_date" required>
+            <button type="submit">확인</button>
         </form>
     </div>
 </body>

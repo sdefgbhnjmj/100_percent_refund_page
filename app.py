@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import requests
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -101,21 +102,45 @@ def question_event():
 def refund_not_eligible():
     return render_template('refund_not_eligible.html')
 
-# 3번 질문: 슬룸 제품 수령 후 40일 이내 여부
+# 3번 질문: 슬룸 제품 수령일 (배송 완료일)을 알고 계신가요?
 @app.route('/question3', methods=['GET', 'POST'])
 def question3():
     if request.method == 'POST':
-        # 선택 저장
-        data['within_40_days'] = request.form.get('within_40_days')
-
-        if data['within_40_days'] == '예':
-            return redirect(url_for('question4'))  # 다음 질문 페이지로 이동
-        elif data['within_40_days'] == '아니오':
-            return redirect(url_for('info_page'))  # 안내 페이지로 이동
-        elif data['within_40_days'] == '모름':
-            return redirect(url_for('unknown_delivery'))  # 송장번호 입력 페이지로 이동
+        # 사용자 선택 저장
+        data['know_delivery_date'] = request.form.get('know_delivery_date')
+        
+        if data['know_delivery_date'] == '예':
+            return redirect(url_for('input_delivery_date'))  # 새로운 페이지로 이동
+        elif data['know_delivery_date'] == '아니오':
+            return redirect(url_for('unknown_delivery'))  # 아니오를 선택 시 송장번호 입력 페이지로 이동
 
     return render_template('question3.html', data=data)
+
+# 새로운 날짜 입력 페이지
+@app.route('/input_delivery_date', methods=['GET', 'POST'])
+def input_delivery_date():
+    if request.method == 'POST':
+        try:
+            delivery_date = request.form.get('delivery_date')
+            data['delivery_date'] = datetime.strptime(delivery_date, '%Y-%m-%d')
+
+            today = datetime.now()
+            after_30_days = data['delivery_date'] + timedelta(days=30)
+            after_40_days = data['delivery_date'] + timedelta(days=40)
+
+            if today >= after_30_days and today <= after_40_days:
+                data['message'] = "100% 환불 이벤트 참여 가능한 기간입니다."
+            elif today > after_40_days:
+                data['message'] = "슬룸 제품 수령 후 40일이 경과하여 이벤트 참여가 불가합니다."
+            else:
+                data['message'] = "제품 수령 후 30일 동안 꾸준히 사용하신 경우에만 환불 가능합니다."
+
+        except ValueError:
+            data['message'] = "잘못된 날짜 형식입니다. 다시 입력해주세요."
+
+        return redirect(url_for('result'))
+
+    return render_template('input_delivery_date.html')
 
 # 송장번호 입력 페이지
 @app.route('/unknown_delivery', methods=['GET', 'POST'])
@@ -133,18 +158,10 @@ def unknown_delivery():
 def tracking_result():
     return render_template('tracking_result.html', data=data)
 
-# 안내 페이지
-@app.route('/info_page')
-def info_page():
-    return render_template('info_page.html')
+# 결과 페이지
+@app.route('/result')
+def result():
+    return render_template('result.html', data=data)
 
-# 4번째 질문 페이지
-@app.route('/question4', methods=['GET', 'POST'])
-def question4():
-    if request.method == 'POST':
-        choice = request.form.get('choice')
-        if choice == 'yes':
-            return redirect(url_for('result'))
-        elif choice == 'no':
-            return redirect(url_for('refund_not_eligible'))
-    return render_template('question4.html')
+if __name__ == '__main__':
+    app.run(debug=True)
