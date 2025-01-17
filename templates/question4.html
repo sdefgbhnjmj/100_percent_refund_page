@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슬룸 환불 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>슬룸 제품을 수령 후(배송 완료일 기준) 30일 동안 꾸준히 사용하셨나요?</h1>
+        <p>※ 꾸준히 사용하신 경우에만 환불 신청이 가능합니다.</p>
+        <form action="/question4" method="post">
+            <div class="options">
+                <button type="submit" name="choice" value="yes" class="btn">예</button>
+                <button type="submit" name="choice" value="no" class="btn">아니오</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

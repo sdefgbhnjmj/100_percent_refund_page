@@ -139,10 +139,12 @@ def info_page():
     return render_template('info_page.html')
 
 # 4번째 질문 페이지
-@app.route('/question4')
+@app.route('/question4', methods=['GET', 'POST'])
 def question4():
+    if request.method == 'POST':
+        choice = request.form.get('choice')
+        if choice == 'yes':
+            return redirect(url_for('result'))
+        elif choice == 'no':
+            return redirect(url_for('refund_not_eligible'))
     return render_template('question4.html')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
