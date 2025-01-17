@@ -28,12 +28,17 @@
             font-size: 24px;
             color: #333;
             margin-bottom: 20px;
+            text-align: center;
+        }
+        .options {
+            text-align: left;
+            margin-bottom: 20px;
         }
         label {
             font-size: 16px;
             color: #333;
-            margin-bottom: 10px;
             display: block;
+            margin-bottom: 10px;
         }
         input[type="radio"] {
             margin-right: 10px;
@@ -60,7 +65,7 @@
 <body>
     <div class="container">
         <h1>슬룸 제품을 30일 동안 꾸준히 사용하셨나요?</h1>
-        <form method="POST">
+        <form method="POST" class="options">
             <label>
                 <input type="radio" name="consistent_use" value="예" required> 예
             </label>
