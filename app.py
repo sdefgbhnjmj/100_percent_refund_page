@@ -1,70 +1,10 @@
 from flask import Flask, request, render_template, redirect, url_for
-import requests
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
 # 사용자 입력 데이터를 저장할 딕셔너리
 data = {}
-
-# 액세스 토큰을 가져오는 함수
-def get_access_token():
-    url = "https://auth.tracker.delivery/oauth2/token"
-    payload = {
-        "grant_type": "client_credentials",
-        "client_id": "5e2otcj9jb2fv76cmk27oqd6gf",  # 실제 client_id 입력
-        "client_secret": "1e2vube7o7iqmrjur6nea65oged4ds4eu33fi2jtmqb0aa1a4tfl",  # 실제 client_secret 입력
-    }
-    headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    try:
-        response = requests.post(url, data=payload, headers=headers)
-        response.raise_for_status()
-        json_response = response.json()
-        return json_response.get("access_token")
-    except Exception as e:
-        print(f"액세스 토큰 오류: {e}")
-        return None
-
-# 배송 정보를 가져오는 함수
-def get_tracking_info(tracking_number):
-    access_token = get_access_token()
-    if not access_token:
-        return "액세스 토큰 오류"
-
-    url = "https://apis.tracker.delivery/graphql"
-    query = """
-    query Track($carrierId: ID!, $trackingNumber: String!) {
-      track(carrierId: $carrierId, trackingNumber: $trackingNumber) {
-        lastEvent {
-          time
-        }
-      }
-    }
-    """
-    variables = {
-        "carrierId": "kr.hanjin",  # 한진택배의 carrierId
-        "trackingNumber": tracking_number
-    }
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {access_token}"
-    }
-    try:
-        response = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
-        response.raise_for_status()
-        json_response = response.json()
-
-        if json_response.get("data") and json_response["data"]["track"]["lastEvent"]:
-            last_event = json_response["data"]["track"]["lastEvent"]
-            delivery_time = last_event["time"]
-            return delivery_time  # 배송 완료 시간만 반환
-        else:
-            return "배송 정보 없음"
-    except Exception as e:
-        print(f"API 호출 오류: {e}")
-        return "API 호출 오류"
 
 # 기본 경로: 첫 번째 질문 페이지로 리디렉션
 @app.route('/')
@@ -106,7 +46,6 @@ def refund_not_eligible():
 @app.route('/question3', methods=['GET', 'POST'])
 def question3():
     if request.method == 'POST':
-        # 사용자 선택 저장
         data['know_delivery_date'] = request.form.get('know_delivery_date')
         
         if data['know_delivery_date'] == '예':

@@ -64,10 +64,12 @@
 <body>
     <div class="container">
         <p class="bold">{{ data['message']|safe }}</p> <!-- safe 필터로 HTML 렌더링 -->
+        
         {% if data['message'] == '아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.' %}
             <img src="{{ url_for('static', filename='images/customer_center.jpg') }}" alt="고객센터 안내 이미지">
-            <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 문의하기</button>
         {% endif %}
+        
+        <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 문의하기</button> <!-- 버튼 텍스트 변경 -->
     </div>
 </body>
 </html>
