@@ -128,6 +128,9 @@ def input_delivery_date():
             after_30_days = data['delivery_date'] + timedelta(days=30)
             after_40_days = data['delivery_date'] + timedelta(days=40)
 
+            # 로그 추가
+            print(f"Today: {today}, After 30 days: {after_30_days}, After 40 days: {after_40_days}")
+
             if today >= after_30_days and today <= after_40_days:
                 data['message'] = "100% 환불 이벤트 참여 가능한 기간입니다."
             elif today > after_40_days:

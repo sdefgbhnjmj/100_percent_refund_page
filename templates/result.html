@@ -63,8 +63,8 @@
 </head>
 <body>
     <div class="container">
-        <p class="bold">{{ message }}</p>
-        {% if message == "100% 환불 이벤트 참여 가능한 기간입니다." %}
+        <p class="bold">{{ data['message'] }}</p>
+        {% if data['message'] == "100% 환불 이벤트 참여 가능한 기간입니다." %}
             <img src="{{ url_for('static', filename='images/customer_center.jpg') }}" alt="고객센터 안내 이미지">
             <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 바로가기</button>
         {% endif %}
