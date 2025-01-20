@@ -63,7 +63,7 @@
 </head>
 <body>
     <div class="container">
-        <p class="bold">{{ data['message']|safe }}</p> <!-- safe 필터 사용 -->
+        <p class="bold">{{ data['message']|safe }}</p> <!-- safe 필터로 HTML 렌더링 -->
         {% if data['message'] == "100% 환불 이벤트 참여 가능한 기간입니다." %}
             <img src="{{ url_for('static', filename='images/customer_center.jpg') }}" alt="고객센터 안내 이미지">
             <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 문의하기</button>
