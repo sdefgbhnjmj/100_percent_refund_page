@@ -131,7 +131,7 @@ def input_delivery_date():
             # 로그 추가
             print(f"Today: {today}, After 30 days: {after_30_days}, After 40 days: {after_40_days}")
 
-                       if today >= after_30_days and today <= after_40_days:
+            if today >= after_30_days and today <= after_40_days:
                 data['message'] = """
                 <strong>아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.</strong><br>
                 - 슬룸 공식 자사몰을 통해 구매한 경우<br>
