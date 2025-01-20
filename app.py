@@ -131,8 +131,15 @@ def input_delivery_date():
             # 로그 추가
             print(f"Today: {today}, After 30 days: {after_30_days}, After 40 days: {after_40_days}")
 
-            if today >= after_30_days and today <= after_40_days:
-                data['message'] = "100% 환불 이벤트 참여 가능한 기간입니다."
+                       if today >= after_30_days and today <= after_40_days:
+                data['message'] = """
+                <strong>아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.</strong><br>
+                - 슬룸 공식 자사몰을 통해 구매한 경우<br>
+                - 100% 환불 이벤트 참여 이력이 없는 경우<br>
+                - 제품 수령 후 40일 이내인 경우<br>
+                - 제품 수령 후 30일 동안 꾸준히 사용하신 경우<br><br>
+                '슬룸 고객센터 문의하기' 버튼을 클릭하신 후, 카카오톡 1:1 상담을 통해 성함/연락처와 함께 "체험 후 환불 신청합니다." 말씀해주시면, 이벤트 접수를 도와드리겠습니다.
+                """
             elif today > after_40_days:
                 data['message'] = "슬룸 제품 수령 후 40일이 경과하여 이벤트 참여가 불가합니다."
             else:
