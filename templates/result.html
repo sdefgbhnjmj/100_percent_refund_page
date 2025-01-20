@@ -34,6 +34,10 @@
             color: #555;
             margin-bottom: 20px;
         }
+        p.error {
+            color: red;
+            font-weight: bold;
+        }
         button {
             background-color: #4CAF50;
             color: white;
@@ -51,17 +55,32 @@
             text-decoration: none;
             color: white;
         }
+        a.link {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>결과</h1>
-        {% if data.message %}
+        {% if data.message == "100% 환불 이벤트 참여 가능한 기간입니다." %}
+            <p>100% 환불 이벤트 참여 가능한 기간으로 아래 메시지를 고객센터에 전달해 주시면, 접수해 드리겠습니다.</p>
+            <p class="error">*실제 정보가 입력한 정보와 다른 경우, 100% 환불 이벤트 참여가 불가능할 수 있습니다.</p>
+            <form>
+                <label for="name">1. 이름</label>
+                <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required><br><br>
+                <label for="phone">2. 핸드폰 번호</label>
+                <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" required><br><br>
+                <label for="order">3. 주문 번호</label>
+                <input type="text" id="order" name="order" placeholder="주문 번호를 입력하세요" required><br><br>
+                <button type="submit">제출하기</button>
+            </form>
+            <p><a href="http://pf.kakao.com/_hFwPK" class="link" target="_blank">슬룸 고객센터 바로가기</a></p>
+            <p>(* 월-금 09:00-17:30, 주말 및 공휴일 휴무)</p>
+        {% else %}
             <p>{{ data.message }}</p>
-        {% endif %}
-        {% if data.after_30_days and data.after_40_days %}
-            <p>30일 이후: {{ data.after_30_days.strftime('%Y-%m-%d') }}</p>
-            <p>40일 이내: {{ data.after_40_days.strftime('%Y-%m-%d') }}</p>
         {% endif %}
         <button><a href="/question4">다시 입력하기</a></button>
     </div>
