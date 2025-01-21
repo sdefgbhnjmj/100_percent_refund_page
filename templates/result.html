@@ -18,59 +18,73 @@
         .container {
             background-color: white;
             padding: 30px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            border: none;
+            border-radius: 12px;
             max-width: 600px;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         .title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: #333;
-            margin-bottom: 15px;
-        }
-        .subtitle {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        .alert {
-            font-size: 13px;
-            color: #d9534f; /* 빨간색 경고 텍스트 */
-            margin-bottom: 15px;
-        }
-        .date-input {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             margin-bottom: 20px;
         }
-        input[type="date"] {
-            width: 200px;
-            padding: 8px 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-            transition: border-color 0.2s ease-in-out;
+        .highlight {
+            background-color: #e9f7ea;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
         }
-        input[type="date"]:focus {
-            border-color: #28a745; /* 초록색 테두리 */
+        .highlight h2 {
+            font-size: 18px;
+            color: #28a745;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .highlight ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .highlight li {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .highlight li::before {
+            content: "✔";
+            color: #28a745;
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+            line-height: 1;
+        }
+        .note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+            line-height: 1.6;
         }
         button {
-            background-color: #28a745; /* 초록색 버튼 */
+            background-color: #28a745;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            margin-top: 20px;
+            transition: background-color 0.2s, transform 0.2s;
         }
         button:hover {
             background-color: #218838;
+            transform: translateY(-2px);
         }
         button:focus {
             outline: none;
@@ -79,15 +93,25 @@
 </head>
 <body>
     <div class="container">
-        <p class="title">슬룸 제품 수령일을 (배송 완료일) 입력해주세요.</p>
-        <p class="subtitle">입력한 배송 완료일 기준으로 이벤트 참여 가능 여부를 확인합니다.</p>
-        <p class="alert">* 정확한 배송 완료일을 입력하지 않을 경우, 이벤트 참여가 제한될 수 있습니다.</p>
+        <p class="title">아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.</p>
         
-        <div class="date-input">
-            <input type="date" id="delivery-date" value="2024-12-21">
+        <div class="highlight">
+            <h2>참여 조건</h2>
+            <ul>
+                <li>슬룸 공식 자사몰을 통해 구매한 경우</li>
+                <li>100% 환불 이벤트 참여 이력이 없는 경우</li>
+                <li>제품 수령 후 40일 이내인 경우</li>
+                <li>제품 수령 후 30일 동안 꾸준히 사용하신 경우</li>
+            </ul>
         </div>
 
-        <button onclick="alert('입력한 날짜가 제출되었습니다!')">확인</button>
+        <p class="note">
+            슬룸 고객센터 문의하기 버튼을 클릭하신 후, 카카오톡 1:1 상담을 통해<br>
+            성함/연락처와 함께 <strong>"체험 후 환불 신청합니다."</strong> 말씀해주시면,<br>
+            이벤트 접수를 도와드리겠습니다.
+        </p>
+
+        <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 문의하기</button>
     </div>
 </body>
 </html>
