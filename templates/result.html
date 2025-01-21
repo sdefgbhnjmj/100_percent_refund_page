@@ -6,8 +6,8 @@
     <title>결과</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f4f7fc;
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,44 +16,47 @@
             height: 100vh;
         }
         .container {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            padding: 25px 35px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
         }
         p {
-            font-size: 16px;
-            color: #555;
+            font-size: 18px;
+            color: #444;
             margin-bottom: 20px;
-            line-height: 1.5;
+            line-height: 1.7;
         }
         p.bold {
             font-weight: bold;
-            color: #333;
+            color: #222;
+            font-size: 20px;
         }
         .highlight {
-            background-color: #f3f3f3;
+            background: linear-gradient(135deg, #e8f5e9, #ffffff);
             border: 2px solid #4CAF50;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
             font-size: 18px;
             color: #333;
         }
         .highlight strong {
             color: #4CAF50;
-            font-size: 20px;
+            font-size: 22px;
         }
         .highlight ul {
-            list-style-type: none;
-            padding: 0;
+            list-style-type: disc;
+            padding-left: 20px;
+            text-align: left;
         }
         .highlight li {
             margin: 10px 0;
             font-size: 16px;
+            line-height: 1.5;
         }
         img {
             margin: 20px auto;
@@ -63,18 +66,19 @@
             display: block;
         }
         button {
-            background-color: #4CAF50;
+            background: linear-gradient(90deg, #4CAF50, #81C784);
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         button:hover {
-            background-color: #45a049;
+            background: linear-gradient(90deg, #388E3C, #66BB6A);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
         a {
             text-decoration: none;
@@ -84,23 +88,20 @@
 </head>
 <body>
     <div class="container">
-        <p class="bold">{{ data['message']|safe }}</p> <!-- safe 필터로 HTML 렌더링 -->
+        <p class="bold">아래 기준에 모두 충족하시어 <span style="color:#4CAF50;">100% 환불 이벤트</span> 참여가 가능합니다.</p>
         
-        {% if data['message'] == '아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.' %}
-            <div class="highlight">
-                <strong>아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.</strong>
-                <ul>
-                    <li>슬룸 공식 자사몰을 통해 구매한 경우</li>
-                    <li>100% 환불 이벤트 참여 이력이 없는 경우</li>
-                    <li>제품 수령 후 40일 이내인 경우</li>
-                    <li>제품 수령 후 30일 동안 꾸준히 사용하신 경우</li>
-                </ul>
-                <p>슬룸 고객센터 문의하기 버튼을 클릭하신 후, 카카오톡 1:1 상담을 통해 성함/연락처와 함께 "체험 후 환불 신청합니다." 말씀해주시면, 이벤트 접수를 도와드리겠습니다.</p>
-            </div>
-            <img src="{{ url_for('static', filename='images/customer_center.jpg') }}" alt="고객센터 안내 이미지">
-        {% endif %}
-        
-        <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 문의하기</button> <!-- 버튼 텍스트 변경 -->
+        <div class="highlight">
+            <strong>참여 조건</strong>
+            <ul>
+                <li>슬룸 공식 자사몰을 통해 구매한 경우</li>
+                <li>100% 환불 이벤트 참여 이력이 없는 경우</li>
+                <li>제품 수령 후 40일 이내인 경우</li>
+                <li>제품 수령 후 30일 동안 꾸준히 사용하신 경우</li>
+            </ul>
+            <p>슬룸 고객센터 문의하기 버튼을 클릭하신 후, 카카오톡 1:1 상담을 통해 성함/연락처와 함께<br><b>"체험 후 환불 신청합니다."</b> 말씀해주시면, 이벤트 접수를 도와드리겠습니다.</p>
+        </div>
+        <img src="customer_center.jpg" alt="고객센터 안내 이미지">
+        <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 문의하기</button>
     </div>
 </body>
 </html>
