@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: "Noto Sans KR", Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f4f7fa;
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,32 +17,33 @@
         }
         .container {
             background-color: white;
-            padding: 30px;
-            border: none;
-            border-radius: 12px;
+            padding: 40px 30px;
+            border-radius: 15px;
             max-width: 600px;
-            width: 100%;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         .title {
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 24px;
+            font-weight: 700;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            line-height: 1.4;
         }
         .highlight {
-            background-color: #e9f7ea;
-            border-left: 5px solid #28a745;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
+            background-color: #eafaf0;
+            border: 1px solid #28a745;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
             text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
         .highlight h2 {
-            font-size: 18px;
+            font-size: 20px;
             color: #28a745;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: bold;
         }
         .highlight ul {
@@ -53,9 +54,10 @@
         .highlight li {
             font-size: 16px;
             color: #555;
-            margin-bottom: 10px;
-            padding-left: 25px;
+            margin-bottom: 12px;
+            padding-left: 30px;
             position: relative;
+            line-height: 1.6;
         }
         .highlight li::before {
             content: "✔";
@@ -66,25 +68,28 @@
             line-height: 1;
         }
         .note {
-            font-size: 14px;
+            font-size: 15px;
             color: #666;
             margin-top: 20px;
-            line-height: 1.6;
+            line-height: 1.8;
         }
         button {
-            background-color: #28a745;
+            background: linear-gradient(90deg, #28a745, #218838);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 25px;
             font-size: 16px;
+            font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.2s, transform 0.2s;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
         button:hover {
-            background-color: #218838;
+            background: linear-gradient(90deg, #218838, #1e7e34);
             transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
         button:focus {
             outline: none;
@@ -93,7 +98,7 @@
 </head>
 <body>
     <div class="container">
-        <p class="title">아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.</p>
+        <p class="title">아래 기준에 모두 충족하시어<br>100% 환불 이벤트 참여가 가능합니다.</p>
         
         <div class="highlight">
             <h2>참여 조건</h2>
