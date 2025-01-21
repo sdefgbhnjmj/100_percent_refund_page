@@ -6,8 +6,8 @@
     <title>환불 서비스 제한 안내</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,23 +16,28 @@
             height: 100vh;
         }
         .container {
-            background: white;
-            padding: 20px 30px;
+            background-color: white;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
+            text-align: center;
         }
         h1 {
-            font-size: 24px;
-            color: #333;
+            font-size: 22px;
+            font-weight: bold;
+            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             margin-bottom: 20px;
         }
         p {
             font-size: 16px;
-            color: #555;
+            color: rgba(85, 85, 85, 0.9); /* Slightly darker text with 90% opacity */
             margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        p.note {
+            color: rgba(102, 102, 102, 0.9); /* Slightly lighter text for notes */
         }
     </style>
 </head>
@@ -40,7 +45,7 @@
     <div class="container">
         <h1>환불 서비스 제한 안내</h1>
         <p>슬룸 공식 자사몰을 통해 구매하신 경우에만 환불 서비스 이용이 가능합니다.</p>
-        <p>* 외부몰 구매 시 환불 서비스 대상이 아닙니다.</p>
+        <p class="note">* 그 외 다른 사이트에서 구매 시 환불 서비스 대상이 아닙니다.</p>
     </div>
 </body>
 </html>
