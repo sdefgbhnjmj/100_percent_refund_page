@@ -74,7 +74,7 @@ def get_tracking_info(tracking_number):
 # 송장번호 입력 페이지
 @app.route('/')
 def index():
-    return render_template('tracking_page.html')
+    return render_template('unknown_delivery.html')
 
 # 송장번호 조회 처리
 @app.route('/track', methods=['POST'])
