@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: "Noto Sans KR", Arial, sans-serif;
-            background-color: #f4f7fc;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,69 +17,83 @@
         }
         .container {
             background-color: white;
-            padding: 25px 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 650px;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            max-width: 600px;
             width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
         }
         .highlight {
-            background-color: #f1f8e9;
-            border: 2px solid #4CAF50;
-            border-radius: 12px;
+            background-color: #f0f8ff;
+            border-left: 4px solid #007BFF;
             padding: 20px;
+            border-radius: 6px;
             margin: 20px 0;
+            text-align: left;
         }
         .highlight h2 {
-            font-size: 24px;
-            color: #4CAF50;
-            margin-bottom: 15px;
+            font-size: 18px;
+            color: #007BFF;
+            margin-bottom: 10px;
             font-weight: bold;
         }
         .highlight ul {
             list-style: none;
             padding: 0;
-            text-align: left;
+            margin: 0;
         }
         .highlight li {
             font-size: 16px;
-            margin: 10px 0;
+            color: #555;
+            margin-bottom: 10px;
             padding-left: 20px;
-            text-indent: -10px;
             position: relative;
         }
         .highlight li::before {
-            content: "✔";
-            color: #4CAF50;
-            font-size: 16px;
+            content: "•";
+            color: #007BFF;
             position: absolute;
             left: 0;
+            font-size: 20px;
+            line-height: 1;
         }
         .note {
             font-size: 14px;
             color: #666;
-            margin-top: 15px;
-            line-height: 1.5;
+            margin-top: 20px;
+            line-height: 1.6;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #007BFF;
             color: white;
             border: none;
             padding: 12px 20px;
             font-size: 16px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             margin-top: 20px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s;
         }
         button:hover {
-            background-color: #388E3C;
+            background-color: #0056b3;
+        }
+        button:focus {
+            outline: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <p class="title">아래 기준에 모두 충족하시어 100% 환불 이벤트 참여가 가능합니다.</p>
+        
         <div class="highlight">
             <h2>참여 조건</h2>
             <ul>
@@ -89,11 +103,13 @@
                 <li>제품 수령 후 30일 동안 꾸준히 사용하신 경우</li>
             </ul>
         </div>
+
         <p class="note">
             슬룸 고객센터 문의하기 버튼을 클릭하신 후, 카카오톡 1:1 상담을 통해<br>
             성함/연락처와 함께 <strong>"체험 후 환불 신청합니다."</strong> 말씀해주시면,<br>
             이벤트 접수를 도와드리겠습니다.
         </p>
+
         <button onclick="window.location.href='http://pf.kakao.com/_hFwPK'">슬룸 고객센터 문의하기</button>
     </div>
 </body>
