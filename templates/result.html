@@ -28,12 +28,12 @@
         .title {
             font-size: 22px;
             font-weight: bold;
-            color: #333;
+            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             margin-bottom: 20px;
         }
         .highlight {
-            background-color: #f0f8ff;
-            border-left: 4px solid #28a745;
+            background-color: rgba(240, 248, 255, 0.9); /* Light background with transparency */
+            border-left: 4px solid rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             padding: 20px;
             border-radius: 6px;
             margin: 20px 0;
@@ -41,7 +41,7 @@
         }
         .highlight h2 {
             font-size: 18px;
-            color: #28a745;
+            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             margin-bottom: 10px;
             font-weight: bold;
         }
@@ -52,14 +52,14 @@
         }
         .highlight li {
             font-size: 16px;
-            color: #555;
+            color: rgba(85, 85, 85, 0.9); /* Slightly darker text with 90% opacity */
             margin-bottom: 10px;
             padding-left: 20px;
             position: relative;
         }
         .highlight li::before {
             content: "•";
-            color: #28a745;
+            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             position: absolute;
             left: 0;
             font-size: 20px;
@@ -67,12 +67,12 @@
         }
         .note {
             font-size: 14px;
-            color: #666;
+            color: rgba(102, 102, 102, 0.9); /* Slightly lighter text with 90% opacity */
             margin-top: 20px;
             line-height: 1.6;
         }
         button {
-            background-color: #28a745;
+            background-color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             color: white;
             border: none;
             padding: 12px 20px;
@@ -83,7 +83,7 @@
             transition: background-color 0.2s;
         }
         button:hover {
-            background-color: #1e7e34;
+            background-color: rgba(10, 54, 95, 0.9); /* Darker hover effect */
         }
         button:focus {
             outline: none;
