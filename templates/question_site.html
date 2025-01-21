@@ -6,8 +6,8 @@
     <title>구매처 질문</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,42 +16,46 @@
             height: 100vh;
         }
         .container {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
             max-width: 600px;
             width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         h1 {
-            font-size: 24px;
-            color: #333;
+            font-size: 22px;
+            font-weight: bold;
+            color: #14497C;
             margin-bottom: 20px;
         }
         select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
+            border: 1px solid rgba(20, 73, 124, 0.9); /* Border color matching the design */
+            border-radius: 6px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            background-color: rgba(240, 248, 255, 0.9);
+            color: #333;
         }
         button {
-            background-color: #4CAF50;
+            background-color: rgba(20, 73, 124, 0.9); /* Button matches main color scheme */
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: rgba(10, 54, 95, 0.9); /* Slightly darker hover effect */
         }
         .error {
-            color: red;
+            color: #d9534f; /* Red for errors */
             font-size: 14px;
             margin-top: 10px;
         }
