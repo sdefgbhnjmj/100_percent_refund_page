@@ -6,7 +6,7 @@ app = Flask(__name__)
 # 루트 경로 정의 (홈 페이지)
 @app.route('/')
 def home():
-    return 'Welcome to the Homepage!'
+    return render_template('home.html')
 
 # 첫 번째 페이지: 구매처 선택
 @app.route('/question_site', methods=['GET', 'POST'])
@@ -69,4 +69,4 @@ def refund_event_info():
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))  # Render에서 제공하는 포트 가져오기
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)
