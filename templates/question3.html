@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배송 완료일을 알고 계신가요?</title>
+    <style>
+        body {
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            margin-bottom: 20px;
+        }
+        .options {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 16px;
+            color: rgba(85, 85, 85, 0.9); /* Slightly darker text with 90% opacity */
+            display: block;
+            margin-bottom: 15px;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        button {
+            background-color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: rgba(10, 54, 95, 0.9); /* Darker hover effect */
+        }
+        button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>슬룸 제품 수령일을 (배송 완료일) 알고 계신가요?</h1>
+        <form method="POST">
+            <div class="options">
+                <label>
+                    <input type="radio" name="know_delivery_date" value="예" required> 예
+                </label>
+                <label>
+                    <input type="radio" name="know_delivery_date" value="아니오"> 아니오
+                </label>
+            </div>
+            <button type="submit">다음</button>
+        </form>
+    </div>
+</body>
+</html>

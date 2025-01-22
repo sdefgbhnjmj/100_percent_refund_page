@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커버 관련 질문</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .option {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            width: 45%;
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>커버 중 어떤 슬룸 제품인가요?</h1>
+        <p>정확한 제품을 선택하지 않으면 추가 배송비가 발생합니다</p>
+        <form method="POST">
+            <div class="options">
+                <div class="option">
+                    <input type="radio" id="cover1" name="cover_product" value="살얼음 냉감 패드" required>
+                    <img src="/static/images/ice_pad.jpg" alt="살얼음 냉감 패드">
+                    <label for="cover1">살얼음 냉감 패드</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="cover2" name="cover_product" value="목편한케어 전용 커버">
+                    <img src="/static/images/neck_cover.jpg" alt="목편한케어 전용 커버">
+                    <label for="cover2">목편한케어 전용 커버</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="cover3" name="cover_product" value="목베개 프로 전용 커버">
+                    <img src="/static/images/neck_pro_cover.jpg" alt="목베개 프로 전용 커버">
+                    <label for="cover3">목베개 프로 전용 커버</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="cover4" name="cover_product" value="넥숄더 힐링케어 전용 쿨링커버">
+                    <img src="/static/images/neck_healing_cover.jpg" alt="넥숄더 힐링케어 전용 쿨링커버">
+                    <label for="cover4">넥숄더 힐링케어 전용 쿨링커버</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="cover5" name="cover_product" value="허리베개 전용 커버">
+                    <img src="/static/images/back_cover.jpg" alt="허리베개 전용 커버">
+                    <label for="cover5">허리베개 전용 커버</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="cover6" name="cover_product" value="목베개 전용 커버">
+                    <img src="/static/images/neck_pillow_cover.jpg" alt="목베개 전용 커버">
+                    <label for="cover6">목베개 전용 커버</label>
+                </div>
+            </div>
+            <br>
+            <button type="submit">다음</button>
+        </form>
+    </div>
+</body>
+</html>

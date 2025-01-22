@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환불 신청</title>
+</head>
+<body>
+    <h1>환불 신청 페이지</h1>
+    <form action="/check" method="post">
+        <!-- 제품 선택 -->
+        <label>환불 희망 제품:</label><br>
+        <!-- 이미지 태그 -->
+        <img src="/static/images/product.jpg" alt="제품 사진" width="200"><br>
+        <select name="product">
+            <option value="제품 A">제품 A</option>
+            <option value="제품 B">제품 B</option>
+            <option value="제품 C">제품 C</option>
+        </select><br><br>
+
+        <!-- 구매처 선택 -->
+        <label>구매처:</label><br>
+        <select name="store">
+            <option value="쿠팡">쿠팡</option>
+            <option value="11번가">11번가</option>
+            <option value="G마켓">G마켓</option>
+        </select><br><br>
+
+        <!-- 사용 여부 -->
+        <label>제품을 사용했나요?</label><br>
+        <input type="radio" name="used" value="예"> 예
+        <input type="radio" name="used" value="아니오"> 아니오<br><br>
+
+        <!-- 주문 날짜 입력 -->
+        <label>주문 날짜 (YYYY-MM-DD):</label><br>
+        <input type="date" name="order_date"><br><br>
+
+        <!-- 제출 버튼 -->
+        <button type="submit">신청 가능 여부 확인</button>
+    </form>
+</body>
+</html>
