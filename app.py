@@ -56,10 +56,10 @@ def enter_delivery_date():
                 return redirect(url_for('refund_event_info'))
             else:
                 error = "배송 완료일은 오늘 기준으로 30일 이상, 40일 이내여야 합니다."
-                return render_template('enter_delivery_date.html', error=error)
+                return render_template('question3.html', error=error)
         except ValueError:
-            return render_template('enter_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
-    return render_template('enter_delivery_date.html')
+            return render_template('question3.html', error="올바른 날짜 형식을 입력해주세요.")
+    return render_template('question3.html')
 
 # 다섯 번째 페이지: 결과 페이지
 @app.route('/result', methods=['GET'])
