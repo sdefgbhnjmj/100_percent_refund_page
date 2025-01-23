@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>배송 완료일을 알고 계신가요?</title>
+    <title>배송 완료일 확인 여부</title>
     <style>
         body {
             font-family: "Noto Sans KR", Arial, sans-serif;
@@ -18,65 +18,53 @@
         .container {
             background-color: white;
             padding: 30px;
-            border: 1px solid #ddd;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         h1 {
             font-size: 22px;
             font-weight: bold;
-            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            color: #14497C;
             margin-bottom: 20px;
         }
-        .options {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        label {
-            font-size: 16px;
-            color: rgba(85, 85, 85, 0.9); /* Slightly darker text with 90% opacity */
-            display: block;
-            margin-bottom: 15px;
-        }
-        input[type="radio"] {
-            margin-right: 10px;
-            transform: scale(1.2);
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
         }
         button {
-            background-color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            flex: 1;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 16px;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.2s;
         }
         button:hover {
-            background-color: rgba(10, 54, 95, 0.9); /* Darker hover effect */
+            background-color: #0056b3;
         }
-        button:focus {
-            outline: none;
+        .back-button {
+            background-color: #6c757d;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>슬룸 제품 수령일을 (배송 완료일) 알고 계신가요?</h1>
+        <h1>배송 완료일을 알고 계신가요?</h1>
         <form method="POST">
-            <div class="options">
-                <label>
-                    <input type="radio" name="know_delivery_date" value="예" required> 예
-                </label>
-                <label>
-                    <input type="radio" name="know_delivery_date" value="아니오"> 아니오
-                </label>
+            <div class="button-group">
+                <button class="back-button" type="button" onclick="window.history.back()">이전</button>
+                <button type="submit">예</button>
             </div>
-            <button type="submit">다음</button>
         </form>
     </div>
 </body>
