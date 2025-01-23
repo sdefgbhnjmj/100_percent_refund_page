@@ -27,16 +27,20 @@
         h1 {
             font-size: 22px;
             font-weight: bold;
-            color: #14497C;
+            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             margin-bottom: 20px;
         }
         input[type="date"] {
-            padding: 10px;
+            width: 100%;
+            padding: 12px;
             font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: calc(100% - 20px);
+            border: 1px solid #ddd;
+            border-radius: 6px;
             margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        input[type="date"]:focus {
+            border-color: rgba(20, 73, 124, 0.9); /* Highlight border */
         }
         .button-group {
             display: flex;
@@ -72,7 +76,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>슬룸 제품 수령일을 (배송 완료일) 입력해주세요.</h1>
+        <h1>배송 완료일을 입력해주세요.</h1>
         <form method="POST">
             <input type="date" name="delivery_date" required>
             <div class="button-group">

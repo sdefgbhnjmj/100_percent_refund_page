@@ -27,8 +27,25 @@
         h1 {
             font-size: 22px;
             font-weight: bold;
-            color: #14497C;
+            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
             margin-bottom: 20px;
+        }
+        .options {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 16px;
+            color: rgba(85, 85, 85, 0.9); /* Slightly darker text with 90% opacity */
+            margin-bottom: 10px;
+            display: block;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        input[type="radio"]:checked + label {
+            color: rgba(20, 73, 124, 0.9); /* Highlight selected option */
         }
         .button-group {
             display: flex;
@@ -61,9 +78,17 @@
     <div class="container">
         <h1>배송 완료일을 알고 계신가요?</h1>
         <form method="POST">
+            <div class="options">
+                <label>
+                    <input type="radio" name="know_delivery_date" value="예" required> 예
+                </label>
+                <label>
+                    <input type="radio" name="know_delivery_date" value="아니오"> 아니오
+                </label>
+            </div>
             <div class="button-group">
                 <button class="back-button" type="button" onclick="window.history.back()">이전</button>
-                <button type="submit">예</button>
+                <button type="submit">다음</button>
             </div>
         </form>
     </div>

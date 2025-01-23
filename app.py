@@ -26,8 +26,6 @@ def event_experience():
         event_participation = request.form.get('event_participation')
         if event_participation == "아니오":
             return redirect(url_for('know_delivery_date'))
-        elif event_participation == "예":
-            return render_template('refund_not_eligible.html')  # 제한 안내 페이지
         else:
             return render_template('question_event.html', error="100% 환불 이벤트 참여 이력이 없어야 합니다.")
     return render_template('question_event.html')
@@ -39,6 +37,8 @@ def know_delivery_date():
         know_delivery_date = request.form.get('know_delivery_date')
         if know_delivery_date == "예":
             return redirect(url_for('enter_delivery_date'))
+        elif know_delivery_date == "아니오":  # "아니오" 선택 시 unknown_delivery로 이동
+            return redirect(url_for('unknown_delivery'))
         else:
             return render_template('question3.html', error="배송 완료일을 알고 있어야 합니다.")
     return render_template('question3.html')
@@ -48,13 +48,12 @@ def know_delivery_date():
 def enter_delivery_date():
     if request.method == 'POST':
         delivery_date_str = request.form.get('delivery_date')
-        if not delivery_date_str:
-            return render_template('input_delivery_date.html', error="배송 완료일을 입력해주세요.")
-
         try:
+            # 배송 완료일을 datetime 객체로 변환
             delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d')
             today = datetime.now()
 
+            # 배송 완료일이 오늘 기준 30일 이상, 40일 이내인지 확인
             if today - timedelta(days=40) <= delivery_date <= today - timedelta(days=30):
                 return redirect(url_for('refund_event_info'))
             else:
@@ -68,6 +67,15 @@ def enter_delivery_date():
 @app.route('/result', methods=['GET'])
 def refund_event_info():
     return render_template('result.html')
+
+# 추가된 페이지: 송장번호 입력 페이지
+@app.route('/unknown_delivery', methods=['GET', 'POST'])
+def unknown_delivery():
+    if request.method == 'POST':
+        tracking_number = request.form.get('tracking_number')
+        # 여기서 송장번호에 대해 처리 로직을 추가할 수 있습니다.
+        return redirect(url_for('refund_event_info'))
+    return render_template('unknown_delivery.html')
 
 if __name__ == '__main__':
     import os
