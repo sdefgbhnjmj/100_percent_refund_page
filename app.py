@@ -42,7 +42,7 @@ def know_delivery_date():
     return render_template('question3.html')
 
 # 네 번째 페이지: 배송 완료일 입력
-@app.route('/input_delivery_date', methods=['GET', 'POST'])
+@app.route('/question3.html', methods=['GET', 'POST'])
 def enter_delivery_date():
     if request.method == 'POST':
         delivery_date_str = request.form.get('delivery_date')
