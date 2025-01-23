@@ -38,7 +38,7 @@
         }
         span {
             font-weight: bold;
-            color: red;
+            color: red; /* 날짜 텍스트를 빨간색으로 표시 */
         }
         a {
             font-weight: bold;
@@ -68,7 +68,7 @@
         <h1>100% 환불 이벤트 신청 기간 전으로 확인됩니다.</h1>
         <p>
             번거로우시겠지만, 이벤트 기간인 
-            <span>2025-02-23 ~ 2025-03-05</span> 
+            <span>{{ start_date }} ~ {{ end_date }}</span> 
             내 다시 접수해 주시면 신속히 처리 도와드리겠습니다.😊
         </p>
         <p>
