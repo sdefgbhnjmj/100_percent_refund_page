@@ -18,59 +18,47 @@
         .container {
             background-color: white;
             padding: 30px;
-            border: 1px solid #ddd;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         h1 {
             font-size: 22px;
             font-weight: bold;
-            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            color: #14497C;
             margin-bottom: 20px;
         }
         p {
             font-size: 16px;
-            color: rgba(85, 85, 85, 0.9); /* Slightly darker text with 90% opacity */
+            color: #333;
             margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        p.error {
-            font-size: 14px;
-            color: #d9534f; /* Red for emphasis */
-            font-weight: bold;
         }
         input[type="date"] {
-            width: 100%;
-            padding: 12px;
+            padding: 10px;
             font-size: 16px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(20, 73, 124, 0.4); /* Light border color */
+            border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="date"]:focus {
-            outline: none;
-            border: 1px solid rgba(20, 73, 124, 0.9); /* Focus color */
-            box-shadow: 0 0 5px rgba(20, 73, 124, 0.4);
+            width: calc(100% - 20px);
+            margin-bottom: 20px;
         }
         button {
-            background-color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: rgba(10, 54, 95, 0.9); /* Darker hover effect */
+            background-color: #0056b3;
         }
-        button:focus {
-            outline: none;
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -78,11 +66,14 @@
     <div class="container">
         <h1>슬룸 제품 수령일을 (배송 완료일) 입력해주세요.</h1>
         <p>입력한 배송 완료일 기준으로 이벤트 참여 가능 여부를 확인합니다.</p>
-        <p class="error">* 정확한 배송 완료일을 입력하지 않을 경우, 이벤트 참여가 제한될 수 있습니다.</p>
+        <p style="color: red; font-size: 14px;">* 정확한 배송 완료일을 입력하지 않을 경우, 이벤트 참여가 제한될 수 있습니다.</p>
         <form method="POST">
             <input type="date" name="delivery_date" required>
             <button type="submit">확인</button>
         </form>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
     </div>
 </body>
 </html>

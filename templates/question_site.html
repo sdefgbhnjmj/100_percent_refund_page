@@ -54,6 +54,14 @@
         button:hover {
             background-color: rgba(10, 54, 95, 0.9); /* Slightly darker hover effect */
         }
+        .back-button {
+            background-color: #6c757d; /* Gray for back button */
+            color: white;
+            margin-top: 10px;
+        }
+        .back-button:hover {
+            background-color: #5a6268; /* Darker gray on hover */
+        }
         .error {
             color: #d9534f; /* Red for errors */
             font-size: 14px;
@@ -75,6 +83,14 @@
         {% if error %}
             <p class="error">{{ error }}</p>
         {% endif %}
+        <button class="back-button" onclick="goBack()">이전</button>
     </div>
+
+    <script>
+        // 이전 페이지로 이동하는 함수
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 </html>
