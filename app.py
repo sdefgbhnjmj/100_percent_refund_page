@@ -57,14 +57,14 @@ def enter_delivery_date():
 
             # 배송 완료일이 오늘 기준 30일 미만
             elif delivery_date > today - timedelta(days=30):
-                start_date = (today - timedelta(days=30)).strftime('%Y-%m-%d')
-                end_date = (today - timedelta(days=40)).strftime('%Y-%m-%d')
+                start_date = (delivery_date + timedelta(days=30)).strftime('%Y-%m-%d')
+                end_date = (delivery_date + timedelta(days=40)).strftime('%Y-%m-%d')
                 return render_template('event_period_restriction.html', start_date=start_date, end_date=end_date)
 
             # 배송 완료일이 오늘 기준 40일 초과
             else:
-                start_date = (today - timedelta(days=40)).strftime('%Y-%m-%d')
-                end_date = (today - timedelta(days=30)).strftime('%Y-%m-%d')
+                start_date = (delivery_date + timedelta(days=30)).strftime('%Y-%m-%d')
+                end_date = (delivery_date + timedelta(days=40)).strftime('%Y-%m-%d')
                 return render_template('event_expired_restriction.html', start_date=start_date, end_date=end_date)
 
         except ValueError:
