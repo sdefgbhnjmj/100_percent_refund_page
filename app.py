@@ -53,12 +53,18 @@ def enter_delivery_date():
             delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d')
             today = datetime.now()
 
-            # 배송 완료일이 오늘 기준 30일 이상, 40일 이내인지 확인
-            if today - timedelta(days=40) <= delivery_date <= today - timedelta(days=30):
-                return redirect(url_for('refund_event_info'))
+            # 배송 완료일이 오늘 기준 30일 이상, 40일 미만인지 확인
+            if delivery_date < today - timedelta(days=30):
+                if delivery_date >= today - timedelta(days=40):
+                    return redirect(url_for('refund_event_info'))
+                else:
+                    error = "배송 완료일은 오늘 기준으로 30일 이상, 40일 이내여야 합니다."
+                    return render_template('input_delivery_date.html', error=error)
             else:
-                error = "배송 완료일은 오늘 기준으로 30일 이상, 40일 이내여야 합니다."
-                return render_template('input_delivery_date.html', error=error)
+                # 이벤트 신청 기간 전
+                start_date = (delivery_date + timedelta(days=30)).strftime('%Y-%m-%d')
+                end_date = (delivery_date + timedelta(days=40)).strftime('%Y-%m-%d')
+                return render_template('event_period_restriction.html', start_date=start_date, end_date=end_date)
         except ValueError:
             return render_template('input_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
     return render_template('input_delivery_date.html')
