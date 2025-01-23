@@ -26,6 +26,8 @@ def event_experience():
         event_participation = request.form.get('event_participation')
         if event_participation == "아니오":
             return redirect(url_for('know_delivery_date'))
+        elif event_participation == "예":
+            return render_template('refund_not_eligible.html')  # 제한 안내 페이지
         else:
             return render_template('question_event.html', error="100% 환불 이벤트 참여 이력이 없어야 합니다.")
     return render_template('question_event.html')
