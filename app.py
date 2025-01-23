@@ -14,9 +14,9 @@ def select_purchase_site():
     if request.method == 'POST':
         purchase_site = request.form.get('purchase_site')
         if purchase_site == "슬룸 공식 홈페이지":
-            return redirect(url_for('event_experience'))
-        else:
-            return render_template('question_site.html', error="구매처를 슬룸 공식 홈페이지로 선택해주세요.")
+            return redirect(url_for('event_experience'))  # 이벤트 참여 질문으로 이동
+        else:  # "그 외 온라인사이트"를 선택한 경우
+            return render_template('external_purchase_restriction.html')  # 새로운 제한 페이지 렌더링
     return render_template('question_site.html')
 
 # 두 번째 페이지: 이벤트 참여 경험 확인
