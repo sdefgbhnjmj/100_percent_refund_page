@@ -48,20 +48,21 @@ def know_delivery_date():
 def enter_delivery_date():
     if request.method == 'POST':
         delivery_date_str = request.form.get('delivery_date')
+        if not delivery_date_str:
+            return render_template('input_delivery_date.html', error="배송 완료일을 입력해주세요.")
+
         try:
-            # 배송 완료일을 datetime 객체로 변환
             delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d')
             today = datetime.now()
 
-            # 배송 완료일이 오늘 기준 30일 이상, 40일 이내인지 확인
             if today - timedelta(days=40) <= delivery_date <= today - timedelta(days=30):
                 return redirect(url_for('refund_event_info'))
             else:
                 error = "배송 완료일은 오늘 기준으로 30일 이상, 40일 이내여야 합니다."
-                return render_template('question3.html', error=error)
+                return render_template('input_delivery_date.html', error=error)
         except ValueError:
-            return render_template('question3.html', error="올바른 날짜 형식을 입력해주세요.")
-    return render_template('question3.html')
+            return render_template('input_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
+    return render_template('input_delivery_date.html')
 
 # 다섯 번째 페이지: 결과 페이지
 @app.route('/result', methods=['GET'])
