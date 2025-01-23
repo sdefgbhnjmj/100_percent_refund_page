@@ -41,16 +41,6 @@ def know_delivery_date():
             return render_template('question3.html', error="배송 완료일을 알고 있어야 합니다.")
     return render_template('question3.html')
 
-from flask import Flask, render_template, request, redirect, url_for
-from datetime import datetime, timedelta
-
-app = Flask(__name__)
-
-# 루트 경로 정의 (홈 페이지)
-@app.route('/')
-def home():
-    return render_template('home.html')
-
 # 네 번째 페이지: 배송 완료일 입력
 @app.route('/input_delivery_date', methods=['GET', 'POST'])
 def enter_delivery_date():
@@ -67,14 +57,14 @@ def enter_delivery_date():
 
             # 배송 완료일이 오늘 기준 30일 미만
             elif delivery_date > today - timedelta(days=30):
-                start_date = (delivery_date + timedelta(days=30)).strftime('%Y-%m-%d')
-                end_date = (delivery_date + timedelta(days=40)).strftime('%Y-%m-%d')
+                start_date = (today - timedelta(days=30)).strftime('%Y-%m-%d')
+                end_date = (today - timedelta(days=40)).strftime('%Y-%m-%d')
                 return render_template('event_period_restriction.html', start_date=start_date, end_date=end_date)
 
             # 배송 완료일이 오늘 기준 40일 초과
             else:
-                start_date = (delivery_date + timedelta(days=30)).strftime('%Y-%m-%d')
-                end_date = (delivery_date + timedelta(days=40)).strftime('%Y-%m-%d')
+                start_date = (today - timedelta(days=40)).strftime('%Y-%m-%d')
+                end_date = (today - timedelta(days=30)).strftime('%Y-%m-%d')
                 return render_template('event_expired_restriction.html', start_date=start_date, end_date=end_date)
 
         except ValueError:
