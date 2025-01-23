@@ -15,8 +15,8 @@ def select_purchase_site():
         purchase_site = request.form.get('purchase_site')
         if purchase_site == "슬룸 공식 홈페이지":
             return redirect(url_for('event_experience'))  # 이벤트 참여 질문으로 이동
-        else:  # "그 외 온라인사이트"를 선택한 경우
-            return render_template('external_purchase_restriction.html')  # 새로운 제한 페이지 렌더링
+        else:
+            return render_template('external_purchase_restriction.html')  # 제한 페이지로 이동
     return render_template('question_site.html')
 
 # 두 번째 페이지: 이벤트 참여 경험 확인
@@ -26,7 +26,7 @@ def event_experience():
         event_participation = request.form.get('event_participation')
         if event_participation == "아니오":
             return redirect(url_for('know_delivery_date'))
-        else:  # "예"를 선택한 경우
+        else:
             return render_template('refund_not_eligible.html')  # 환불 불가 페이지로 이동
     return render_template('question_event.html')
 
@@ -37,7 +37,7 @@ def know_delivery_date():
         know_delivery_date = request.form.get('know_delivery_date')
         if know_delivery_date == "예":
             return redirect(url_for('enter_delivery_date'))
-        elif know_delivery_date == "아니오":  # "아니오" 선택 시 unknown_delivery로 이동
+        elif know_delivery_date == "아니오":
             return redirect(url_for('unknown_delivery'))
         else:
             return render_template('question3.html', error="배송 완료일을 알고 있어야 합니다.")
@@ -73,18 +73,25 @@ def enter_delivery_date():
 def refund_event_info():
     return render_template('result.html')
 
-if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 5000))  # Render에서 제공하는 포트 가져오기
-    app.run(host='0.0.0.0', port=port)
-
 # 추가된 페이지: 송장번호 입력 페이지
 @app.route('/unknown_delivery', methods=['GET', 'POST'])
 def unknown_delivery():
     if request.method == 'POST':
         tracking_number = request.form.get('tracking_number')
-        # 여기서 송장번호에 대해 처리 로직을 추가할 수 있습니다.
-        return redirect(url_for('refund_event_info'))
+        if tracking_number:
+            # 송장번호에 대한 처리 로직 추가
+            if tracking_number == "123456":  # 예시로 특정 송장번호를 조회
+                tracking_info = {
+                    "status": "배송 완료",
+                    "time": "2025-01-20 14:30"
+                }
+            else:
+                tracking_info = {
+                    "error": "해당 송장번호로 조회된 정보가 없습니다. 다시 확인해주세요."
+                }
+            return render_template('tracking_result.html', tracking_info=tracking_info)
+        else:
+            return render_template('unknown_delivery.html', error="송장번호를 입력해주세요.")
     return render_template('unknown_delivery.html')
 
 if __name__ == '__main__':
