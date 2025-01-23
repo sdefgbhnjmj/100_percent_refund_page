@@ -25,9 +25,9 @@ def event_experience():
     if request.method == 'POST':
         event_participation = request.form.get('event_participation')
         if event_participation == "아니오":
-            return redirect(url_for('know_delivery_date'))
-        else:
-            return render_template('question_event.html', error="100% 환불 이벤트 참여 이력이 없어야 합니다.")
+            return redirect(url_for('know_delivery_date'))  # 배송 완료일 확인으로 이동
+        else:  # "예"를 선택한 경우
+            return render_template('refund_not_eligible.html')  # 환불 불가 페이지로 이동
     return render_template('question_event.html')
 
 # 세 번째 페이지: 배송 완료일 확인 여부
@@ -36,7 +36,7 @@ def know_delivery_date():
     if request.method == 'POST':
         know_delivery_date = request.form.get('know_delivery_date')
         if know_delivery_date == "예":
-            return redirect(url_for('enter_delivery_date'))
+            return redirect(url_for('enter_delivery_date'))  # 배송 완료일 입력으로 이동
         else:
             return render_template('question3.html', error="배송 완료일을 알고 있어야 합니다.")
     return render_template('question3.html')
