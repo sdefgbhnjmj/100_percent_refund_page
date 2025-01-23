@@ -1,7 +1,74 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
+import requests
 
 app = Flask(__name__)
+
+# Access Token 가져오는 함수
+def get_access_token():
+    url = 'https://auth.tracker.delivery/oauth2/token'
+    payload = {
+        'grant_type': 'client_credentials',
+        'client_id': '5e2otcj9jb2fv76cmk27oqd6gf',
+        'client_secret': '1e2vube7o7iqmrjur6nea65oged4ds4eu33fi2jtmqb0aa1a4tfl'
+    }
+    response = requests.post(url, data=payload)
+    if response.status_code == 200:
+        return response.json().get('access_token')
+    else:
+        return None
+
+# 송장 정보 조회 함수
+def get_tracking_info(tracking_number):
+    access_token = get_access_token()
+    if not access_token:
+        return {"error": "액세스 토큰을 가져올 수 없습니다."}
+
+    url = 'https://apis.tracker.delivery/graphql'
+    query = """
+        query Track($carrierId: ID!, $trackingNumber: String!) {
+          track(carrierId: $carrierId, trackingNumber: $trackingNumber) {
+            lastEvent {
+              time
+              status {
+                code
+              }
+            }
+          }
+        }
+    """
+    variables = {
+        'carrierId': 'kr.hanjin',
+        'trackingNumber': tracking_number
+    }
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {access_token}'
+    }
+    response = requests.post(url, json={'query': query, 'variables': variables}, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        if data.get('data') and data['data']['track'] and data['data']['track']['lastEvent']:
+            last_event = data['data']['track']['lastEvent']
+            return {
+                "status": last_event['status']['code'],
+                "time": last_event['time']
+            }
+        else:
+            return {"error": "배송 정보를 찾을 수 없습니다."}
+    else:
+        return {"error": "API 호출 중 오류가 발생했습니다."}
+
+# 배송 상태 한국어 변환 함수
+def translate_status(status_code):
+    status_mapping = {
+        "DELIVERED": "배송 완료",
+        "IN_TRANSIT": "배송 중",
+        "OUT_FOR_DELIVERY": "배송 준비 중",
+        "PENDING": "배송 대기 중",
+        "UNKNOWN": "알 수 없음"
+    }
+    return status_mapping.get(status_code, "상태 정보 없음")
 
 # 루트 경로 정의 (홈 페이지)
 @app.route('/')
@@ -71,6 +138,18 @@ def enter_delivery_date():
             return render_template('input_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
     
     return render_template('input_delivery_date.html')
+
+# 송장 번호 조회 라우트
+@app.route('/track', methods=['POST'])
+def track():
+    tracking_number = request.form.get('tracking_number')
+    if tracking_number:
+        tracking_info = get_tracking_info(tracking_number)
+        if "status" in tracking_info:
+            tracking_info["status"] = translate_status(tracking_info["status"])
+        return render_template('tracking_result.html', tracking_info=tracking_info)
+    else:
+        return render_template('tracking_result.html', tracking_info={"error": "송장번호를 입력해주세요."})
 
 # 결과 페이지
 @app.route('/result', methods=['GET'])
