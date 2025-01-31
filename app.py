@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
 import requests
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="C:/Users/apf_temp_admin/Desktop/python/100% 환불 페이지/static", static_url_path="/static")
 
 # Access Token 가져오는 함수
 def get_access_token():
@@ -157,6 +157,4 @@ def refund_event_info():
     return render_template('result.html')
 
 if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 5000))  # Render에서 제공하는 포트 가져오기
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
