@@ -64,7 +64,7 @@
 </head>
 <body>
     <div class="container">
-        <img class="logo" src="/static/images/sloom_logo.png" alt="슬룸 로고">
+        <img class="logo" src="{{ url_for('static', filename='images/sloom_logo.png') }}" alt="슬룸 로고">
         <h1>안녕하세요, 슬룸입니다.😊</h1>
         <p>약 <span class="highlight">5분 이내</span> 100% 환불 가능 여부를 확인하실 수 있습니다.</p>
         <button onclick="location.href='/question_site'">시작하기</button>
