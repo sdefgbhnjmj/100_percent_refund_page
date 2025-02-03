@@ -89,7 +89,7 @@ def event_experience():
     if request.method == 'POST':
         event_participation = request.form.get('event_participation')
         if event_participation == "아니오":
-            return redirect(url_for('know_delivery_date'))
+            return redirect(url_for('refund_product_selection'))
         else:
             return render_template('refund_not_eligible.html')
     return render_template('question_event.html')
@@ -107,16 +107,22 @@ def refund_product_selection():
             return redirect(url_for('refund_single_product_info'))
     return render_template('refund_product_selection.html')
 
-@app.route('/refund_set_product_info')
+@app.route('/refund_set_product_info', methods=['GET', 'POST'])
 def refund_set_product_info():
+    if request.method == 'POST':
+        return redirect(url_for('know_delivery_date'))
     return render_template('refund_set_product_info.html')
 
-@app.route('/refund_multiple_product_info')
+@app.route('/refund_multiple_product_info', methods=['GET', 'POST'])
 def refund_multiple_product_info():
+    if request.method == 'POST':
+        return redirect(url_for('know_delivery_date'))
     return render_template('refund_multiple_product_info.html')
 
-@app.route('/refund_single_product_info')
+@app.route('/refund_single_product_info', methods=['GET', 'POST'])
 def refund_single_product_info():
+    if request.method == 'POST':
+        return redirect(url_for('know_delivery_date'))
     return render_template('refund_single_product_info.html')
 
 @app.route('/question3', methods=['GET', 'POST'])
