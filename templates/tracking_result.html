@@ -26,7 +26,7 @@
         }
         h1 {
             font-size: 24px;
-            color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            color: rgba(20, 73, 124, 0.9);
             margin-bottom: 20px;
             font-weight: bold;
         }
@@ -36,16 +36,17 @@
             margin-bottom: 20px;
         }
         button {
-            background-color: rgba(20, 73, 124, 0.9); /* #14497C with 90% opacity */
+            background-color: rgba(20, 73, 124, 0.9);
             color: white;
             border: none;
             padding: 10px 20px;
             font-size: 16px;
             border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
         button:hover {
-            background-color: rgba(10, 54, 95, 0.9); /* Darker hover */
+            background-color: rgba(10, 54, 95, 0.9);
         }
     </style>
 </head>
@@ -58,7 +59,7 @@
         {% else %}
             <p>{{ tracking_info.error }}</p>
         {% endif %}
-        <a href="/"><button>돌아가기</button></a>
+        <a href="/input_delivery_date"><button>다음</button></a>
     </div>
 </body>
 </html>
