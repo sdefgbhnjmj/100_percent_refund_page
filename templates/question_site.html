@@ -24,14 +24,6 @@
             width: 100%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            position: relative;
-        }
-        .logo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 50px;
-            height: 50px;
         }
         h1 {
             font-size: 22px;
@@ -84,7 +76,6 @@
 </head>
 <body>
     <div class="container">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="슬룸 로고" class="logo">
         <h1>슬룸 제품을 어느 사이트에서 구매하셨나요?</h1>
         <form method="POST">
             <select name="purchase_site" required>
