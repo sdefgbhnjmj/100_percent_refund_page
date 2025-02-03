@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime, timedelta
 import requests
+import os
+from dotenv import load_dotenv
+
+# .env 파일 로드
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -9,8 +14,8 @@ def get_access_token():
     url = 'https://auth.tracker.delivery/oauth2/token'
     payload = {
         'grant_type': 'client_credentials',
-        'client_id': '5e2otcj9jb2fv76cmk27oqd6gf',
-        'client_secret': '1e2vube7o7iqmrjur6nea65oged4ds4eu33fi2jtmqb0aa1a4tfl'
+        'client_id': os.getenv('CLIENT_ID'),
+        'client_secret': os.getenv('CLIENT_SECRET')
     }
     response = requests.post(url, data=payload)
     if response.status_code == 200:
@@ -142,4 +147,4 @@ def refund_event_info():
     return render_template('result.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=10000)
