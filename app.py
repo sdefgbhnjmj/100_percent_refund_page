@@ -27,7 +27,7 @@ def get_tracking_info(tracking_number):
     url = 'https://apis.tracker.delivery/graphql'
     query = """
         query Track($carrierId: ID!, $trackingNumber: String!) {
-          track(carrierId: $carrierId, trackingNumber: $tracking_number) {
+          track(carrierId: $carrierId, trackingNumber: $trackingNumber) {
             lastEvent {
               time
               status {
@@ -46,19 +46,13 @@ def get_tracking_info(tracking_number):
         'Authorization': f'Bearer {access_token}'
     }
     response = requests.post(url, json={'query': query, 'variables': variables}, headers=headers)
-    
     if response.status_code == 200:
         data = response.json()
         if data.get('data') and data['data']['track'] and data['data']['track']['lastEvent']:
             last_event = data['data']['track']['lastEvent']
-            raw_time = last_event['time']  # 예: 2025-01-15T13:05:00.000+09:00
-
-            # 날짜 부분만 추출
-            formatted_date = raw_time.split("T")[0]
-
             return {
                 "status": last_event['status']['code'],
-                "time": formatted_date  # 변환된 날짜 값만 반환
+                "time": last_event['time']
             }
         else:
             return {"error": "배송 정보를 찾을 수 없습니다."}
