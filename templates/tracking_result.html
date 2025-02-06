@@ -55,7 +55,7 @@
         <h1>송장번호 조회 결과</h1>
         {% if tracking_info.status %}
             <p>배송 상태: {{ tracking_info.status }}</p>
-            <p>배송 완료 시간: {{ tracking_info.time }}</p>
+            <p>배송 완료일: {{ tracking_info.time }}</p>
         {% else %}
             <p>{{ tracking_info.error }}</p>
         {% endif %}
