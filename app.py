@@ -4,75 +4,19 @@ import requests
 
 app = Flask(__name__)
 
-# Access Token 가져오는 함수
-def get_access_token():
-    url = 'https://auth.tracker.delivery/oauth2/token'
-    payload = {
-        'grant_type': 'client_credentials',
-        'client_id': '5e2otcj9jb2fv76cmk27oqd6gf',
-        'client_secret': '1e2vube7o7iqmrjur6nea65oged4ds4eu33fi2jtmqb0aa1a4tfl'
-    }
-    response = requests.post(url, data=payload)
-    if response.status_code == 200:
-        return response.json().get('access_token')
-    else:
-        return None
+@app.route('/', methods=['GET', 'POST'])
+def select_brand():
+    if request.method == 'POST':
+        brand = request.form.get('brand')
+        if brand == "brand1":
+            return redirect(url_for('select_purchase_site'))
+        elif brand == "brand2":
+            return redirect(url_for('brand2_home'))
+    return render_template('select_brand.html')
 
-# 송장 정보 조회 함수
-def get_tracking_info(tracking_number):
-    access_token = get_access_token()
-    if not access_token:
-        return {"error": "액세스 토큰을 가져올 수 없습니다."}
-
-    url = 'https://apis.tracker.delivery/graphql'
-    query = """
-        query Track($carrierId: ID!, $trackingNumber: String!) {
-          track(carrierId: $carrierId, trackingNumber: $trackingNumber) {
-            lastEvent {
-              time
-              status {
-                code
-              }
-            }
-          }
-        }
-    """
-    variables = {
-        'carrierId': 'kr.hanjin',
-        'trackingNumber': tracking_number
-    }
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {access_token}'
-    }
-    response = requests.post(url, json={'query': query, 'variables': variables}, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        if data.get('data') and data['data']['track'] and data['data']['track']['lastEvent']:
-            last_event = data['data']['track']['lastEvent']
-            return {
-                "status": last_event['status']['code'],
-                "time": last_event['time']
-            }
-        else:
-            return {"error": "배송 정보를 찾을 수 없습니다."}
-    else:
-        return {"error": "API 호출 중 오류가 발생했습니다."}
-
-# 배송 상태 한국어 변환 함수
-def translate_status(status_code):
-    status_mapping = {
-        "DELIVERED": "배송 완료",
-        "IN_TRANSIT": "배송 중",
-        "OUT_FOR_DELIVERY": "배송 준비 중",
-        "PENDING": "배송 대기 중",
-        "UNKNOWN": "알 수 없음"
-    }
-    return status_mapping.get(status_code, "상태 정보 없음")
-
-@app.route('/')
-def home():
-    return render_template('home.html')
+@app.route('/brand2')
+def brand2_home():
+    return "<h1>브랜드2 전용 페이지입니다. 여기에 새 흐름을 추가하세요.</h1>"
 
 @app.route('/question_site', methods=['GET', 'POST'])
 def select_purchase_site():
@@ -94,7 +38,6 @@ def event_experience():
             return render_template('refund_not_eligible.html')
     return render_template('question_event.html')
 
-# 환불 상품 구성 선택
 @app.route('/refund_product_selection', methods=['GET', 'POST'])
 def refund_product_selection():
     if request.method == 'POST':
@@ -171,6 +114,58 @@ def track():
 @app.route('/result', methods=['GET'])
 def refund_event_info():
     return render_template('result.html')
+
+def get_access_token():
+    url = 'https://auth.tracker.delivery/oauth2/token'
+    payload = {
+        'grant_type': 'client_credentials',
+        'client_id': '5e2otcj9jb2fv76cmk27oqd6gf',
+        'client_secret': '1e2vube7o7iqmrjur6nea65oged4ds4eu33fi2jtmqb0aa1a4tfl'
+    }
+    response = requests.post(url, data=payload)
+    if response.status_code == 200:
+        return response.json().get('access_token')
+    return None
+
+def get_tracking_info(tracking_number):
+    access_token = get_access_token()
+    if not access_token:
+        return {"error": "액세스 토큰을 가져올 수 없습니다."}
+
+    url = 'https://apis.tracker.delivery/graphql'
+    query = """
+        query Track($carrierId: ID!, $trackingNumber: String!) {
+          track(carrierId: $carrierId, trackingNumber: $trackingNumber) {
+            lastEvent {
+              time
+              status {
+                code
+              }
+            }
+          }
+        }
+    """
+    variables = {'carrierId': 'kr.hanjin', 'trackingNumber': tracking_number}
+    headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}'}
+    response = requests.post(url, json={'query': query, 'variables': variables}, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        if data.get('data') and data['data']['track'] and data['data']['track']['lastEvent']:
+            last_event = data['data']['track']['lastEvent']
+            return {"status": last_event['status']['code'], "time": last_event['time']}
+        else:
+            return {"error": "배송 정보를 찾을 수 없습니다."}
+    return {"error": "API 호출 중 오류가 발생했습니다."}
+
+def translate_status(status_code):
+    status_mapping = {
+        "DELIVERED": "배송 완료",
+        "IN_TRANSIT": "배송 중",
+        "OUT_FOR_DELIVERY": "배송 준비 중",
+        "PENDING": "배송 대기 중",
+        "UNKNOWN": "알 수 없음"
+    }
+    return status_mapping.get(status_code, "상태 정보 없음")
 
 if __name__ == '__main__':
     app.run(debug=True)
