@@ -11,12 +11,8 @@ def select_brand():
         if brand == "brand1":
             return redirect(url_for('home'))  # 슬룸 → home.html
         elif brand == "brand2":
-            return redirect(url_for('cellology_home'))
+            return redirect(url_for('cellology_home'))  # 셀올로지 → cellology_home.html
     return render_template('select_brand.html')
-
-@app.route('/brand2')
-def brand2_home():
-    return "<h1>브랜드2 전용 페이지입니다. 여기에 새 흐름을 추가하세요.</h1>"
 
 @app.route('/home')
 def home():
@@ -202,17 +198,6 @@ def cellology_enter_delivery_date():
         except ValueError:
             return render_template('셀올로지/cellology_input_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
     return render_template('셀올로지/cellology_input_delivery_date.html')
-
-@app.route('/cellology/track', methods=['POST'])
-def cellology_track():
-    tracking_number = request.form.get('tracking_number')
-    if tracking_number:
-        tracking_info = get_tracking_info(tracking_number)
-        if "status" in tracking_info:
-            tracking_info["status"] = translate_status(tracking_info["status"])
-        return render_template('셀올로지/cellology_tracking_result.html', tracking_info=tracking_info)
-    else:
-        return render_template('셀올로지/cellology_tracking_result.html', tracking_info={"error": "송장번호를 입력해주세요."})
 
 @app.route('/cellology/result', methods=['GET'])
 def cellology_result():
