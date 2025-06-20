@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환불 서비스 제한 안내</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QPWTWFSY4H');
+    </script>
+
+    <style>
+        body {
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: rgba(20, 73, 124, 0.9);
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: rgba(85, 85, 85, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        p.note {
+            color: rgba(102, 102, 102, 0.9);
+        }
+        button {
+            background-color: rgba(20, 73, 124, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: rgba(10, 54, 95, 0.9);
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+            margin-top: 10px;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>환불 서비스 제한 안내</h1>
+        <p>셀올로지 공식 자사몰을 통해 구매하신 경우에만 환불 서비스 이용이 가능합니다.</p>
+        <p class="note">* 그 외 다른 사이트에서 구매 시 환불 서비스 대상이 아닙니다.</p>
+        <button onclick="window.location.href='/'">처음으로 돌아가기</button>
+        <button class="back-button" onclick="window.history.back()">이전</button>
+    </div>
+</body>
+</html>

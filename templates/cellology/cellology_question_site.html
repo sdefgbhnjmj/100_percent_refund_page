@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구매처 질문</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QPWTWFSY4H');
+    </script>
+
+    <style>
+        body {
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #14497C;
+            margin-bottom: 20px;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid rgba(20, 73, 124, 0.9);
+            border-radius: 6px;
+            margin-bottom: 20px;
+            background-color: rgba(240, 248, 255, 0.9);
+            color: #333;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between; /* 버튼 간격 균등 분배 */
+            gap: 10px; /* 버튼 사이 간격 */
+            margin-top: 20px;
+        }
+        button {
+            flex: 1; /* 버튼 크기를 동일하게 */
+            background-color: rgba(20, 73, 124, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: rgba(10, 54, 95, 0.9);
+        }
+        .back-button {
+            background-color: #6c757d;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        .error {
+            color: #d9534f;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>슬룸 제품을 어느 사이트에서 구매하셨나요?</h1>
+        <form method="POST">
+            <select name="purchase_site" required>
+                <option value="">구매처를 선택하세요</option>
+                <option value="슬룸 공식 홈페이지">슬룸 공식 홈페이지</option>
+                <option value="그 외 온라인사이트">그 외 온라인사이트 (쿠팡, 네이버 스마트스토어, 11번가 등)</option>
+            </select>
+            <div class="button-group">
+                <button class="back-button" type="button" onclick="goBack()">이전</button>
+                <button type="submit">다음</button>
+            </div>
+        </form>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        // 이전 페이지로 이동하는 함수
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환불 서비스 상세 안내</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QPWTWFSY4H');
+    </script>
+
+    <style>
+        body {
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            color: rgba(20, 73, 124, 0.9);
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: rgba(240, 248, 255, 0.9);
+            border-left: 4px solid rgba(20, 73, 124, 0.9);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .highlight h2 {
+            font-size: 18px;
+            color: rgba(20, 73, 124, 0.9);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .highlight ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .highlight li {
+            font-size: 16px;
+            color: rgba(85, 85, 85, 0.9);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .highlight li::before {
+            content: "•";
+            color: rgba(20, 73, 124, 0.9);
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+            line-height: 1;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: rgba(20, 73, 124, 0.9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: rgba(10, 54, 95, 0.9);
+        }
+        .back-button {
+            background-color: #6c757d;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">환불 서비스 상세 안내</h1>
+        <p>동일한 상품 2개 이상 구매하신 경우 아래 조건에 따라 환불 가능합니다.😊</p>
+        <p>구성이 다른 세트 상품 또는 단품을 구매하신 경우 '이전' 버튼으로 이동해주세요.</p>
+        <p>주의 사항을 꼭 읽으신 후, 동의하시면 '다음' 버튼으로 이동해주세요.</p>
+        <div class="highlight">
+            <h2>동일한 상품 2개 이상 예시</h2>
+            <ul>
+                <li>예시 1: 목편한케어 1+1 (2개)</li>
+                <li>예시 2: 허리베개 프로 1+1 (2개)</li>
+            <h2>주의 사항</h2>
+            <ul>
+                <li>체험하시는 상품 1개 외 미개봉 상품에 대해서는 개봉/손상 없이 보관하셨을 경우에만 전액 환불됩니다.</li>
+                <li>추가로 개봉/손상된 상품에 대해서는 상품 수만큼 차감 후 환불 가능합니다. (*자사몰 상품 구성 가격인 정가 기준)</li>
+                <li>상품 박스 개봉 시 개봉으로 처리되는 점 유의 부탁드립니다.</li>
+            </ul>
+        </div>
+        <div class="button-group">
+            <button class="back-button" onclick="window.history.back()">이전</button>
+            <button onclick="window.location.href='/question3'">다음</button>
+        </div>
+    </div>
+</body>
+</html>

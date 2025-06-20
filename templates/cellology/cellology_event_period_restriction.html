@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 신청 기간 안내</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QPWTWFSY4H');
+    </script>
+
+    <style>
+        body {
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: rgba(20, 73, 124, 0.9);
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: rgba(85, 85, 85, 0.9);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        span {
+            font-weight: bold;
+            color: red; /* 날짜 텍스트를 빨간색으로 표시 */
+        }
+        a {
+            font-weight: bold;
+            color: rgba(20, 73, 124, 0.9);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            background-color: rgba(20, 73, 124, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: rgba(10, 54, 95, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>100% 환불 이벤트 신청 기간 전으로 확인됩니다.</h1>
+        <p>
+            번거로우시겠지만, 이벤트 기간인 
+            <span>{{ start_date }} ~ {{ end_date }}</span> 
+            내 다시 접수해 주시면 신속히 처리 도와드리겠습니다.😊
+        </p>
+        <p>
+            제품 구성에 따라 이벤트 조건이 상이하므로, 아래 &lt;100% 환불 이벤트&gt; 공지사항에서
+            상세 조건을 확인하신 후 기간 내 신청 부탁드립니다.
+        </p>
+        <a href="https://sleeplab.co.kr/notice/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=13709226&t=board">
+            ➡️ 100% 환불 이벤트 상세 조건 확인하러 가기
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>송장번호 입력</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QPWTWFSY4H');
+    </script>
+
+    <style>
+        body {
+            font-family: "Noto Sans KR", Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: rgba(20, 73, 124, 0.9);
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: rgba(85, 85, 85, 0.9);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus {
+            border-color: rgba(20, 73, 124, 0.9);
+        }
+        button {
+            background-color: rgba(20, 73, 124, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: rgba(10, 54, 95, 0.9);
+        }
+        button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>송장번호를 입력해주세요</h1>
+        <p>송장번호는 배송 당시 발송된 슬룸 알림톡에서 확인할 수 있습니다.</p>
+        <p>조회 후 잠시만 기다려주시면, 배송 완료일을 안내해 드리겠습니다.😊</p>
+        <form method="POST" action="/track">
+            <input type="text" name="tracking_number" placeholder="송장번호 입력" required>
+            <button type="submit">조회</button>
+        </form>
+    </div>
+</body>
+</html>
