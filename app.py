@@ -116,7 +116,7 @@ def refund_event_info():
 
 @app.route('/cellology/home')
 def cellology_home():
-    return render_template('셀올로지/cellology_home.html')
+    return render_template('cellology/cellology_home.html')
 
 @app.route('/cellology/question_site', methods=['GET', 'POST'])
 def cellology_question_site():
@@ -125,8 +125,8 @@ def cellology_question_site():
         if purchase_site == "셀올로지 공식 홈페이지":
             return redirect(url_for('cellology_question_event'))
         else:
-            return render_template('셀올로지/cellology_external_purchase_restriction.html')
-    return render_template('셀올로지/cellology_question_site.html')
+            return render_template('cellology/cellology_external_purchase_restriction.html')
+    return render_template('cellology/cellology_question_site.html')
 
 @app.route('/cellology/question_event', methods=['GET', 'POST'])
 def cellology_question_event():
@@ -135,8 +135,8 @@ def cellology_question_event():
         if event_participation == "아니오":
             return redirect(url_for('cellology_refund_product_selection'))
         else:
-            return render_template('셀올로지/cellology_refund_not_eligible.html')
-    return render_template('셀올로지/cellology_question_event.html')
+            return render_template('cellology/cellology_refund_not_eligible.html')
+    return render_template('cellology/cellology_question_event.html')
 
 @app.route('/cellology/refund_product_selection', methods=['GET', 'POST'])
 def cellology_refund_product_selection():
@@ -148,25 +148,25 @@ def cellology_refund_product_selection():
             return redirect(url_for('cellology_refund_multiple_product_info'))
         elif refund_option == "single":
             return redirect(url_for('cellology_refund_single_product_info'))
-    return render_template('셀올로지/cellology_refund_product_selection.html')
+    return render_template('cellology/cellology_refund_product_selection.html')
 
 @app.route('/cellology/refund_set_product_info', methods=['GET', 'POST'])
 def cellology_refund_set_product_info():
     if request.method == 'POST':
         return redirect(url_for('cellology_know_delivery_date'))
-    return render_template('셀올로지/cellology_refund_set_product_info.html')
+    return render_template('cellology/cellology_refund_set_product_info.html')
 
 @app.route('/cellology/refund_multiple_product_info', methods=['GET', 'POST'])
 def cellology_refund_multiple_product_info():
     if request.method == 'POST':
         return redirect(url_for('cellology_know_delivery_date'))
-    return render_template('셀올로지/cellology_refund_multiple_product_info.html')
+    return render_template('cellology/cellology_refund_multiple_product_info.html')
 
 @app.route('/cellology/refund_single_product_info', methods=['GET', 'POST'])
 def cellology_refund_single_product_info():
     if request.method == 'POST':
         return redirect(url_for('cellology_know_delivery_date'))
-    return render_template('셀올로지/cellology_refund_single_product_info.html')
+    return render_template('cellology/cellology_refund_single_product_info.html')
 
 @app.route('/cellology/question3', methods=['GET', 'POST'])
 def cellology_know_delivery_date():
@@ -175,8 +175,8 @@ def cellology_know_delivery_date():
         if know_delivery_date == "예":
             return redirect(url_for('cellology_enter_delivery_date'))
         else:
-            return render_template('셀올로지/cellology_unknown_delivery.html')
-    return render_template('셀올로지/cellology_question3.html')
+            return render_template('cellology/cellology_unknown_delivery.html')
+    return render_template('cellology/cellology_question3.html')
 
 @app.route('/cellology/input_delivery_date', methods=['GET', 'POST'])
 def cellology_enter_delivery_date():
@@ -190,18 +190,18 @@ def cellology_enter_delivery_date():
             elif delivery_date > today - timedelta(days=30):
                 start_date = (delivery_date + timedelta(days=30)).strftime('%Y-%m-%d')
                 end_date = (delivery_date + timedelta(days=40)).strftime('%Y-%m-%d')
-                return render_template('셀올로지/cellology_event_period_restriction.html', start_date=start_date, end_date=end_date)
+                return render_template('cellology/cellology_event_period_restriction.html', start_date=start_date, end_date=end_date)
             else:
                 start_date = (delivery_date + timedelta(days=30)).strftime('%Y-%m-%d')
                 end_date = (delivery_date + timedelta(days=40)).strftime('%Y-%m-%d')
-                return render_template('셀올로지/cellology_event_expired_restriction.html', start_date=start_date, end_date=end_date)
+                return render_template('cellology/cellology_event_expired_restriction.html', start_date=start_date, end_date=end_date)
         except ValueError:
-            return render_template('셀올로지/cellology_input_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
-    return render_template('셀올로지/cellology_input_delivery_date.html')
+            return render_template('cellology/cellology_input_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
+    return render_template('cellology/cellology_input_delivery_date.html')
 
 @app.route('/cellology/result', methods=['GET'])
 def cellology_result():
-    return render_template('셀올로지/cellology_result.html')
+    return render_template('cellology/cellology_result.html')
 
 def get_access_token():
     url = 'https://auth.tracker.delivery/oauth2/token'
