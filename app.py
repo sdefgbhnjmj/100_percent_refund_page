@@ -10,7 +10,7 @@ def select_brand():
         brand = request.form.get('brand')
         if brand == "brand1":
             return redirect(url_for('home'))  # 슬룸 → home.html
-        elif brand == "brand2":
+        elif brand == "셀올로지":
             return redirect(url_for('cellology_home'))  # 셀올로지 → cellology_home.html
     return render_template('select_brand.html')
 
