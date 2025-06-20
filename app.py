@@ -9,7 +9,7 @@ def select_brand():
     if request.method == 'POST':
         brand = request.form.get('brand')
         if brand == "brand1":
-            return redirect(url_for('select_purchase_site'))
+            return redirect(url_for('home'))  # 슬룸 → home.html
         elif brand == "brand2":
             return redirect(url_for('brand2_home'))
     return render_template('select_brand.html')
@@ -17,6 +17,10 @@ def select_brand():
 @app.route('/brand2')
 def brand2_home():
     return "<h1>브랜드2 전용 페이지입니다. 여기에 새 흐름을 추가하세요.</h1>"
+
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
 @app.route('/question_site', methods=['GET', 'POST'])
 def select_purchase_site():
