@@ -11,6 +11,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-QPWTWFSY4H');
     </script>
 
@@ -113,7 +114,6 @@
             <ul>
                 <li>예시 1: 블루 이레이저 크림 1+1 (2개)</li>
                 <li>예시 2: 멜리턴 앰플 2.0 1+1 (2개)</li>
-            </ul>
             <h2>주의 사항</h2>
             <ul>
                 <li>체험하시는 상품 1개 외 미개봉 상품에 대해서는 개봉/손상 없이 보관하셨을 경우에만 전액 환불됩니다.</li>
@@ -123,19 +123,8 @@
         </div>
         <div class="button-group">
             <button class="back-button" onclick="window.history.back()">이전</button>
-            <button type="button" onclick="goNext()">다음</button>
+            <button onclick="window.location.href='{{ url_for('cellology_know_delivery_date') }}'">다음</button>
         </div>
     </div>
-
-    <script>
-        function goNext() {
-            const brand = sessionStorage.getItem('brand');
-            if (brand === '셀올로지') {
-                window.location.href = '/cellology/question3';
-            } else {
-                window.location.href = '/question3';
-            }
-        }
-    </script>
 </body>
 </html>
