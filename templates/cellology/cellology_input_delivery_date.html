@@ -89,7 +89,7 @@
 <body>
     <div class="container">
         <h1>배송 완료일을 입력해주세요.</h1>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('cellology_enter_delivery_date') }}">
             <input type="date" name="delivery_date" required>
             <div class="button-group">
                 <button class="back-button" type="button" onclick="window.history.back()">이전</button>
