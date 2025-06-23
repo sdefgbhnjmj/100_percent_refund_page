@@ -88,7 +88,7 @@
 <body>
     <div class="container">
         <h1>환불을 희망하시는 상품의 구성을 선택해주세요.</h1>
-        <form method="POST" id="refundForm">
+        <form method="POST" action="{{ url_for('cellology_refund_product_selection') }}" id="refundForm">
             <div class="radio-group">
                 <label><input type="radio" name="refund_option" value="set" required> 구성이 다른 세트 상품</label>
                 <label><input type="radio" name="refund_option" value="multiple" required> 동일한 상품 2개 이상</label>
