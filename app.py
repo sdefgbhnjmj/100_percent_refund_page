@@ -9,9 +9,9 @@ def select_brand():
     if request.method == 'POST':
         brand = request.form.get('brand')
         if brand == "슬룸":
-            return redirect(url_for('home'))  # 슬룸 로직
+            return redirect(url_for('home'))
         elif brand == "셀올로지":
-            return redirect(url_for('cellology_home'))  # 셀올로지 로직
+            return redirect(url_for('cellology_home'))
     return render_template('select_brand.html')
 
 @app.route('/home')
