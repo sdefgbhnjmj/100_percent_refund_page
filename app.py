@@ -203,6 +203,17 @@ def cellology_enter_delivery_date():
 def cellology_result():
     return render_template('cellology/cellology_result.html')
 
+@app.route('/cellology/track', methods=['POST'])
+def cellology_track():
+    tracking_number = request.form.get('tracking_number')
+    if tracking_number:
+        tracking_info = get_tracking_info(tracking_number)
+        if "status" in tracking_info:
+            tracking_info["status"] = translate_status(tracking_info["status"])
+        return render_template('cellology/cellology_tracking_result.html', tracking_info=tracking_info)
+    else:
+        return render_template('cellology/cellology_tracking_result.html', tracking_info={"error": "송장번호를 입력해주세요."})
+
 def get_access_token():
     url = 'https://auth.tracker.delivery/oauth2/token'
     payload = {
