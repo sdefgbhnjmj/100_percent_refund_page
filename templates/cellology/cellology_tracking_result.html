@@ -70,7 +70,7 @@
         {% else %}
             <p>{{ tracking_info.error }}</p>
         {% endif %}
-        <a href="/input_delivery_date"><button>다음</button></a>
+        <a href="{{ url_for('cellology_enter_delivery_date') }}"><button>다음</button></a>
     </div>
 </body>
 </html>
