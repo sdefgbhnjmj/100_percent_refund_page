@@ -11,6 +11,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-QPWTWFSY4H');
     </script>
 
@@ -113,27 +114,17 @@
             <ul>
                 <li>예시 1: 샷건 + 포어샷</li>
                 <li>예시 2: 블루 이레이저 세럼 + 스팟 + 크림</li>
-            </ul>
             <h2>주의 사항</h2>
             <ul>
                 <li>부분 환불 희망하는 경우, 자사몰 상품 구성 가격 기준의 정가 차감 후 환불됩니다.</li>
             </ul>
         </div>
-        <div class="button-group">
-            <button class="back-button" type="button" onclick="window.history.back()">이전</button>
-            <button type="button" onclick="goNext()">다음</button>
-        </div>
+        <form method="POST" action="{{ url_for('cellology_refund_set_product_info') }}">
+            <div class="button-group">
+                <button class="back-button" type="button" onclick="window.history.back()">이전</button>
+                <button type="submit">다음</button>
+            </div>
+        </form>
     </div>
-
-    <script>
-        function goNext() {
-            const brand = sessionStorage.getItem('brand');
-            if (brand === '셀올로지') {
-                window.location.href = '/cellology/question3';
-            } else {
-                window.location.href = '/question3';
-            }
-        }
-    </script>
 </body>
 </html>
