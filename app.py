@@ -271,5 +271,13 @@ def translate_status(status_code):
     }
     return status_mapping.get(status_code, "상태 정보 없음")
 
+@app.route('/eligible.html')
+def eligible_page():
+    return render_template('eligible.html')
+
+@app.route('/not_eligible.html')
+def not_eligible_page():
+    return render_template('not_eligible.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
