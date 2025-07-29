@@ -99,6 +99,12 @@ def enter_delivery_date():
             return render_template('input_delivery_date.html', error="올바른 날짜 형식을 입력해주세요.")
     return render_template('input_delivery_date.html')
 
+@app.route('/eligible_next', methods=['GET', 'POST'])
+def eligible_next():
+    if request.method == 'POST':
+        return redirect(url_for('refund_product_selection'))
+    return render_template('eligible_next.html')
+
 @app.route('/track', methods=['POST'])
 def track():
     tracking_number = request.form.get('tracking_number')
