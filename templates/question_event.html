@@ -107,7 +107,7 @@
           window.location.href = "not_eligible.html";
         } else {
           const form = document.getElementById("eventForm");
-          form.action = "/eligible_next";  // Flask 라우팅 주소로 설정
+          form.action = "eligible.html";
           form.method = "POST";  // POST 방식 지정 (명시적으로)
           form.submit();  // 서버로 제출
         }
