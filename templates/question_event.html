@@ -5,16 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤트 참여 경험</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-QPWTWFSY4H');
-    </script>
-
     <style>
         body {
             font-family: "Noto Sans KR", Arial, sans-serif;
@@ -58,6 +48,14 @@
         input[type="radio"]:checked + label {
             color: rgba(20, 73, 124, 0.9);
         }
+        input[type="tel"] {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
         .button-group {
             display: flex;
             justify-content: space-between;
@@ -68,7 +66,7 @@
             flex: 1;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: rgba(20, 73, 124, 0.9); /* Updated color to match question_site */
+            background-color: rgba(20, 73, 124, 0.9);
             color: white;
             border: none;
             border-radius: 6px;
@@ -89,7 +87,7 @@
 <body>
     <div class="container">
         <h1>100% 환불 이벤트에 참여하신 경험이 있으신가요?</h1>
-        <form method="POST">
+        <form id="eventForm" onsubmit="return checkPhoneNumber(event)">
             <div class="options">
                 <label>
                     <input type="radio" name="event_participation" value="예" required> 예
@@ -97,6 +95,8 @@
                 <label>
                     <input type="radio" name="event_participation" value="아니오"> 아니오
                 </label>
+                <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required
+                       pattern="010-[0-9]{4}-[0-9]{4}">
             </div>
             <div class="button-group">
                 <button class="back-button" type="button" onclick="window.history.back()">이전</button>
@@ -104,5 +104,31 @@
             </div>
         </form>
     </div>
+
+    <script>
+    async function checkPhoneNumber(event) {
+        event.preventDefault();
+
+        const phone = document.getElementById("phone").value.trim();
+        if (!/^010-\d{4}-\d{4}$/.test(phone)) {
+            alert("휴대폰 번호는 010-0000-0000 형식으로 입력해주세요.");
+            return false;
+        }
+
+        try {
+            const response = await fetch("https://script.google.com/a/macros/olit.co.kr/s/AKfycbymWedW4mNsnd7bmUvlVid2xjokXzFXgakDkawQbcMmQuSWIe3E1czzAQx_EU9A7jt6/exec?phone=" + encodeURIComponent(phone));
+            const result = await response.json();
+
+            if (result.found) {
+                document.getElementById("eventForm").submit(); // 다음 단계로 진행
+            } else {
+                alert("입력하신 번호로 이벤트 참여 기록이 없습니다.");
+            }
+        } catch (error) {
+            console.error("오류 발생:", error);
+            alert("확인 중 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+    }
+    </script>
 </body>
 </html>
