@@ -302,5 +302,38 @@ def check_refund_event():
     
     return render_template('check_refund_event.html')
 
+@app.route('/input_phonenumber', methods=['GET', 'POST'])
+def input_phonenumber():
+    if request.method == 'POST':
+        phone = request.form.get('phone')
+        if not phone:
+            return render_template('input_phonenumber.html', message="휴대폰 번호를 입력해주세요.")
+
+        try:
+            api_url = f"https://script.google.com/a/macros/olit.co.kr/s/AKfycbymWedW4mNsnd7bmUvlVid2xjokXzFXgakDkawQbcMmQuSWIe3E1czzAQx_EU9A7jt6/exec?phone={phone}"
+            response = requests.get(api_url)
+            result = response.json()
+
+            if result.get("found"):
+                return redirect(url_for('not_eligible_phonenumber'))
+            else:
+                return redirect(url_for('eligible_phonenumber'))
+
+        except Exception as e:
+            print("API 오류:", e)
+            return render_template('input_phonenumber.html', message="조회 중 오류가 발생했습니다.")
+    
+    return render_template('input_phonenumber.html')
+
+
+@app.route('/eligible_phonenumber')
+def eligible_phonenumber():
+    return render_template('eligible_phonenumber.html')
+
+
+@app.route('/not_eligible_phonenumber')
+def not_eligible_phonenumber():
+    return render_template('not_eligible_phonenumber.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
