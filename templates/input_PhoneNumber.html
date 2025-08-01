@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>이벤트 참여 확인</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: bold;
+      color: rgba(20, 73, 124, 0.9);
+      margin-bottom: 20px;
+    }
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin-top: 10px;
+      font-size: 15px;
+      color: #333;
+    }
+    .contact-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: rgba(20, 73, 124, 0.9);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .contact-button:hover {
+      background-color: rgba(10, 54, 95, 0.9);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>100% 환불 이벤트 참여 이력을 확인하기 위해 주문하신 연락처를 입력해주세요.</h1>
+    <p>조회까지 약 10~15초 정도 소요됩니다. 잠시만 기다려 주세요.</p>
+    <form id="eventForm" method="POST" onsubmit="return checkPhoneNumber(event)">
+      <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required pattern="010-[0-9]{4}-[0-9]{4}">
+      <div class="message" id="resultMessage"></div>
+    </form>
+    <a href="https://sloom.channel.io/workflows/761754" class="contact-button">담당자 연결</a>
+  </div>
+
+  <script>
+    async function checkPhoneNumber(event) {
+      event.preventDefault();
+
+      const phoneInput = document.getElementById("phone");
+      const phone = phoneInput.value.trim();
+      const messageBox = document.getElementById("resultMessage");
+
+      if (!/^010-\d{4}-\d{4}$/.test(phone)) {
+        messageBox.textContent = "휴대폰 번호는 010-0000-0000 형식으로 입력해주세요.";
+        messageBox.style.color = "red";
+        return false;
+      }
+
+      try {
+        const response = await fetch("https://script.google.com/a/macros/olit.co.kr/s/AKfycbymWedW4mNsnd7bmUvlVid2xjokXzFXgakDkawQbcMmQuSWIe3E1czzAQx_EU9A7jt6/exec?phone=" + encodeURIComponent(phone));
+        const result = await response.json();
+
+        if (result.found) {
+          window.location.href = "not_eligible.html";
+        } else {
+          window.location.href = "eligible.html";
+        }
+      } catch (error) {
+        console.error("오류 발생:", error);
+        messageBox.textContent = "확인 중 오류가 발생했습니다. 다시 시도해주세요.";
+        messageBox.style.color = "red";
+      }
+
+      return false;
+    }
+  </script>
+</body>
+</html>
