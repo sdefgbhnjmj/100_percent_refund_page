@@ -43,8 +43,14 @@
       font-size: 15px;
       color: #333;
     }
-    .contact-button {
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
       margin-top: 20px;
+    }
+    button {
+      flex: 1;
       padding: 10px 20px;
       font-size: 16px;
       background-color: rgba(20, 73, 124, 0.9);
@@ -53,23 +59,31 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.2s;
-      text-decoration: none;
-      display: inline-block;
     }
-    .contact-button:hover {
+    button:hover {
       background-color: rgba(10, 54, 95, 0.9);
+    }
+    .back-button {
+      background-color: #6c757d;
+    }
+    .back-button:hover {
+      background-color: #5a6268;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>100% 환불 이벤트 참여 이력을 확인하기 위해 주문하신 연락처를 입력해주세요.</h1>
-    <p>조회까지 약 10~15초 정도 소요됩니다. 잠시만 기다려 주세요.</p>
+    <p>[다음] 버튼을 누르시면, 조회까지 약 10~15초 정도 소요됩니다.</p>
+    <p>잠시 기다려 주시면 안내해 드리겠습니다.</p>
     <form id="eventForm" method="POST" onsubmit="return checkPhoneNumber(event)">
       <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required pattern="010-[0-9]{4}-[0-9]{4}">
       <div class="message" id="resultMessage"></div>
+      <div class="button-group">
+        <button class="back-button" type="button" onclick="window.history.back()">이전</button>
+        <button type="submit">다음</button>
+      </div>
     </form>
-    <a href="https://sloom.channel.io/workflows/761754" class="contact-button">담당자 연결</a>
   </div>
 
   <script>
@@ -91,9 +105,9 @@
         const result = await response.json();
 
         if (result.found) {
-          window.location.href = "not_eligible.html";
+          window.location.href = "{{ url_for('not_eligible_page') }}";
         } else {
-          window.location.href = "eligible.html";
+          window.location.href = "{{ url_for('eligible_page') }}";
         }
       } catch (error) {
         console.error("오류 발생:", error);
