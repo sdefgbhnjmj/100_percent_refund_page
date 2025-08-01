@@ -8,11 +8,19 @@ app = Flask(__name__)
 def select_brand():
     if request.method == 'POST':
         brand = request.form.get('brand')
+
+        # brand 값이 있으면 기존처럼 처리
         if brand == "슬룸":
             return redirect(url_for('home'))
         elif brand == "셀올로지":
             return redirect(url_for('cellology_home'))
+
+        # brand 값이 없으면 → "100% 환불 이벤트 확인" 버튼
+        return redirect(url_for('input_phonenumber'))
+
+    # GET 요청이면 기본 페이지 렌더링
     return render_template('select_brand.html')
+
 
 @app.route('/home')
 def home():
