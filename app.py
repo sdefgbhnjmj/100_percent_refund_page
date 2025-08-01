@@ -279,5 +279,28 @@ def eligible_page():
 def not_eligible_page():
     return render_template('not_eligible.html')
 
+@app.route('/check_refund_event', methods=['GET', 'POST'])
+def check_refund_event():
+    if request.method == 'POST':
+        phone = request.form.get('phone')
+        if not phone:
+            return render_template('check_refund_event.html', message="휴대폰 번호를 입력해주세요.")
+
+        try:
+            api_url = f"https://script.google.com/a/macros/olit.co.kr/s/AKfycbymWedW4mNsnd7bmUvlVid2xjokXzFXgakDkawQbcMmQuSWIe3E1czzAQx_EU9A7jt6/exec?phone={phone}"
+            response = requests.get(api_url)
+            result = response.json()
+
+            if result.get("found"):
+                return redirect(url_for('not_eligible_page'))
+            else:
+                return redirect(url_for('eligible_page'))
+
+        except Exception as e:
+            print("API 오류:", e)
+            return render_template('check_refund_event.html', message="조회 중 오류가 발생했습니다.")
+    
+    return render_template('check_refund_event.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
