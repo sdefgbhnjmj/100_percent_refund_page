@@ -24,15 +24,7 @@ def select_brand():
 
 @app.route('/home')
 def home():
-    return render_template('Sloom_home.html')
-
-@app.route('/sloom_refund_options')
-def sloom_refund_options():
-    return render_template('sloom_refund_options.html')
-
-@app.route('/aligo_page')
-def aligo_page():
-    return render_template('aligo_page.html')
+    return render_template('home.html')
 
 @app.route('/question_site', methods=['GET', 'POST'])
 def select_purchase_site():
