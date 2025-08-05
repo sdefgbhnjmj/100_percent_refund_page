@@ -24,7 +24,7 @@ def select_brand():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('Sloom_home.html')
 
 @app.route('/aligo_page')
 def aligo_page():
