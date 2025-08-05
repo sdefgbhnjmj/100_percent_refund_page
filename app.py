@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from datetime import datetime, timedelta
 import requests
+import pandas as pd
+import asyncio
+import aiohttp
+import json
 
 app = Flask(__name__)
 
@@ -342,6 +346,84 @@ def eligible_phonenumber():
 @app.route('/not_eligible_phonenumber')
 def not_eligible_phonenumber():
     return render_template('not_eligible_phonenumber.html')
+
+@app.route('/send_alimtalk', methods=['POST'])
+def send_alimtalk():
+    try:
+        data = request.json
+        df = pd.DataFrame(data['rows'])
+
+        def match_column(df_columns, keyword):
+            for col in df_columns:
+                if keyword.replace(" ", "").lower() in col.replace(" ", "").lower():
+                    return col
+            return None
+
+        f_col_name = match_column(df.columns, "연락처")
+        m_col_name = match_column(df.columns, "회수 알림톡 발송")
+
+        if not f_col_name or not m_col_name:
+            return jsonify({"status": "error", "message": "필수 열(연락처 또는 회수 알림톡 발송)이 누락되었습니다."}), 400
+
+        df[f_col_name] = df[f_col_name].astype(str).str.replace('-', '', regex=False)
+        df[m_col_name] = df[m_col_name].astype(str).str.strip().str.lower()
+        df_filtered = df[df[m_col_name] == 'true'].copy()
+        df_filtered['index_in_df'] = df_filtered.index
+        phone_numbers = df_filtered[f_col_name].tolist()
+
+        api_url = "https://kakaoapi.aligo.in/akv10/alimtalk/send/"
+        api_key = "YOUR_API_KEY"
+        user_id = "YOUR_USER_ID"
+        sender_key = "YOUR_SENDER_KEY"
+        tpl_code = "YOUR_TPL_CODE"
+        sender = "YOUR_PHONE"
+        logs = []
+
+        async def send_message(session, number):
+            try:
+                formatted_number = str(number)
+                if not formatted_number.startswith("82"):
+                    if formatted_number.startswith("0"):
+                        formatted_number = "82" + formatted_number[1:]
+                    else:
+                        formatted_number = "82" + formatted_number
+
+                payload = {
+                    "apikey": api_key,
+                    "userid": user_id,
+                    "senderkey": sender_key,
+                    "tpl_code": tpl_code,
+                    "sender": sender,
+                    "receiver_1": formatted_number,
+                    "message_1": (
+                        "안녕하세요 고객님,\n"
+                        "신청하신 교환/반품 요청 진행 사항 안내 드립니다.\n\n"
+                        "■ 수거 접수 완료\n\n"
+                        "* 영업일 1~3일 이내로 한진택배에서 별도 연락 후 방문 진행됩니다.\n"
+                        "* 택배박스에 포장 후 택배 기사 방문 시 전달해주세요.\n\n"
+                        "* 수거 완료 후 물류센터 입고까지는 영업일 5일 정도 소요되며, 순차적으로 처리 진행됩니다.\n\n"
+                        "관련해서 문의 사항이 있으실 경우 고객센터로 문의 부탁 드립니다."
+                    ),
+                    "button_1": json.dumps({
+                        "button": [{"name": "채널 추가", "linkType": "AC", "linkTypeName": "채널 추가"}]
+                    })
+                }
+
+                async with session.post(api_url, data=payload) as response:
+                    result = await response.text()
+                    logs.append({"연락처": formatted_number, "결과": result})
+            except Exception as e:
+                logs.append({"연락처": number, "결과": f"에러: {e}"})
+
+        async def run_all():
+            async with aiohttp.ClientSession() as session:
+                tasks = [send_message(session, number) for number in phone_numbers]
+                await asyncio.gather(*tasks)
+
+        asyncio.run(run_all())
+        return jsonify({"status": "success", "count": len(logs), "logs": logs})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
