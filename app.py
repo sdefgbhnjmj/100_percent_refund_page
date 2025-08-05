@@ -26,6 +26,10 @@ def select_brand():
 def home():
     return render_template('home.html')
 
+@app.route('/aligo_page')
+def aligo_page():
+    return render_template('aligo_page.html')
+
 @app.route('/question_site', methods=['GET', 'POST'])
 def select_purchase_site():
     if request.method == 'POST':
