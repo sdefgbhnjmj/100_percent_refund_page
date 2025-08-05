@@ -372,11 +372,11 @@ def send_alimtalk():
         phone_numbers = df_filtered[f_col_name].tolist()
 
         api_url = "https://kakaoapi.aligo.in/akv10/alimtalk/send/"
-        api_key = "YOUR_API_KEY"
-        user_id = "YOUR_USER_ID"
-        sender_key = "YOUR_SENDER_KEY"
-        tpl_code = "YOUR_TPL_CODE"
-        sender = "YOUR_PHONE"
+        api_key = "utz7jtf6dgtv7zfl1hal92brh3fw9699"
+        user_id = "olitcorp"
+        sender_key = "7a45ccda49acc7601c1ad4c3a1ad9b95d470553a"
+        tpl_code = "TW_6573"
+        sender = "010-7212-5958"
         logs = []
 
         async def send_message(session, number):
