@@ -343,5 +343,9 @@ def eligible_phonenumber():
 def not_eligible_phonenumber():
     return render_template('not_eligible_phonenumber.html')
 
+@app.route('/defective_exchange', methods=['GET'])
+def defective_exchange():
+    return render_template('AS/defective_exchange.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
