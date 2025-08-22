@@ -334,14 +334,15 @@ def input_phonenumber():
     return render_template('input_phonenumber.html')
 
 
-@app.route('/eligible_phonenumber')
+@app.route('/eligible_phonenumber.html')
 def eligible_phonenumber():
     return render_template('eligible_phonenumber.html')
 
 
-@app.route('/not_eligible_phonenumber')
+@app.route('/not_eligible_phonenumber.html')
 def not_eligible_phonenumber():
     return render_template('not_eligible_phonenumber.html')
+
 
 @app.route('/defective_exchange', methods=['GET'])
 def defective_exchange():
