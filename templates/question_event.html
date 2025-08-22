@@ -89,7 +89,7 @@
   <script>
     const phoneInput = document.getElementById("phone");
 
-    // 입력 중 자동 포맷팅
+    // 입력 중 자동 포맷팅 (01000000000 → 010-0000-0000)
     phoneInput.addEventListener("input", function () {
       let value = phoneInput.value.replace(/\D/g, ""); // 숫자만 남김
 
@@ -109,13 +109,13 @@
       const messageBox = document.getElementById("resultMessage");
 
       if (!/^010-\d{4}-\d{4}$/.test(phone)) {
-        messageBox.textContent = "휴대폰 번호를 입력해주세요.";
+        messageBox.textContent = "휴대폰 번호를 입력해주세요. (예: 010-0000-0000)";
         messageBox.style.color = "red";
         return false;
       }
 
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxN_RRQfInNGB7VqfWvIbP-RAnNLOQAkn_pN1IdDjEyvZiL4PbBc5GFI9OF36qgA_Ja/exec?phone=" 
+        const response = await fetch("https://script.google.com/macros/s/AKfycbzrInrVhnx6NML4fFCWtRupt7OvdBki8QbBG3MWOKWSYPYH5nconMkfUXPT-BE1ZCTT/exec?phone=" 
           + encodeURIComponent(phone));
         const result = await response.json();
 
