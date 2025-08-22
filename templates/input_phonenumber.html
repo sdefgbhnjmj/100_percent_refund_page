@@ -65,15 +65,15 @@
 </head>
 <body>
   <div class="container">
-    <h1>100% 환불 이벤트 참여 이력을 확인하기 위해 주문하신 연락처를 입력해주세요.</h1>
-    <p>[다음] 버튼을 누르시면, 조회까지 약 10~15초 정도 소요됩니다.</p>
+    <h1>100% 환불 이벤트 참여 이력을 확인하기 위해<br>주문하신 연락처를 입력해주세요.</h1>
+    <p>[조회] 버튼을 누르시면, 확인까지 약 10~15초 정도 소요됩니다.</p>
     <p>잠시 기다려 주시면 안내해 드리겠습니다.</p>
+
     <form id="eventForm" method="POST" onsubmit="return checkPhoneNumber(event)">
       <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
       <div class="message" id="resultMessage"></div>
       <div class="button-group">
-        <button class="back-button" type="button" onclick="window.history.back()">이전</button>
-        <button type="submit">다음</button>
+        <button type="submit">조회</button>
       </div>
     </form>
   </div>
@@ -107,14 +107,17 @@
       }
 
       try {
+        // ✅ Apps Script 웹 앱 URL (새 URL로 교체 필요)
         const response = await fetch("https://script.google.com/macros/s/AKfycbzowk7kuRxqVkbMv9_fSPnddCBEapw4nrDxMkHBZjM_ju1UUBV0Qo4nUjv5kQ1wAh3u/exec?phone=" 
           + encodeURIComponent(phone));
         const result = await response.json();
 
-        if (result.found) {
+        if (!result.found) {
+          // 조회 안된 경우 → not_eligible.html
           window.location.href = "not_eligible.html";
         } else {
-          window.location.href = "eligible.html";
+          // 조회된 경우 → eligible_phonenumber.html
+          window.location.href = "eligible_phonenumber.html";
         }
       } catch (error) {
         console.error("오류 발생:", error);
