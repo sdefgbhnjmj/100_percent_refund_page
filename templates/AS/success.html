@@ -2,11 +2,57 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>조회 성공</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: bold;
+      color: rgba(20, 73, 124, 0.9);
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .mapping-box {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #f8f9fa;
+      font-size: 15px;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
-  <h2>주문 조회 성공!</h2>
-  <p>상품 정보:</p>
-  <p>{{ mapping_data }}</p>
+  <div class="container">
+    <h2>주문 조회 성공</h2>
+    <p>아래 상품 정보가 확인되었습니다.</p>
+    <div class="mapping-box">
+      {{ mapping_data }}
+    </div>
+  </div>
 </body>
 </html>
