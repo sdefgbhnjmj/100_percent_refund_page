@@ -348,5 +348,71 @@ def not_eligible_phonenumber():
 def defective_exchange():
     return render_template('AS/defective_exchange.html')
 
+@app.route('/defective_exchange', methods=['GET'])
+def defective_exchange():
+    return render_template('AS/defective_exchange.html')
+
+@app.route('/check_order', methods=['GET', 'POST'])
+def check_order():
+    if request.method == 'POST':
+        order_number = request.form.get("order_number", "").strip()
+
+        # 주문번호는 숫자만 가능
+        if not order_number.isdigit():
+            return redirect(url_for('fail'))
+
+        try:
+            payload = {"orderCode": order_number}
+            headers = {
+                "accept": "application/json",
+                "Authorization": "g2zxsJiC5DBsoypjdWMM",  # 슬룸 accessKey 고정
+                "Content-Type": "application/json"
+            }
+
+            response = requests.post(
+                "https://api.poomgo.com/open-api/oms/orders",
+                headers=headers,
+                json=payload,
+                timeout=15
+            )
+            data = response.json()
+
+            mapping_data = None
+            if data.get("rows"):
+                all_items = []
+                for row in data["rows"]:
+                    items = row.get("items", [])
+                    for item in items:
+                        resource_name = item.get("resource_name", "")
+                        resource_id = item.get("resourceId", "")
+                        quantity = item.get("quantity", 0)
+                        if not resource_name and not resource_id and not quantity:
+                            continue
+                        all_items.append(f"{resource_name}({resource_id}) {quantity}")
+
+                mapping_data = " / ".join(all_items)
+
+            if mapping_data:
+                return render_template("AS/success.html", mapping_data=mapping_data)
+            else:
+                return redirect(url_for("fail"))
+
+        except Exception as e:
+            print("API 오류:", e)
+            return redirect(url_for("fail"))
+
+    return render_template("AS/check_order.html")
+
+
+@app.route('/fail')
+def fail():
+    return render_template('AS/fail.html')
+
+
+@app.route('/success')
+def success():
+    return render_template('AS/success.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
