@@ -16,71 +16,106 @@
 
   <style>
     body {
-      margin: 0; 
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      margin: 0;
       padding: 0;
-      font-family: "Noto Sans KR", sans-serif;
-      background: linear-gradient(135deg, #14497c, #0a365f); /* 브랜드 컬러 그라데이션 */
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #14497c, #0a365f);
+      color: white;
       text-align: center;
+      overflow: hidden;
     }
 
-    .wrapper {
-      max-width: 600px;
-      padding: 0 20px;
+    /* 상단 로고 텍스트 */
+    .logo {
+      position: absolute;
+      top: 30px;
+      font-size: 36px;
+      font-weight: bold;
+      font-family: "Arial Black", sans-serif;
+      letter-spacing: 2px;
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                   0 0 20px rgba(20, 73, 124, 0.7);
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInDown 1s forwards;
+      text-decoration: none; /* 밑줄 제거 */
+    }
+
+    .logo:hover {
+      color: #ffdd57; /* 호버 시 색상 변경 */
+      text-shadow: 0 0 15px rgba(255, 221, 87, 0.9),
+                   0 0 30px rgba(255, 221, 87, 0.7);
     }
 
     h1 {
       font-size: 32px;
-      margin-bottom: 16px;
       font-weight: bold;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInUp 1s 0.3s forwards;
     }
 
     p {
       font-size: 18px;
-      margin-bottom: 32px;
-      line-height: 1.5;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInUp 1s 0.6s forwards;
     }
 
     .highlight {
-      color: #ffd166;  /* 포인트 컬러 */
       font-weight: bold;
+      color: #ffdd57; /* 노란 강조 */
     }
 
     button {
-      background: #fff;
+      background-color: #ffdd57;
       color: #14497c;
       border: none;
-      padding: 14px 30px;
-      font-size: 18px;
+      padding: 14px 28px;
+      font-size: 16px;
       font-weight: bold;
-      border-radius: 50px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
+      transition: transform 0.2s, background-color 0.2s;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInUp 1s 0.9s forwards;
     }
 
     button:hover {
+      background-color: #ffe877;
       transform: scale(1.05);
-      background: #f1f1f1;
     }
 
-    small {
-      display: block;
-      margin-top: 20px;
-      font-size: 14px;
-      opacity: 0.8;
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <h1>안녕하세요, 슬룸입니다.</h1>
-    <p>약 <span class="highlight">5분 이내</span><br>불량 상품 교환 접수를 하실 수 있습니다.</p>
-    <button onclick="location.href='/check_order'">시작하기</button>
-    <small>💡 주문번호를 준비해주세요. 주문 시 발송된 알림톡을 통해 확인 가능합니다.</small>
-  </div>
+  <!-- 상단 로고 텍스트 (클릭 시 sleeplab.co.kr 이동) -->
+  <a href="https://sleeplab.co.kr/" class="logo" target="_blank">SLOOM</a>
+
+  <h1>안녕하세요, 슬룸입니다.</h1>
+  <p>약 <span class="highlight">5분 이내</span> 불량 상품 교환 접수를 하실 수 있습니다.</p>
+  <button onclick="location.href='/check_order'">시작하기</button>
 </body>
 </html>
