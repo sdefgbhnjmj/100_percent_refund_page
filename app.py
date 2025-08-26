@@ -346,7 +346,7 @@ def not_eligible_phonenumber():
 
 @app.route('/defective_exchange', methods=['GET'])
 def defective_exchange():
-    return render_template('defective_exchange.html')
+    return render_template("AS/defective_exchange.html")
 
 @app.route('/check_order', methods=['GET', 'POST'])
 def check_order():
@@ -389,7 +389,7 @@ def check_order():
                 mapping_data = " / ".join(all_items)
 
             if mapping_data:
-                return render_template("success.html", mapping_data=mapping_data)
+                return render_template("AS/success.html", mapping_data=mapping_data)
             else:
                 return redirect(url_for("fail"))
 
@@ -397,12 +397,12 @@ def check_order():
             print("API 오류:", e)
             return redirect(url_for("fail"))
 
-    return render_template("check_order.html")
+    return render_template("AS/check_order.html")
 
 
 @app.route('/fail')
 def fail():
-    return render_template('fail.html')
+    return render_template('AS/fail.html')
 
 
 if __name__ == '__main__':
