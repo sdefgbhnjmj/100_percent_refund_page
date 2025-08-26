@@ -348,10 +348,6 @@ def not_eligible_phonenumber():
 def defective_exchange():
     return render_template('AS/defective_exchange.html')
 
-@app.route('/defective_exchange', methods=['GET'])
-def defective_exchange():
-    return render_template('AS/defective_exchange.html')
-
 @app.route('/check_order', methods=['GET', 'POST'])
 def check_order():
     if request.method == 'POST':
