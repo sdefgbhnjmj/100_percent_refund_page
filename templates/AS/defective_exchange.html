@@ -17,105 +17,86 @@
   <style>
     body {
       font-family: "Noto Sans KR", Arial, sans-serif;
+      background-color: #F4F7FA;
       margin: 0;
       padding: 0;
-      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #14497c, #0a365f);
-      color: white;
-      text-align: center;
-      overflow: hidden;
+      justify-content: center;
+      height: 100vh;
     }
 
-    /* 상단 로고 텍스트 */
+    /* 로고 */
     .logo {
       position: absolute;
       top: 30px;
-      font-size: 36px;
-      font-weight: bold;
-      font-family: "Arial Black", sans-serif;
-      letter-spacing: 2px;
-      color: white;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
-                   0 0 20px rgba(20, 73, 124, 0.7);
-      opacity: 0;
-      transform: translateY(-20px);
-      animation: fadeInDown 1s forwards;
-      text-decoration: none; /* 밑줄 제거 */
+      left: 30px;
+    }
+    .logo img {
+      height: 45px;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .logo img:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 6px rgba(20, 73, 124, 0.4));
     }
 
-    .logo:hover {
-      color: #ffdd57; /* 호버 시 색상 변경 */
-      text-shadow: 0 0 15px rgba(255, 221, 87, 0.9),
-                   0 0 30px rgba(255, 221, 87, 0.7);
+    .content {
+      text-align: center;
+      color: rgba(20, 73, 124, 0.9);
+      animation: fadeIn 1.2s ease-in-out;
     }
-
     h1 {
-      font-size: 32px;
+      font-size: 26px;
       font-weight: bold;
-      margin-bottom: 20px;
-      opacity: 0;
-      transform: translateY(-20px);
-      animation: fadeInUp 1s 0.3s forwards;
+      margin-bottom: 10px;
     }
-
     p {
-      font-size: 18px;
-      margin-bottom: 30px;
-      opacity: 0;
-      transform: translateY(-20px);
-      animation: fadeInUp 1s 0.6s forwards;
+      font-size: 16px;
+      margin: 6px 0;
     }
 
     .highlight {
       font-weight: bold;
-      color: #ffdd57; /* 노란 강조 */
+      color: red;
     }
 
     button {
-      background-color: #ffdd57;
-      color: #14497c;
-      border: none;
-      padding: 14px 28px;
+      background-color: #fff;
+      color: rgba(20, 73, 124, 0.9);
+      border: 2px solid rgba(20, 73, 124, 0.9);
+      padding: 12px 28px;
       font-size: 16px;
-      font-weight: bold;
-      border-radius: 30px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: transform 0.2s, background-color 0.2s;
-      opacity: 0;
-      transform: translateY(-20px);
-      animation: fadeInUp 1s 0.9s forwards;
+      transition: all 0.2s;
+      margin-top: 25px;
     }
-
     button:hover {
-      background-color: #ffe877;
-      transform: scale(1.05);
+      background-color: rgba(20, 73, 124, 0.9);
+      color: #fff;
     }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInDown {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* 애니메이션 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <!-- 상단 로고 텍스트 (클릭 시 sleeplab.co.kr 이동) -->
-  <a href="https://sleeplab.co.kr/" class="logo" target="_blank">SLOOM</a>
+  <!-- 상단 로고 -->
+  <a href="https://sleeplab.co.kr/" target="_blank" class="logo">
+    <img src="{{ url_for('static', filename='images/W_logo_1000x198px.png') }}" alt="SLOOM 로고">
+  </a>
 
-  <h1>안녕하세요, 슬룸입니다.</h1>
-  <p>약 <span class="highlight">5분 이내</span> 불량 상품 교환 접수를 하실 수 있습니다.</p>
-  <button onclick="location.href='/check_order'">시작하기</button>
+  <!-- 본문 -->
+  <div class="content">
+    <h1>안녕하세요, 슬룸입니다.</h1>
+    <p>약 <span class="highlight">5분 이내</span></p>
+    <p>불량 상품 교환 접수를 하실 수 있습니다.</p>
+    <button onclick="location.href='/check_order'">시작하기</button>
+  </div>
 </body>
 </html>
