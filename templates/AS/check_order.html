@@ -15,44 +15,54 @@
   </script>
 
   <style>
-    body {
-      font-family: "Noto Sans KR", Arial, sans-serif;
-      background-color: #F4F7FA;
+    html, body {
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      height: 100%;
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
     }
 
-    /* 로고 */
+    body {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 로고: 상단 고정 */
     .logo {
-      margin-top: 40px;
-      margin-bottom: 60px;
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
     }
     .logo img {
-      height: 55px;
+      height: 28px;
     }
 
-    .content {
-      background-color: #fff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      max-width: 500px;
-      width: 100%;
+    /* 콘텐츠 영역 */
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      color: rgba(20, 73, 124, 0.9);
-      animation: fadeIn 1.2s ease-in-out;
+      padding: 0 20px;
+      box-sizing: border-box;
+      max-width: 600px;
+      width: 100%;
     }
 
     h1 {
       font-size: 24px;
       font-weight: bold;
+      color: rgba(20, 73, 124, 0.9);
       margin-bottom: 25px;
+    }
+
+    form {
+      width: 100%;
     }
 
     input[type="text"] {
@@ -82,24 +92,19 @@
       transform: translateY(-2px);
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
   </style>
 </head>
 <body>
 
-  <!-- 상단 로고 -->
+  <!-- 로고 -->
   <div class="logo">
     <a href="https://sleeplab.co.kr/" target="_blank">
       <img src="{{ url_for('static', filename='images/P_logo_1000x198px.png') }}" alt="SLOOM 로고">
     </a>
   </div>
 
-  <!-- 주문번호 입력 영역 -->
-  <div class="content">
+  <!-- 콘텐츠 -->
+  <div class="wrapper">
     <h1>주문번호를 입력해주세요</h1>
     <form method="POST">
       <input type="text" name="order_number" placeholder="숫자만 입력" required />
