@@ -1,46 +1,106 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>조회 실패</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QPWTWFSY4H');
+  </script>
+
   <style>
     body {
       font-family: "Noto Sans KR", Arial, sans-serif;
-      background-color: #f8f9fa;
+      background-color: #F4F7FA;
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       height: 100vh;
     }
-    .container {
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      width: 100%;
+
+    /* 로고 */
+    .logo {
+      margin-top: 40px;
+      margin-bottom: 60px;
       text-align: center;
     }
+    .logo img {
+      height: 55px;
+    }
+
+    .content {
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
     h2 {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
       color: #d9534f;
       margin-bottom: 20px;
     }
+
     p {
-      font-size: 16px;
-      margin-bottom: 10px;
+      font-size: 17px;
       color: #333;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      border: none;
+      padding: 14px 36px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- 상단 로고 -->
+  <div class="logo">
+    <a href="https://sleeplab.co.kr/" target="_blank">
+      <img src="{{ url_for('static', filename='images/P_logo_1000x198px.png') }}" alt="SLOOM 로고">
+    </a>
+  </div>
+
+  <!-- 본문 영역 -->
+  <div class="content">
     <h2>조회 실패</h2>
     <p>주문번호를 확인할 수 없습니다.<br>다시 시도해주세요.</p>
+    <button onclick="history.back()">돌아가기</button>
   </div>
+
 </body>
 </html>
