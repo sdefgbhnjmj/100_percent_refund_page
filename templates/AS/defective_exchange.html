@@ -60,19 +60,21 @@
     }
 
     button {
-      background-color: #fff;
-      color: rgba(20, 73, 124, 0.9);
-      border: 2px solid rgba(20, 73, 124, 0.9);
-      padding: 14px 32px;
-      font-size: 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 35px;
-    }
-    button:hover {
-      background-color: rgba(20, 73, 124, 0.9);
+      background: linear-gradient(135deg, #1e3c72, #2a5298); /* 세련된 블루 그라디언트 */
       color: #fff;
+      border: none;
+      padding: 14px 36px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 12px; /* 더 둥근 느낌 */
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
     }
 
     /* 애니메이션 */
