@@ -15,37 +15,43 @@
   </script>
 
   <style>
-    body {
-      font-family: "Noto Sans KR", Arial, sans-serif;
-      background-color: #F4F7FA;
+    html, body {
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      height: 100%;
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
     }
 
-    /* 로고 */
+    body {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 로고: 화면 상단에 고정 */
     .logo {
-      margin-top: 40px;
-      margin-bottom: 60px;
+      position: absolute;
+      top: 65px;
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
     }
     .logo img {
-      height: 55px;
+      height: 28px;
     }
 
-    .content {
-      background-color: #fff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    /* 콘텐츠: 수직/수평 정중앙 */
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      box-sizing: border-box;
       max-width: 600px;
       width: 100%;
-      text-align: center;
-      animation: fadeIn 1.2s ease-in-out;
     }
 
     h2 {
@@ -58,23 +64,25 @@
     p {
       font-size: 17px;
       color: #333;
-      line-height: 1.6;
       margin-bottom: 30px;
     }
 
     .mapping-box {
-      background-color: #F4F7FA;
-      border: 1px solid #ccc;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: left;
-      font-size: 15px;
-      white-space: pre-wrap;
+      background-color: #ffffff;
+      padding: 28px 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+      font-size: 15.5px;
       color: #444;
+      white-space: pre-wrap;
+      width: 100%;
+      text-align: left;
+      line-height: 1.75;
+      box-sizing: border-box;
     }
 
     button {
-      margin-top: 30px;
+      margin-top: 40px;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
       border: none;
@@ -91,24 +99,19 @@
       transform: translateY(-2px);
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
   </style>
 </head>
 <body>
 
-  <!-- 상단 로고 -->
+  <!-- 로고 (상단 고정) -->
   <div class="logo">
     <a href="https://sleeplab.co.kr/" target="_blank">
       <img src="{{ url_for('static', filename='images/P_logo_1000x198px.png') }}" alt="SLOOM 로고">
     </a>
   </div>
 
-  <!-- 본문 -->
-  <div class="content">
+  <!-- 본문 콘텐츠 (정중앙) -->
+  <div class="wrapper">
     <h2>주문 조회 성공</h2>
     <p>아래 상품 정보가 확인되었습니다.</p>
     <div class="mapping-box">
