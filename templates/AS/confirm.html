@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>반품 희망 상품 선택</title>
+  <title>선택한 상품 확인</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
@@ -70,27 +70,22 @@
       width: 100%;
     }
 
-    .mapping-box {
+    .confirm-box {
       background-color: #ffffff;
       padding: 28px 32px;
       border-radius: 16px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-      font-size: 15.5px;
+      font-size: 16px;
       color: #444;
       width: 100%;
       text-align: left;
       box-sizing: border-box;
+      line-height: 1.6;
     }
 
-    .mapping-box label {
-      display: block;
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-
-    input[type="checkbox"] {
-      margin-right: 10px;
-      transform: scale(1.2);
+    ul {
+      padding-left: 20px;
+      margin: 0;
     }
 
     button {
@@ -122,19 +117,19 @@
   </div>
 
   <div class="wrapper">
-    <h2>반품 희망 상품</h2>
-    <p>주문건 중 반품 희망하시는 상품을 선택해주세요.</p>
+    <h2>선택한 상품 확인</h2>
+    <p>아래 상품이 맞는지 확인해 주세요.</p>
 
-    <form method="POST" action="{{ url_for('confirm_selected_products') }}">
-      <div class="mapping-box">
-        {% for item in mapping_list %}
-          <label>
-            <input type="checkbox" name="selected_items" value="{{ item }}">
-            {{ item }}
-          </label>
-        {% endfor %}
+    <form method="POST" action="{{ url_for('submit_exchange_form') }}">
+      <div class="confirm-box">
+        <ul>
+          {% for item in selected_items %}
+            <li>{{ item }}</li>
+            <input type="hidden" name="confirmed_items" value="{{ item }}">
+          {% endfor %}
+        </ul>
       </div>
-      <button type="submit">다음</button>
+      <button type="submit">확인 후 제출</button>
     </form>
   </div>
 

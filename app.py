@@ -402,5 +402,15 @@ def fail():
     return render_template('AS/fail.html')
 
 
+@app.route('/confirm_selected_products', methods=['POST'])
+def confirm_selected_products():
+    selected_items = request.form.getlist('selected_items')
+
+    if not selected_items:
+        return render_template('AS/success.html', mapping_list=[], message="상품을 한 개 이상 선택해주세요.")
+
+    return render_template('AS/confirm.html', selected_items=selected_items)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
