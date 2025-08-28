@@ -353,7 +353,6 @@ def check_order():
     if request.method == 'POST':
         order_number = request.form.get("order_number", "").strip()
 
-        # 주문번호는 숫자만 가능
         if not order_number.isdigit():
             return redirect(url_for('fail'))
 
@@ -361,7 +360,7 @@ def check_order():
             payload = {"orderCode": order_number}
             headers = {
                 "accept": "application/json",
-                "Authorization": "g2zxsJiC5DBsoypjdWMM",  # 슬룸 accessKey 고정
+                "Authorization": "g2zxsJiC5DBsoypjdWMM",
                 "Content-Type": "application/json"
             }
 
@@ -373,20 +372,8 @@ def check_order():
             )
             data = response.json()
 
-            mapping_data = None
+            mapping_data = []
             if data.get("rows"):
-                all_items = []
-                for row in data["rows"]:
-                    items = row.get("items", [])
-                    for item in items:
-                        resource_name = item.get("resource_name", "")
-                        resource_id = item.get("resourceId", "")
-                        quantity = item.get("quantity", 0)
-                        if not resource_name and not resource_id and not quantity:
-                            continue
-                        all_items.append(f"{resource_name}({resource_id}) {quantity}")
-
-                mapping_data = []
                 for row in data["rows"]:
                     items = row.get("items", [])
                     for item in items:
@@ -395,11 +382,8 @@ def check_order():
                         if not resource_name or not quantity:
                             continue
 
-        # 브랜드명 제거, 괄호 앞까지만 추출
-        # 예: "슬룸 허리편한케어(279656)" → "허리편한케어"
-        product_name = resource_name.split(" ", 1)[-1].split("(")[0].replace("_리테일", "").strip()
-        mapping_data.append(f"{product_name} {quantity}개")
-
+                        product_name = resource_name.split(" ", 1)[-1].split("(")[0].replace("_리테일", "").strip()
+                        mapping_data.append(f"{product_name} {quantity}개")
 
             if mapping_data:
                 return render_template("AS/success.html", mapping_list=mapping_data)
