@@ -386,10 +386,23 @@ def check_order():
                             continue
                         all_items.append(f"{resource_name}({resource_id}) {quantity}")
 
-                mapping_data = " / ".join(all_items)
+                mapping_data = []
+                for row in data["rows"]:
+                    items = row.get("items", [])
+                    for item in items:
+                        resource_name = item.get("resource_name", "")
+                        quantity = item.get("quantity", 0)
+                        if not resource_name or not quantity:
+                            continue
+
+        # 브랜드명 제거, 괄호 앞까지만 추출
+        # 예: "슬룸 허리편한케어(279656)" → "허리편한케어"
+        product_name = resource_name.split(" ", 1)[-1].split("(")[0].replace("_리테일", "").strip()
+        mapping_data.append(f"{product_name} {quantity}개")
+
 
             if mapping_data:
-                return render_template("AS/success.html", mapping_data=mapping_data)
+                return render_template("AS/success.html", mapping_list=mapping_data)
             else:
                 return redirect(url_for("fail"))
 

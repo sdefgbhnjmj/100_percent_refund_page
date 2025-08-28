@@ -30,7 +30,6 @@
       justify-content: center;
     }
 
-    /* 로고: 화면 상단에 고정 */
     .logo {
       position: absolute;
       top: 65px;
@@ -43,7 +42,6 @@
       height: 28px;
     }
 
-    /* 콘텐츠 */
     .wrapper {
       display: flex;
       flex-direction: column;
@@ -59,7 +57,15 @@
       font-size: 24px;
       font-weight: bold;
       color: rgba(20, 73, 124, 0.9);
+      margin-bottom: 16px;
+    }
+
+    .example-image {
+      max-width: 100%;
+      width: 320px;
       margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     }
 
     p {
@@ -109,16 +115,15 @@
 </head>
 <body>
 
-  <!-- 로고 (상단 고정) -->
   <div class="logo">
     <a href="https://sleeplab.co.kr/" target="_blank">
       <img src="{{ url_for('static', filename='images/P_logo_1000x198px.png') }}" alt="SLOOM 로고">
     </a>
   </div>
 
-  <!-- 본문 콘텐츠 -->
   <div class="wrapper">
     <h2>주문번호를 입력해주세요</h2>
+    <img src="{{ url_for('static', filename='images/ordernumber.png') }}" alt="주문번호 예시 이미지" class="example-image" />
     <p>주문번호는 구매처에서 확인하실 수 있습니다.</p>
 
     <form method="POST" style="width: 100%;">

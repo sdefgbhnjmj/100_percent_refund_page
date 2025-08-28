@@ -115,8 +115,11 @@
     <h2>주문 조회 성공</h2>
     <p>아래 상품 정보가 확인되었습니다.</p>
     <div class="mapping-box">
-      {{ mapping_data }}
+      {% for item in mapping_list %}
+        {{ item }}<br>
+      {% endfor %}
     </div>
+
     <button onclick="location.href='/exchange_form'">교환 신청하기</button>
   </div>
 
