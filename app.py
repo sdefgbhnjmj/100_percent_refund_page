@@ -414,3 +414,24 @@ def confirm_selected_products():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/input_address', methods=['GET', 'POST'])
+def input_address():
+    if request.method == 'POST':
+        zipcode = request.form.get('zipcode')
+        address1 = request.form.get('address1')
+        address2 = request.form.get('address2')
+
+        if not zipcode or not address1:
+            return render_template(
+                'AS/input_address.html',
+                message="우편번호와 기본주소는 필수입니다."
+            )
+
+        # TODO: 여기서 주소 저장 or 다음 단계로 연결 가능
+        return render_template('AS/address_success.html',
+                               zipcode=zipcode,
+                               address1=address1,
+                               address2=address2)
+
+    return render_template('AS/input_address.html')
