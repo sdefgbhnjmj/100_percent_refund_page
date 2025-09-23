@@ -382,28 +382,32 @@ def check_order():
             if data.get("rows"):
                 for row in data["rows"]:
                     items = row.get("items", [])
-                    # 주문자 / 수령자 연락처 세션에 저장
-                    session['customer_phone'] = row.get("customerData", {}).get("mobile")
-                    session['receiver_phone'] = row.get("receiverData", {}).get("phone")
+
+                    # 주문자 / 수령자 연락처 세션에 저장 (최초 한 번만)
+                    if not session.get('customer_phone'):
+                        session['customer_phone'] = row.get("customerData", {}).get("mobile")
+                    if not session.get('receiver_phone'):
+                        session['receiver_phone'] = row.get("receiverData", {}).get("phone")
 
                     for item in items:
                         resource_name = item.get("resource_name", "")
                         quantity = item.get("quantity", 0)
                         if not resource_name or not quantity:
                             continue
+
                         product_name = resource_name.split(" ", 1)[-1].split("(")[0].replace("_리테일", "").strip()
                         mapping_data.append(f"{product_name} {quantity}개")
 
             if mapping_data:
-                return render_template("AS/success.html", mapping_list=mapping_data)
-            else:
-                return redirect(url_for("fail"))
+                session['mapping_list'] = mapping_data  # 상품목록 세션에 저장
+                return redirect(url_for("input_orderer"))
 
         except Exception as e:
             print("API 오류:", e)
             return redirect(url_for("fail"))
 
     return render_template("AS/check_order.html")
+
 
 @app.route('/fail')
 def fail():
