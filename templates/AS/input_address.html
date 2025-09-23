@@ -11,74 +11,148 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
     }
-    .wrapper {
+    .container {
       background: #fff;
-      padding: 28px 32px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-      max-width: 500px;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
       width: 100%;
-      text-align: center;
     }
     h2 {
       font-size: 22px;
       font-weight: bold;
-      margin-bottom: 20px;
-      color: rgba(20, 73, 124, 0.9);
-    }
-    .input-box {
       margin-bottom: 16px;
+      color: #14497C;
+      text-align: center;
+    }
+    .selected-box {
+      background: #F9FBFD;
+      border: 1px solid #e0e6ed;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+      font-size: 15px;
+      color: #333;
+    }
+    .selected-box ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+    .form-group {
+      margin-bottom: 18px;
       text-align: left;
+    }
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
     }
     input[type="text"] {
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin-top: 6px;
+      padding: 14px 16px;
+      font-size: 15px;
+      border-radius: 12px;
+      border: 1px solid #dcdcdc;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
       box-sizing: border-box;
     }
-    button {
-      margin-top: 20px;
+    input[type="text"]:focus {
+      border: 1px solid #2a5298;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
+    }
+    .zipcode-row {
+      display: flex;
+      gap: 10px;
+    }
+    .zipcode-row input {
+      flex: 2;
+    }
+    .zipcode-row button {
+      flex: 1;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      background: #2a5298;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .zipcode-row button:hover {
+      background: #1e3c72;
+    }
+    .submit-btn {
+      width: 100%;
+      margin-top: 30px;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
       border: none;
-      padding: 14px 36px;
-      font-size: 16px;
+      padding: 16px;
+      font-size: 17px;
       font-weight: 600;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    button:hover {
+    .submit-btn:hover {
       transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+    }
+    .message {
+      color: #d9534f;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-align: center;
     }
   </style>
   <!-- 다음 주소 API -->
   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
-  <div class="wrapper">
-    <h2>상품을 회수할 배송지를 입력해주세요</h2>
+  <div class="container">
+    <h2>교환 접수 안내</h2>
+
+    <div class="selected-box">
+      <p><strong>선택하신 상품의 교환 접수를 진행해 드리겠습니다.</strong></p>
+      <ul>
+        {% for item in selected_items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <h2>상품 회수 배송지를 입력해주세요</h2>
+
+    {% if message %}
+      <p class="message">{{ message }}</p>
+    {% endif %}
+
     <form method="POST">
-      <div class="input-box">
+      <div class="form-group">
         <label>우편번호</label>
-        <input type="text" id="zipcode" name="zipcode" readonly required>
-        <button type="button" onclick="execDaumPostcode()">우편번호 검색</button>
+        <div class="zipcode-row">
+          <input type="text" id="zipcode" name="zipcode" readonly required>
+          <button type="button" onclick="execDaumPostcode()">검색</button>
+        </div>
       </div>
-      <div class="input-box">
+      <div class="form-group">
         <label>기본주소</label>
         <input type="text" id="address1" name="address1" readonly required>
       </div>
-      <div class="input-box">
+      <div class="form-group">
         <label>상세주소</label>
-        <input type="text" id="address2" name="address2">
+        <input type="text" id="address2" name="address2" placeholder="동/호수 등 상세주소 입력">
       </div>
-      <button type="submit">제출</button>
+      <button type="submit" class="submit-btn">제출</button>
     </form>
   </div>
 
