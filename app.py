@@ -383,7 +383,7 @@ def check_order():
                 for row in data["rows"]:
                     items = row.get("items", [])
 
-                    # 주문자 / 수령자 연락처 세션에 저장 (최초 한 번만)
+                    # 주문자/수령자 연락처 세션에 저장
                     if not session.get('customer_phone'):
                         session['customer_phone'] = row.get("customerData", {}).get("mobile")
                     if not session.get('receiver_phone'):
@@ -414,19 +414,6 @@ def fail():
     return render_template('AS/fail.html')
 
 
-@app.route('/confirm_selected_products', methods=['GET', 'POST'])
-def confirm_selected_products():
-    if request.method == 'POST':
-        selected_items = request.form.getlist('selected_items')
-        if not selected_items:
-            return render_template('AS/success.html', mapping_list=[], message="상품을 한 개 이상 선택해주세요.")
-        session['selected_items'] = selected_items
-    else:
-        selected_items = session.get('selected_items', [])
-
-    return render_template('AS/confirm_selected_products.html', selected_items=selected_items)
-
-
 @app.route('/input_orderer', methods=['GET', 'POST'])
 def input_orderer():
     if request.method == 'POST':
@@ -436,13 +423,38 @@ def input_orderer():
         customer_phone = session.get('customer_phone')
         receiver_phone = session.get('receiver_phone')
 
-        # 연락처 정규화 후 비교
+        # 연락처 비교
         if normalize_phone(phone) == normalize_phone(customer_phone) or normalize_phone(phone) == normalize_phone(receiver_phone):
-            return redirect(url_for('input_address'))
+            return redirect(url_for('success'))
         else:
             return render_template('AS/orderer_not_found.html')
 
     return render_template('AS/input_orderer.html')
+
+
+@app.route('/success', methods=['GET', 'POST'])
+def success():
+    mapping_list = session.get('mapping_list', [])
+
+    if request.method == 'POST':
+        selected_items = request.form.getlist('selected_items')
+        if not selected_items:
+            return render_template("AS/success.html", mapping_list=mapping_list, message="상품을 한 개 이상 선택해주세요.")
+
+        session['selected_items'] = selected_items
+        return redirect(url_for("confirm_selected_products"))
+
+    return render_template("AS/success.html", mapping_list=mapping_list)
+
+
+@app.route('/confirm_selected_products', methods=['GET', 'POST'])
+def confirm_selected_products():
+    selected_items = session.get('selected_items', [])
+
+    if request.method == 'POST':
+        return redirect(url_for('input_address'))
+
+    return render_template('AS/confirm_selected_products.html', selected_items=selected_items)
 
 
 @app.route('/input_address', methods=['GET', 'POST'])
@@ -463,6 +475,7 @@ def input_address():
         return redirect(url_for('input_receive_address'))
 
     return render_template('AS/input_address.html')
+
 
 @app.route('/input_receive_address', methods=['GET', 'POST'])
 def input_receive_address():
