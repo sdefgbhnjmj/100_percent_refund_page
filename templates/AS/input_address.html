@@ -29,18 +29,29 @@
       color: #14497C;
       text-align: center;
     }
+    .sub-text {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 24px;
+      text-align: center;
+      line-height: 1.5;
+    }
     .selected-box {
-      background: #F9FBFD;
-      border: 1px solid #e0e6ed;
-      border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 28px;
+      background: #f8f9fc;
+      border: 1px solid #e2e6ea;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
       font-size: 15px;
       color: #333;
     }
     .selected-box ul {
-      margin: 8px 0 0;
-      padding-left: 20px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .selected-box li {
+      margin-bottom: 6px;
     }
     .form-group {
       margin-bottom: 18px;
@@ -119,23 +130,23 @@
 </head>
 <body>
   <div class="container">
-    <h2>교환 접수 안내</h2>
+    <h2>교환 접수해 드리겠습니다.</h2>
+    <p class="sub-text">아래 상품의 회수 배송지를 입력해주세요.</p>
 
+    <!-- 선택한 상품 목록 -->
     <div class="selected-box">
-      <p><strong>선택하신 상품의 교환 접수를 진행해 드리겠습니다.</strong></p>
       <ul>
         {% for item in selected_items %}
-          <li>{{ item }}</li>
+          <li>📦 {{ item }}</li>
         {% endfor %}
       </ul>
     </div>
-
-    <h2>상품 회수 배송지를 입력해주세요</h2>
 
     {% if message %}
       <p class="message">{{ message }}</p>
     {% endif %}
 
+    <!-- 배송지 입력 폼 -->
     <form method="POST">
       <div class="form-group">
         <label>우편번호</label>
