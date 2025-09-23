@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta
 import requests
 
 app = Flask(__name__)
+app.secret_key = "random-secret-key"
 
 @app.route('/', methods=['GET', 'POST'])
 def select_brand():
@@ -412,8 +413,7 @@ def confirm_selected_products():
     return render_template('AS/confirm.html', selected_items=selected_items)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
 
 @app.route('/input_address', methods=['GET', 'POST'])
 def input_address():
@@ -428,10 +428,39 @@ def input_address():
                 message="우편번호와 기본주소는 필수입니다."
             )
 
-        # TODO: 여기서 주소 저장 or 다음 단계로 연결 가능
-        return render_template('AS/address_success.html',
-                               zipcode=zipcode,
-                               address1=address1,
-                               address2=address2)
+        # 회수지 주소를 세션에 저장
+        session['pickup_address'] = {
+            'zipcode': zipcode,
+            'address1': address1,
+            'address2': address2
+        }
+
+        # 입력 완료 후 → 수령지 입력 페이지로 이동
+        return redirect(url_for('input_receive_address'))
 
     return render_template('AS/input_address.html')
+
+
+@app.route('/input_receive_address', methods=['GET', 'POST'])
+def input_receive_address():
+    pickup_address = session.get('pickup_address')  # 세션에서 회수지 주소 불러오기
+
+    if request.method == 'POST':
+        zipcode = request.form.get('zipcode')
+        address1 = request.form.get('address1')
+        address2 = request.form.get('address2')
+
+        return render_template(
+            'AS/receive_address_success.html',
+            zipcode=zipcode,
+            address1=address1,
+            address2=address2
+        )
+
+    # pickup_address를 템플릿으로 전달
+    return render_template('AS/input_receive_address.html', pickup_address=pickup_address)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+

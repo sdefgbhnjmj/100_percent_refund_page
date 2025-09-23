@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>배송지 입력</title>
+  <title>수령지 입력</title>
   <style>
     body {
       background-color: #F4F7FA;
@@ -83,45 +83,31 @@
     .zipcode-row button:hover {
       background: #1e3c72;
     }
-    .btn-group {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      margin-top: 30px;
+    .form-check {
+      margin-bottom: 20px;
+      text-align: left;
     }
-    .btn {
-      flex: 1;
-      border: none;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .form-check input {
+      margin-right: 8px;
+      transform: scale(1.1);
     }
     .btn-submit {
+      width: 100%;
+      margin-top: 20px;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
+      border: none;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: 600;
+      border-radius: 14px;
+      cursor: pointer;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .btn-submit:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
-    }
-    .btn-back {
-      background: #ccc;
-      color: #333;
-    }
-    .btn-back:hover {
-      background: #bbb;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-    }
-    .message {
-      color: #d9534f;
-      font-size: 14px;
-      margin-bottom: 10px;
-      text-align: center;
     }
   </style>
   <!-- 다음 주소 API -->
@@ -129,14 +115,16 @@
 </head>
 <body>
   <div class="container">
-    <h2>교환 접수해 드리겠습니다.</h2>
-    <p class="sub-text">상품 회수 배송지를 입력해주세요.</p>
+    <h2>교환 상품 수령지 입력</h2>
+    <p class="sub-text">교환 상품을 수령할 배송지를 입력해 주세요.</p>
 
-    {% if message %}
-      <p class="message">{{ message }}</p>
-    {% endif %}
+    <!-- 동일한 주소 체크 -->
+    <div class="form-check">
+      <label>
+        <input type="checkbox" id="sameAddress" onclick="fillSameAddress()"> 회수지와 동일
+      </label>
+    </div>
 
-    <!-- 배송지 입력 폼 -->
     <form method="POST">
       <div class="form-group">
         <label>우편번호</label>
@@ -153,18 +141,12 @@
         <label>상세주소</label>
         <input type="text" id="address2" name="address2" placeholder="동/호수 등 상세주소 입력">
       </div>
-
-      <div class="btn-group">
-        <!-- 이전 단계 버튼 -->
-        <button type="button" class="btn btn-back" onclick="history.back()">이전 단계</button>
-
-        <!-- 제출 버튼 -->
-        <button type="submit" class="btn btn-submit">제출</button>
-      </div>
+      <button type="submit" class="btn-submit">제출</button>
     </form>
   </div>
 
   <script>
+    // 다음 주소 API
     function execDaumPostcode() {
       new daum.Postcode({
         oncomplete: function(data) {
@@ -173,6 +155,28 @@
           document.getElementById('address2').focus();
         }
       }).open();
+    }
+
+    // 회수지와 동일 체크 → 세션 값 복사
+    function fillSameAddress() {
+      const same = document.getElementById('sameAddress').checked;
+
+      {% if pickup_address %}
+        if (same) {
+          document.getElementById('zipcode').value = "{{ pickup_address.zipcode }}";
+          document.getElementById('address1').value = "{{ pickup_address.address1 }}";
+          document.getElementById('address2').value = "{{ pickup_address.address2 }}";
+        } else {
+          document.getElementById('zipcode').value = "";
+          document.getElementById('address1').value = "";
+          document.getElementById('address2').value = "";
+        }
+      {% else %}
+        if (same) {
+          alert("먼저 회수지 주소를 입력해야 합니다.");
+          document.getElementById('sameAddress').checked = false;
+        }
+      {% endif %}
     }
   </script>
 </body>

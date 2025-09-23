@@ -3,135 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>선택한 상품 확인</title>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-QPWTWFSY4H');
-  </script>
-
+  <title>선택 상품 확인</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
+    body {
       background-color: #F4F7FA;
       font-family: "Noto Sans KR", Arial, sans-serif;
-    }
-
-    body {
-      position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
-    }
-
-    .logo {
-      position: absolute;
-      top: 65px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-    }
-
-    .logo img {
-      height: 28px;
-    }
-
-    .wrapper {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      box-sizing: border-box;
-      max-width: 600px;
-      width: 100%;
-    }
-
-    h2 {
-      font-size: 24px;
-      font-weight: bold;
-      color: rgba(20, 73, 124, 0.9);
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 17px;
-      color: #333;
-      margin-bottom: 30px;
-    }
-
-    form {
-      width: 100%;
-    }
-
-    .confirm-box {
-      background-color: #ffffff;
-      padding: 28px 32px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-      font-size: 16px;
-      color: #444;
-      width: 100%;
-      text-align: left;
-      box-sizing: border-box;
-      line-height: 1.6;
-    }
-
-    ul {
-      padding-left: 20px;
+      min-height: 100vh;
       margin: 0;
     }
-
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      color: #14497C;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px 0;
+      text-align: left;
+    }
+    li {
+      background: #f8f9fc;
+      border: 1px solid #e2e6ea;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: #333;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
     button {
-      margin-top: 40px;
+      flex: 1;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
       border: none;
-      padding: 14px 36px;
-      font-size: 18px;
+      padding: 14px 0;
+      font-size: 17px;
       font-weight: 600;
       border-radius: 12px;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
     button:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
     }
+    .btn-secondary {
+      background: #ccc;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background: #bbb;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>선택하신 상품을 확인해 주세요</h2>
+    <p>아래 상품으로 교환 접수를 진행합니다.</p>
 
-  <div class="logo">
-    <a href="https://sleeplab.co.kr/" target="_blank">
-      <img src="{{ url_for('static', filename='images/P_logo_1000x198px.png') }}" alt="SLOOM 로고">
-    </a>
+    <ul>
+      {% for item in selected_items %}
+        <li>📦 {{ item }}</li>
+      {% endfor %}
+    </ul>
+
+    <div class="btn-group">
+      <!-- 수정하기 버튼 -->
+      <form method="GET" action="{{ url_for('check_order') }}">
+        <button type="submit" class="btn-secondary">수정하기</button>
+      </form>
+
+      <!-- 다음 버튼 -->
+      <form method="POST" action="{{ url_for('input_address') }}">
+        {% for item in selected_items %}
+          <input type="hidden" name="selected_items" value="{{ item }}">
+        {% endfor %}
+        <button type="submit">다음</button>
+      </form>
+    </div>
   </div>
-
-  <div class="wrapper">
-    <h2>선택한 상품 확인</h2>
-    <p>아래 상품이 맞는지 확인해 주세요.</p>
-
-    <form method="POST" action="{{ url_for('submit_exchange_form') }}">
-      <div class="confirm-box">
-        <ul>
-          {% for item in selected_items %}
-            <li>{{ item }}</li>
-            <input type="hidden" name="confirmed_items" value="{{ item }}">
-          {% endfor %}
-        </ul>
-      </div>
-      <button type="submit">확인 후 제출</button>
-    </form>
-  </div>
-
 </body>
 </html>
