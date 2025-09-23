@@ -14,6 +14,7 @@
       min-height: 100vh;
       margin: 0;
     }
+
     .container {
       background: #fff;
       padding: 40px 32px;
@@ -23,89 +24,97 @@
       width: 100%;
       text-align: center;
     }
+
     h2 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: bold;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
       color: #14497C;
     }
-    p {
-      font-size: 16px;
-      margin-bottom: 20px;
+
+    .sub-text {
+      font-size: 15px;
       color: #555;
+      margin-bottom: 24px;
     }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 24px 0;
-      text-align: left;
-    }
-    li {
+
+    .selected-box {
       background: #f8f9fc;
       border: 1px solid #e2e6ea;
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 30px;
       font-size: 15px;
       color: #333;
+      text-align: left;
     }
+
+    .selected-box ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .selected-box li {
+      margin-bottom: 8px;
+    }
+
     .btn-group {
       display: flex;
       justify-content: center;
-      gap: 16px;
+      gap: 16px; /* 버튼 간격 */
     }
-    button {
-      flex: 1;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: #fff;
-      border: none;
+
+    .btn {
+      flex: 1; /* 버튼 크기를 균등하게 */
+      max-width: 150px;
+      text-align: center;
       padding: 14px 0;
-      font-size: 17px;
-      font-weight: 600;
       border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      transition: all 0.2s ease;
     }
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    }
-    .btn-secondary {
-      background: #ccc;
+
+    .btn-edit {
+      background-color: #e0e0e0;
       color: #333;
     }
-    .btn-secondary:hover {
-      background: #bbb;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    .btn-edit:hover {
+      background-color: #d5d5d5;
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    .btn-next:hover {
+      background: linear-gradient(135deg, #1b345f, #244a85);
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>선택하신 상품을 확인해 주세요</h2>
-    <p>아래 상품으로 교환 접수를 진행합니다.</p>
+    <p class="sub-text">아래 상품으로 교환 접수를 진행합니다.</p>
 
-    <ul>
-      {% for item in selected_items %}
-        <li>📦 {{ item }}</li>
-      {% endfor %}
-    </ul>
-
-    <div class="btn-group">
-      <!-- 수정하기 버튼 -->
-      <form method="GET" action="{{ url_for('check_order') }}">
-        <button type="submit" class="btn-secondary">수정하기</button>
-      </form>
-
-      <!-- 다음 버튼 -->
-      <form method="POST" action="{{ url_for('input_address') }}">
+    <div class="selected-box">
+      <ul>
         {% for item in selected_items %}
-          <input type="hidden" name="selected_items" value="{{ item }}">
+          <li>📦 {{ item }}</li>
         {% endfor %}
-        <button type="submit">다음</button>
-      </form>
+      </ul>
     </div>
+
+    <form method="POST" action="{{ url_for('input_address') }}">
+      <div class="btn-group">
+        <button type="button" class="btn btn-edit" onclick="history.back()">수정하기</button>
+        <button type="submit" class="btn btn-next">다음</button>
+      </div>
+    </form>
   </div>
 </body>
 </html>
