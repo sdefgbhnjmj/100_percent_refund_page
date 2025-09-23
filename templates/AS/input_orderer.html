@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>주문자 정보 입력</title>
+  <style>
+    body {
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #14497C;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      border-radius: 12px;
+      border: 1px solid #dcdcdc;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus {
+      border: 1px solid #2a5298;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    .btn {
+      flex: 1;
+      max-width: 150px;
+      text-align: center;
+      padding: 14px 0;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-prev {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+    .btn-prev:hover {
+      background-color: #d5d5d5;
+    }
+    .btn-next {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    .btn-next:hover {
+      background: linear-gradient(135deg, #1b345f, #244a85);
+    }
+    .message {
+      color: #d9534f;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>주문자 정보를 입력해주세요</h2>
+    {% if message %}
+      <p class="message">{{ message }}</p>
+    {% endif %}
+    <form method="POST">
+      <div class="form-group">
+        <label for="orderer_name">주문자</label>
+        <input type="text" id="orderer_name" name="orderer_name" placeholder="주문자 성함 입력" required>
+      </div>
+      <div class="form-group">
+        <label for="orderer_phone">연락처</label>
+        <input type="text" id="orderer_phone" name="orderer_phone" 
+               placeholder="010-0000-0000" maxlength="13" required
+               oninput="formatPhoneNumber(this)">
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-prev" onclick="history.back()">이전 단계</button>
+        <button type="submit" class="btn btn-next">다음</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function formatPhoneNumber(input) {
+      // 숫자만 남기기
+      let value = input.value.replace(/[^0-9]/g, '');
+
+      // 010으로 시작하지 않으면 자동 보정
+      if (value.length > 0 && !value.startsWith("010")) {
+        value = "010" + value.replace(/^010/, "");
+      }
+
+      // 010-0000-0000 형식 만들기
+      if (value.length <= 3) {
+        input.value = value;
+      } else if (value.length <= 7) {
+        input.value = value.slice(0, 3) + '-' + value.slice(3);
+      } else {
+        input.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+      }
+    }
+  </script>
+</body>
+</html>
