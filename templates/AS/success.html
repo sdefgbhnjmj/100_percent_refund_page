@@ -126,7 +126,7 @@
     <p>주문건 중 교환 희망하시는 상품을 선택해주세요.</p>
 
     <!-- action을 input_address 라우트로 -->
-    <form method="POST" action="{{ url_for('input_address') }}">
+    <form method="POST" action="{{ url_for('confirm_selected_products') }}">
       <div class="mapping-box">
         {% for item in mapping_list %}
           <label>
