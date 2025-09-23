@@ -410,7 +410,7 @@ def confirm_selected_products():
     if not selected_items:
         return render_template('AS/success.html', mapping_list=[], message="상품을 한 개 이상 선택해주세요.")
 
-    return render_template('AS/confirm.html', selected_items=selected_items)
+    return render_template('AS/confirm_selected_products.html', selected_items=selected_items)
 
 
 
