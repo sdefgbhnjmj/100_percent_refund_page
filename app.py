@@ -5,6 +5,11 @@ import requests
 app = Flask(__name__)
 app.secret_key = "random-secret-key"
 
+def normalize_phone(phone):
+    if not phone:
+        return None
+    return ''.join(filter(str.isdigit, phone))
+
 @app.route('/', methods=['GET', 'POST'])
 def select_brand():
     if request.method == 'POST':
@@ -377,12 +382,15 @@ def check_order():
             if data.get("rows"):
                 for row in data["rows"]:
                     items = row.get("items", [])
+                    # 주문자 / 수령자 연락처 세션에 저장
+                    session['customer_phone'] = row.get("customerData", {}).get("mobile")
+                    session['receiver_phone'] = row.get("receiverData", {}).get("phone")
+
                     for item in items:
                         resource_name = item.get("resource_name", "")
                         quantity = item.get("quantity", 0)
                         if not resource_name or not quantity:
                             continue
-
                         product_name = resource_name.split(" ", 1)[-1].split("(")[0].replace("_리테일", "").strip()
                         mapping_data.append(f"{product_name} {quantity}개")
 
@@ -397,22 +405,40 @@ def check_order():
 
     return render_template("AS/check_order.html")
 
-
 @app.route('/fail')
 def fail():
     return render_template('AS/fail.html')
 
 
-@app.route('/confirm_selected_products', methods=['POST'])
+@app.route('/confirm_selected_products', methods=['GET', 'POST'])
 def confirm_selected_products():
-    selected_items = request.form.getlist('selected_items')
-
-    if not selected_items:
-        return render_template('AS/success.html', mapping_list=[], message="상품을 한 개 이상 선택해주세요.")
+    if request.method == 'POST':
+        selected_items = request.form.getlist('selected_items')
+        if not selected_items:
+            return render_template('AS/success.html', mapping_list=[], message="상품을 한 개 이상 선택해주세요.")
+        session['selected_items'] = selected_items
+    else:
+        selected_items = session.get('selected_items', [])
 
     return render_template('AS/confirm_selected_products.html', selected_items=selected_items)
 
 
+@app.route('/input_orderer', methods=['GET', 'POST'])
+def input_orderer():
+    if request.method == 'POST':
+        name = request.form.get('orderer_name')
+        phone = request.form.get('orderer_phone')
+
+        customer_phone = session.get('customer_phone')
+        receiver_phone = session.get('receiver_phone')
+
+        # 연락처 정규화 후 비교
+        if normalize_phone(phone) == normalize_phone(customer_phone) or normalize_phone(phone) == normalize_phone(receiver_phone):
+            return redirect(url_for('input_address'))
+        else:
+            return render_template('AS/orderer_not_found.html')
+
+    return render_template('AS/input_orderer.html')
 
 
 @app.route('/input_address', methods=['GET', 'POST'])
@@ -423,27 +449,20 @@ def input_address():
         address2 = request.form.get('address2')
 
         if not zipcode or not address1:
-            return render_template(
-                'AS/input_address.html',
-                message="우편번호와 기본주소는 필수입니다."
-            )
+            return render_template('AS/input_address.html', message="우편번호와 기본주소는 필수입니다.")
 
-        # 회수지 주소를 세션에 저장
         session['pickup_address'] = {
             'zipcode': zipcode,
             'address1': address1,
             'address2': address2
         }
-
-        # 입력 완료 후 → 수령지 입력 페이지로 이동
         return redirect(url_for('input_receive_address'))
 
     return render_template('AS/input_address.html')
 
-
 @app.route('/input_receive_address', methods=['GET', 'POST'])
 def input_receive_address():
-    pickup_address = session.get('pickup_address')  # 세션에서 회수지 주소 불러오기
+    pickup_address = session.get('pickup_address')
 
     if request.method == 'POST':
         zipcode = request.form.get('zipcode')
@@ -457,10 +476,8 @@ def input_receive_address():
             address2=address2
         )
 
-    # pickup_address를 템플릿으로 전달
     return render_template('AS/input_receive_address.html', pickup_address=pickup_address)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
