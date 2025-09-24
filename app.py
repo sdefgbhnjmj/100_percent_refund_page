@@ -355,6 +355,7 @@ def defective_exchange():
     return render_template("AS/defective_exchange.html")
 
 # 주문번호 입력
+# 주문번호 입력
 @app.route('/check_order', methods=['GET', 'POST'])
 def check_order():
     if request.method == 'POST':
@@ -413,9 +414,7 @@ def fail():
     return render_template('AS/fail.html')
 
 
-# ------------------------------
-# 교환 희망 상품 선택
-# ------------------------------
+# 교환 희망 상품 선택 페이지
 @app.route('/success', methods=['GET', 'POST'])
 def success():
     mapping_list = session.get('mapping_list', [])
@@ -433,9 +432,7 @@ def success():
     return render_template("AS/success.html", mapping_list=mapping_list)
 
 
-# ------------------------------
-# 선택 상품 확인
-# ------------------------------
+# 선택 상품 확인 페이지
 @app.route('/confirm_selected_products', methods=['GET', 'POST'])
 def confirm_selected_products():
     selected_items = session.get('selected_items', [])
@@ -448,9 +445,7 @@ def confirm_selected_products():
     )
 
 
-# ------------------------------
 # 주문자 정보 입력
-# ------------------------------
 @app.route('/input_orderer', methods=['GET', 'POST'])
 def input_orderer():
     if request.method == 'POST':
@@ -462,9 +457,7 @@ def input_orderer():
     return render_template('AS/input_orderer.html')
 
 
-# ------------------------------
 # 회수지 주소 입력
-# ------------------------------
 @app.route('/input_address', methods=['GET', 'POST'])
 def input_address():
     if request.method == 'POST':
@@ -488,9 +481,7 @@ def input_address():
     return render_template('AS/input_address.html')
 
 
-# ------------------------------
 # 수령지 주소 입력
-# ------------------------------
 @app.route('/input_receive_address', methods=['GET', 'POST'])
 def input_receive_address():
     pickup_address = session.get('pickup_address')
@@ -500,30 +491,14 @@ def input_receive_address():
         address1 = request.form.get('address1')
         address2 = request.form.get('address2')
 
-        session['receive_address'] = {
-            'zipcode': zipcode,
-            'address1': address1,
-            'address2': address2
-        }
-        return redirect(url_for('complete'))
+        return render_template(
+            'AS/receive_address_success.html',
+            zipcode=zipcode,
+            address1=address1,
+            address2=address2
+        )
 
     return render_template(
         'AS/input_receive_address.html',
         pickup_address=pickup_address
     )
-
-
-# ------------------------------
-# 최종 완료 화면
-# ------------------------------
-@app.route('/complete')
-def complete():
-    return render_template(
-        "AS/receive_address_success.html",
-        pickup_address=session.get('pickup_address'),
-        receive_address=session.get('receive_address')
-    )
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
