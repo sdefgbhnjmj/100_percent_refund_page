@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>교환 접수 완료</title>
+  <style>
+    body {
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 700px;
+      width: 100%;
+      text-align: center;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #14497C;
+    }
+    p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .info-box {
+      background: #f8f9fc;
+      border: 1px solid #e2e6ea;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: left;
+      font-size: 15px;
+      color: #333;
+    }
+    .info-box h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #2a5298;
+    }
+    .info-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .btn-home {
+      display: inline-block;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-home:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>교환 접수가 완료되었습니다 🎉</h2>
+    <p>입력하신 정보를 확인해 주세요.</p>
+
+    <!-- 선택한 상품 -->
+    <div class="info-box">
+      <h3>📦 선택 상품</h3>
+      <ul>
+        {% for item in selected_items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- 주문자 정보 -->
+    <div class="info-box">
+      <h3>👤 주문자 정보</h3>
+      <p><strong>이름:</strong> {{ orderer_info.name }}</p>
+      <p><strong>연락처:</strong> {{ orderer_info.phone }}</p>
+    </div>
+
+    <!-- 회수지 주소 -->
+    <div class="info-box">
+      <h3>🚚 회수지 주소</h3>
+      <p><strong>우편번호:</strong> {{ pickup_address.zipcode }}</p>
+      <p><strong>기본주소:</strong> {{ pickup_address.address1 }}</p>
+      <p><strong>상세주소:</strong> {{ pickup_address.address2 }}</p>
+    </div>
+
+    <!-- 수령지 주소 -->
+    <div class="info-box">
+      <h3>📮 수령지 주소</h3>
+      <p><strong>우편번호:</strong> {{ receive_address.zipcode }}</p>
+      <p><strong>기본주소:</strong> {{ receive_address.address1 }}</p>
+      <p><strong>상세주소:</strong> {{ receive_address.address2 }}</p>
+    </div>
+
+    <p>접수해주셔서 감사합니다.<br/>최대한 신속히 확인 후 교환을 진행해드리겠습니다.</p>
+
+    <a href="/" class="btn-home">홈으로 가기</a>
+  </div>
+</body>
+</html>

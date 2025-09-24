@@ -355,7 +355,6 @@ def defective_exchange():
     return render_template("AS/defective_exchange.html")
 
 # 주문번호 입력
-# 주문번호 입력
 @app.route('/check_order', methods=['GET', 'POST'])
 def check_order():
     if request.method == 'POST':
@@ -496,6 +495,34 @@ def input_receive_address():
             zipcode=zipcode,
             address1=address1,
             address2=address2
+        )
+
+    return render_template(
+        'AS/input_receive_address.html',
+        pickup_address=pickup_address
+    )
+
+@app.route('/input_receive_address', methods=['GET', 'POST'])
+def input_receive_address():
+    pickup_address = session.get('pickup_address')
+
+    if request.method == 'POST':
+        zipcode = request.form.get('zipcode')
+        address1 = request.form.get('address1')
+        address2 = request.form.get('address2')
+
+        session['receive_address'] = {
+            'zipcode': zipcode,
+            'address1': address1,
+            'address2': address2
+        }
+
+        return render_template(
+            'AS/receive_address_success.html',
+            selected_items=session.get('selected_items', []),
+            orderer_info=session.get('orderer_info', {}),
+            pickup_address=pickup_address,
+            receive_address=session['receive_address']
         )
 
     return render_template(
