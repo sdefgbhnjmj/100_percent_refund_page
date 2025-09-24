@@ -382,25 +382,17 @@ def check_order():
             if data.get("rows"):
                 for row in data["rows"]:
                     items = row.get("items", [])
-
-                    # 주문자/수령자 연락처 세션에 저장
-                    if not session.get('customer_phone'):
-                        session['customer_phone'] = row.get("customerData", {}).get("mobile")
-                    if not session.get('receiver_phone'):
-                        session['receiver_phone'] = row.get("receiverData", {}).get("phone")
-
                     for item in items:
                         resource_name = item.get("resource_name", "")
                         quantity = item.get("quantity", 0)
                         if not resource_name or not quantity:
                             continue
-
                         product_name = resource_name.split(" ", 1)[-1].split("(")[0].replace("_리테일", "").strip()
                         mapping_data.append(f"{product_name} {quantity}개")
 
             if mapping_data:
-                session['mapping_list'] = mapping_data  # 상품목록 세션에 저장
-                return redirect(url_for("input_orderer"))
+                session['mapping_list'] = mapping_data
+                return redirect(url_for("success"))  
 
         except Exception as e:
             print("API 오류:", e)
@@ -414,47 +406,41 @@ def fail():
     return render_template('AS/fail.html')
 
 
+@app.route('/success', methods=['GET'])
+def success():
+    mapping_list = session.get('mapping_list', [])
+    return render_template("AS/success.html", mapping_list=mapping_list)
+
+
+@app.route('/confirm_selected_products', methods=['GET', 'POST'])
+def confirm_selected_products():
+    if request.method == 'POST':
+        selected_items = request.form.getlist('selected_items')
+        if not selected_items:
+            return render_template(
+                'AS/success.html',
+                mapping_list=session.get('mapping_list', []),
+                message="상품을 한 개 이상 선택해주세요."
+            )
+        session['selected_items'] = selected_items
+        return redirect(url_for('input_orderer'))
+
+    selected_items = session.get('selected_items', [])
+    return render_template('AS/confirm_selected_products.html', selected_items=selected_items)
+
+
 @app.route('/input_orderer', methods=['GET', 'POST'])
 def input_orderer():
     if request.method == 'POST':
         name = request.form.get('orderer_name')
         phone = request.form.get('orderer_phone')
 
-        customer_phone = session.get('customer_phone')
-        receiver_phone = session.get('receiver_phone')
+        session['orderer_name'] = name
+        session['orderer_phone'] = phone
 
-        # 연락처 비교
-        if normalize_phone(phone) == normalize_phone(customer_phone) or normalize_phone(phone) == normalize_phone(receiver_phone):
-            return redirect(url_for('success'))
-        else:
-            return render_template('AS/orderer_not_found.html')
+        return redirect(url_for('input_address')) 
 
     return render_template('AS/input_orderer.html')
-
-
-@app.route('/success', methods=['GET', 'POST'])
-def success():
-    mapping_list = session.get('mapping_list', [])
-
-    if request.method == 'POST':
-        selected_items = request.form.getlist('selected_items')
-        if not selected_items:
-            return render_template("AS/success.html", mapping_list=mapping_list, message="상품을 한 개 이상 선택해주세요.")
-
-        session['selected_items'] = selected_items
-        return redirect(url_for("confirm_selected_products"))
-
-    return render_template("AS/success.html", mapping_list=mapping_list)
-
-
-@app.route('/confirm_selected_products', methods=['GET', 'POST'])
-def confirm_selected_products():
-    selected_items = session.get('selected_items', [])
-
-    if request.method == 'POST':
-        return redirect(url_for('input_address'))
-
-    return render_template('AS/confirm_selected_products.html', selected_items=selected_items)
 
 
 @app.route('/input_address', methods=['GET', 'POST'])
