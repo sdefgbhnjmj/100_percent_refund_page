@@ -5,128 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>교환 희망 상품 선택</title>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-QPWTWFSY4H');
-  </script>
-
   <style>
-    html, body {
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
       background-color: #F4F7FA;
       font-family: "Noto Sans KR", Arial, sans-serif;
-    }
-
-    body {
-      position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
-    }
-
-    .logo {
-      position: absolute;
-      top: 65px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-    }
-
-    .logo img {
-      height: 28px;
-    }
-
-    .wrapper {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      box-sizing: border-box;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
       max-width: 600px;
       width: 100%;
+      text-align: center;
     }
-
     h2 {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
-      color: rgba(20, 73, 124, 0.9);
       margin-bottom: 20px;
+      color: #14497C;
     }
-
     p {
-      font-size: 17px;
-      color: #333;
-      margin-bottom: 30px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #555;
     }
-
-    form {
-      width: 100%;
-    }
-
     .mapping-box {
-      background-color: #ffffff;
-      padding: 28px 32px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-      font-size: 15.5px;
-      color: #444;
-      width: 100%;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 20px;
       text-align: left;
-      box-sizing: border-box;
     }
-
     .mapping-box label {
       display: block;
       margin-bottom: 12px;
-      line-height: 1.5;
+      font-size: 15px;
     }
-
     input[type="checkbox"] {
       margin-right: 10px;
       transform: scale(1.2);
     }
-
     button {
-      margin-top: 40px;
+      margin-top: 30px;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
       border: none;
       padding: 14px 36px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 600;
       border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      width: 100%;
     }
-
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .message {
+      color: #d9534f;
+      margin-bottom: 20px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>교환 희망 상품 선택</h2>
+    <p>교환을 원하시는 상품을 선택해주세요.</p>
 
-  <div class="logo">
-    <a href="https://sleeplab.co.kr/" target="_blank">
-      <img src="{{ url_for('static', filename='images/P_logo_1000x198px.png') }}" alt="SLOOM 로고">
-    </a>
-  </div>
+    {% if message %}
+      <p class="message">{{ message }}</p>
+    {% endif %}
 
-  <div class="wrapper">
-    <h2>교환 희망 상품</h2>
-    <p>주문건 중 교환 희망하시는 상품을 선택해주세요.</p>
-
-    <form method="POST" action="{{ url_for('success') }}">
+    <form method="POST" action="{{ url_for('confirm_selected_products') }}">
       <div class="mapping-box">
         {% for item in mapping_list %}
           <label>
@@ -138,6 +96,5 @@
       <button type="submit">다음</button>
     </form>
   </div>
-
 </body>
 </html>
