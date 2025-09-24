@@ -105,6 +105,7 @@
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
     }
 
     button:hover {
@@ -125,8 +126,7 @@
     <h2>교환 희망 상품</h2>
     <p>주문건 중 교환 희망하시는 상품을 선택해주세요.</p>
 
-    <!-- action을 input_address 라우트로 -->
-    <form method="POST" action="{{ url_for('confirm_selected_products') }}">
+    <form method="POST" action="{{ url_for('success') }}">
       <div class="mapping-box">
         {% for item in mapping_list %}
           <label>

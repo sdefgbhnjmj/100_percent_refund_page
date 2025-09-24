@@ -125,7 +125,7 @@
       </label>
     </div>
 
-    <form method="POST">
+    <form method="POST" action="{{ url_for('input_receive_address') }}">
       <div class="form-group">
         <label>우편번호</label>
         <div class="zipcode-row">
@@ -141,7 +141,7 @@
         <label>상세주소</label>
         <input type="text" id="address2" name="address2" placeholder="동/호수 등 상세주소 입력">
       </div>
-      <button type="submit" class="btn-submit">제출</button>
+      <button type="submit" class="btn-submit">완료</button>
     </form>
   </div>
 
