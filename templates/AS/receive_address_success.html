@@ -29,57 +29,50 @@
       margin-bottom: 20px;
       color: #14497C;
     }
-    p {
-      font-size: 16px;
-      color: #555;
+    .section {
+      text-align: left;
       margin-bottom: 24px;
-      line-height: 1.6;
-    }
-    .info-box {
       background: #f8f9fc;
       border: 1px solid #e2e6ea;
+      padding: 16px;
       border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      text-align: left;
-      font-size: 15px;
-      color: #333;
     }
-    .info-box h3 {
-      margin: 0 0 12px;
+    .section h3 {
       font-size: 16px;
       font-weight: bold;
       color: #2a5298;
+      margin-bottom: 10px;
     }
-    .info-box ul {
-      margin: 0;
-      padding-left: 18px;
+    .section p {
+      margin: 4px 0;
+      font-size: 15px;
+      color: #333;
     }
-    .btn-home {
+    .btn {
       display: inline-block;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: #fff;
-      padding: 14px 32px;
+      margin-top: 20px;
+      padding: 14px 28px;
       font-size: 16px;
       font-weight: 600;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      border: none;
       border-radius: 12px;
-      text-decoration: none;
       cursor: pointer;
+      text-decoration: none;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .btn-home:hover {
+    .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>교환 접수가 완료되었습니다 🎉</h2>
-    <p>입력하신 정보를 확인해 주세요.</p>
+    <h2>교환 접수가 완료되었습니다. 최대한 신속히 교환 도와드리겠습니다.</h2>
 
-    <!-- 선택한 상품 -->
-    <div class="info-box">
+    <div class="section">
       <h3>📦 선택 상품</h3>
       <ul>
         {% for item in selected_items %}
@@ -88,32 +81,23 @@
       </ul>
     </div>
 
-    <!-- 주문자 정보 -->
-    <div class="info-box">
-      <h3>👤 주문자 정보</h3>
-      <p><strong>이름:</strong> {{ orderer_info.name }}</p>
-      <p><strong>연락처:</strong> {{ orderer_info.phone }}</p>
+    <div class="section">
+      <h3>🙋‍♂️ 주문자 정보</h3>
+      <p>이름: {{ orderer_info.name }}</p>
+      <p>연락처: {{ orderer_info.phone }}</p>
     </div>
 
-    <!-- 회수지 주소 -->
-    <div class="info-box">
+    <div class="section">
       <h3>🚚 회수지 주소</h3>
-      <p><strong>우편번호:</strong> {{ pickup_address.zipcode }}</p>
-      <p><strong>기본주소:</strong> {{ pickup_address.address1 }}</p>
-      <p><strong>상세주소:</strong> {{ pickup_address.address2 }}</p>
+      <p>{{ pickup_address.zipcode }} {{ pickup_address.address1 }} {{ pickup_address.address2 }}</p>
     </div>
 
-    <!-- 수령지 주소 -->
-    <div class="info-box">
-      <h3>📮 수령지 주소</h3>
-      <p><strong>우편번호:</strong> {{ receive_address.zipcode }}</p>
-      <p><strong>기본주소:</strong> {{ receive_address.address1 }}</p>
-      <p><strong>상세주소:</strong> {{ receive_address.address2 }}</p>
+    <div class="section">
+      <h3>📦 수령지 주소</h3>
+      <p>{{ receive_address.zipcode }} {{ receive_address.address1 }} {{ receive_address.address2 }}</p>
     </div>
 
-    <p>접수해주셔서 감사합니다.<br/>최대한 신속히 확인 후 교환을 진행해드리겠습니다.</p>
-
-    <a href="/" class="btn-home">홈으로 가기</a>
+    <a href="/" class="btn">메인으로 돌아가기</a>
   </div>
 </body>
 </html>
