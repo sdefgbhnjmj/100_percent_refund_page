@@ -354,6 +354,7 @@ def not_eligible_phonenumber():
 def defective_exchange():
     return render_template("AS/defective_exchange.html")
 
+# 주문번호 입력
 @app.route('/check_order', methods=['GET', 'POST'])
 def check_order():
     if request.method == 'POST':
@@ -387,12 +388,17 @@ def check_order():
                         quantity = item.get("quantity", 0)
                         if not resource_name or not quantity:
                             continue
-                        product_name = resource_name.split(" ", 1)[-1].split("(")[0].replace("_리테일", "").strip()
+                        product_name = (
+                            resource_name.split(" ", 1)[-1]
+                            .split("(")[0]
+                            .replace("_리테일", "")
+                            .strip()
+                        )
                         mapping_data.append(f"{product_name} {quantity}개")
 
             if mapping_data:
                 session['mapping_list'] = mapping_data
-                return redirect(url_for("success"))  
+                return redirect(url_for("success"))
 
         except Exception as e:
             print("API 오류:", e)
@@ -401,48 +407,56 @@ def check_order():
     return render_template("AS/check_order.html")
 
 
+# 실패 페이지
 @app.route('/fail')
 def fail():
     return render_template('AS/fail.html')
 
 
-@app.route('/success', methods=['GET'])
+# 교환 희망 상품 선택 페이지
+@app.route('/success', methods=['GET', 'POST'])
 def success():
     mapping_list = session.get('mapping_list', [])
-    return render_template("AS/success.html", mapping_list=mapping_list)
-
-
-@app.route('/confirm_selected_products', methods=['GET', 'POST'])
-def confirm_selected_products():
     if request.method == 'POST':
         selected_items = request.form.getlist('selected_items')
         if not selected_items:
             return render_template(
                 'AS/success.html',
-                mapping_list=session.get('mapping_list', []),
+                mapping_list=mapping_list,
                 message="상품을 한 개 이상 선택해주세요."
             )
         session['selected_items'] = selected_items
+        return redirect(url_for('confirm_selected_products'))
+
+    return render_template("AS/success.html", mapping_list=mapping_list)
+
+
+# 선택 상품 확인 페이지
+@app.route('/confirm_selected_products', methods=['GET', 'POST'])
+def confirm_selected_products():
+    selected_items = session.get('selected_items', [])
+    if request.method == 'POST':
         return redirect(url_for('input_orderer'))
 
-    selected_items = session.get('selected_items', [])
-    return render_template('AS/confirm_selected_products.html', selected_items=selected_items)
+    return render_template(
+        'AS/confirm_selected_products.html',
+        selected_items=selected_items
+    )
 
 
+# 주문자 정보 입력
 @app.route('/input_orderer', methods=['GET', 'POST'])
 def input_orderer():
     if request.method == 'POST':
         name = request.form.get('orderer_name')
         phone = request.form.get('orderer_phone')
-
-        session['orderer_name'] = name
-        session['orderer_phone'] = phone
-
-        return redirect(url_for('input_address')) 
+        session['orderer_info'] = {"name": name, "phone": phone}
+        return redirect(url_for('input_address'))
 
     return render_template('AS/input_orderer.html')
 
 
+# 회수지 주소 입력
 @app.route('/input_address', methods=['GET', 'POST'])
 def input_address():
     if request.method == 'POST':
@@ -451,7 +465,10 @@ def input_address():
         address2 = request.form.get('address2')
 
         if not zipcode or not address1:
-            return render_template('AS/input_address.html', message="우편번호와 기본주소는 필수입니다.")
+            return render_template(
+                'AS/input_address.html',
+                message="우편번호와 기본주소는 필수입니다."
+            )
 
         session['pickup_address'] = {
             'zipcode': zipcode,
@@ -463,6 +480,7 @@ def input_address():
     return render_template('AS/input_address.html')
 
 
+# 수령지 주소 입력
 @app.route('/input_receive_address', methods=['GET', 'POST'])
 def input_receive_address():
     pickup_address = session.get('pickup_address')
@@ -479,7 +497,10 @@ def input_receive_address():
             address2=address2
         )
 
-    return render_template('AS/input_receive_address.html', pickup_address=pickup_address)
+    return render_template(
+        'AS/input_receive_address.html',
+        pickup_address=pickup_address
+    )
 
 
 if __name__ == '__main__':

@@ -62,11 +62,11 @@
     .btn-group {
       display: flex;
       justify-content: center;
-      gap: 16px; /* 버튼 간격 */
+      gap: 16px;
     }
 
     .btn {
-      flex: 1; /* 버튼 크기를 균등하게 */
+      flex: 1;
       max-width: 150px;
       text-align: center;
       padding: 14px 0;
@@ -109,12 +109,12 @@
       </ul>
     </div>
 
-    <form method="POST" action="{{ url_for('input_orderer') }}">
-      <div class="btn-group">
-        <button type="button" class="btn btn-edit" onclick="history.back()">수정하기</button>
-        <button type="submit" class="btn btn-next">다음</button>
-      </div>
-    </form>
+    <div class="btn-group">
+      <button type="button" class="btn btn-edit" onclick="history.back()">수정하기</button>
+      <!-- GET 요청으로 주문자 입력 페이지로 이동 -->
+      <a href="{{ url_for('input_orderer') }}" class="btn btn-next">다음</a>
+    </div>
   </div>
 </body>
 </html>
+
