@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta
 
-import gspread
+import os, json
 from oauth2client.service_account import ServiceAccountCredentials
+import gspread
 
-# Google Sheets 인증
 scope = ["https://spreadsheets.google.com/feeds",
          "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+
+# Render 환경변수에서 JSON 불러오기
+google_creds = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+creds = ServiceAccountCredentials.from_json_keyfile_dict(google_creds, scope)
 client = gspread.authorize(creds)
 
 # 대상 스프레드시트 열기
