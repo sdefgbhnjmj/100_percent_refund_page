@@ -525,7 +525,7 @@ def receive_success():
     orderer_info = session.get('orderer_info', {})
     pickup_address = session.get('pickup_address', {})
     receive_address = session.get('receive_address', {})
-    order_number = session.get('order_number', "")  # 세션에서 주문번호 가져오기
+    order_number = session.get('order_number', "")
 
     # Google Sheets 기록
     sheet.append_row([
@@ -545,6 +545,7 @@ def receive_success():
         pickup_address=pickup_address,
         receive_address=receive_address
     )
+
 
 # ------------------------------
 # 실행
