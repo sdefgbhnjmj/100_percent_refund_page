@@ -1,5 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta
+
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+# Google Sheets 인증
+scope = ["https://spreadsheets.google.com/feeds",
+         "https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+client = gspread.authorize(creds)
+
+# 대상 스프레드시트 열기
+sheet = client.open("[CX팀][슬룸] 반품/교환 후처리 관리 시트").worksheet("교환접수데이터")
+
 import requests
 
 app = Flask(__name__)
@@ -398,6 +411,7 @@ def check_order():
 
             if mapping_data:
                 session['mapping_list'] = mapping_data
+                session['order_number'] = order_number   # 주문번호 세션에 저장
                 return redirect(url_for("success"))
 
         except Exception as e:
@@ -507,14 +521,30 @@ def input_receive_address():
 # 8. 최종 완료 페이지
 @app.route('/receive_success')
 def receive_success():
+    selected_items = session.get('selected_items', [])
+    orderer_info = session.get('orderer_info', {})
+    pickup_address = session.get('pickup_address', {})
+    receive_address = session.get('receive_address', {})
+    order_number = session.get('order_number', "")  # 세션에서 주문번호 가져오기
+
+    # Google Sheets 기록
+    sheet.append_row([
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        order_number,
+        orderer_info.get("name", ""),
+        orderer_info.get("phone", ""),
+        ", ".join(selected_items),
+        f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",
+        f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}"
+    ])
+
     return render_template(
         'AS/receive_address_success.html',
-        selected_items=session.get('selected_items', []),
-        orderer_info=session.get('orderer_info', {}),
-        pickup_address=session.get('pickup_address', {}),
-        receive_address=session.get('receive_address', {})
+        selected_items=selected_items,
+        orderer_info=orderer_info,
+        pickup_address=pickup_address,
+        receive_address=receive_address
     )
-
 
 # ------------------------------
 # 실행
