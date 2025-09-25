@@ -13,8 +13,10 @@ google_creds = json.loads(os.environ["GOOGLE_CREDENTIALS"])
 creds = ServiceAccountCredentials.from_json_keyfile_dict(google_creds, scope)
 client = gspread.authorize(creds)
 
-# 대상 스프레드시트 열기
-sheet = client.open("[CX팀][슬룸] 반품/교환 후처리 관리 시트").worksheet("교환접수데이터")
+# 스프레드시트 ID로 열기
+spreadsheet = client.open_by_key("1t7Oa-rKPY2aYgphNugE5K5gMCP7Hn3joaJYp-bbh7Jw")
+sheet = spreadsheet.worksheet("교환접수데이터")
+
 
 import requests
 
