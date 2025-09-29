@@ -13,45 +13,78 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
+      padding: 20px;
     }
+
     .container {
       background: #fff;
       padding: 40px 32px;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      max-width: 700px;
+      max-width: 720px;
       width: 100%;
-      text-align: center;
     }
-    h2 {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #14497C;
-    }
-    .section {
-      text-align: left;
-      margin-bottom: 24px;
-      background: #f8f9fc;
+
+    .notice-box {
+      background-color: #f8f9fc;
       border: 1px solid #e2e6ea;
-      padding: 16px;
-      border-radius: 12px;
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: left;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
-    .section h3 {
-      font-size: 16px;
-      font-weight: bold;
-      color: #2a5298;
+
+    .notice-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 16px;
+    }
+
+    .notice-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #333;
       margin-bottom: 10px;
     }
-    .section p {
-      margin: 4px 0;
-      font-size: 15px;
-      color: #333;
+
+    .info-card {
+      background: #f8f9fc;
+      border: 1px solid #e2e6ea;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
     }
-    .btn {
-      display: inline-block;
+
+    .info-section + .info-section {
       margin-top: 20px;
-      padding: 14px 28px;
+    }
+
+    .info-section h3 {
+      font-size: 15px;
+      color: #2a5298;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .info-section p,
+    .info-section li {
+      font-size: 14px;
+      color: #333;
+      margin: 4px 0;
+    }
+
+    .info-section ul {
+      padding-left: 20px;
+      list-style-position: inside;
+      margin: 0;
+    }
+
+    .btn {
+      display: block;
+      margin: 40px auto 0;
+      padding: 14px 36px;
       font-size: 16px;
       font-weight: 600;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
@@ -60,8 +93,10 @@
       border-radius: 12px;
       cursor: pointer;
       text-decoration: none;
+      text-align: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
@@ -70,34 +105,50 @@
 </head>
 <body>
   <div class="container">
-    <h2>교환 접수가 완료되었습니다. 최대한 신속히 교환 도와드리겠습니다.</h2>
 
-    <div class="section">
-      <h3>📦 선택 상품</h3>
-      <ul>
-        {% for item in selected_items %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
+    <div class="notice-box">
+      <div class="notice-title">교환 접수 완료 안내</div>
+      <div class="notice-text">
+        고객님, 교환 접수가 정상적으로 완료되었습니다.<br>
+        추석 연휴로 인해 9월 30일 회수 건부터는 10월 9일부터 순차 진행될 예정이며,<br>
+        쇼핑몰 내 교환 상태 반영이 지연될 수 있는 점 양해 부탁드립니다.
+      </div>
+      <div class="notice-text">
+        별도 연락 없이도 순차적으로 진행되오니, 원활한 처리를 위해 잠시만 기다려 주시길 바랍니다.
+      </div>
+      <div class="notice-text">
+        즐겁고 풍성한 한가위 보내시길 바랍니다.
+      </div>
     </div>
 
-    <div class="section">
-      <h3>🙋‍♂️ 주문자 정보</h3>
-      <p>이름: {{ orderer_info.name }}</p>
-      <p>연락처: {{ orderer_info.phone }}</p>
+    <div class="info-card">
+      <div class="info-section">
+        <h3>선택 상품</h3>
+        <ul>
+          {% for item in selected_items %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="info-section">
+        <h3>주문자 정보</h3>
+        <p>이름: {{ orderer_info.name }}</p>
+        <p>연락처: {{ orderer_info.phone }}</p>
+      </div>
+
+      <div class="info-section">
+        <h3>회수지 주소</h3>
+        <p>{{ pickup_address.zipcode }} {{ pickup_address.address1 }} {{ pickup_address.address2 }}</p>
+      </div>
+
+      <div class="info-section">
+        <h3>수령지 주소</h3>
+        <p>{{ receive_address.zipcode }} {{ receive_address.address1 }} {{ receive_address.address2 }}</p>
+      </div>
     </div>
 
-    <div class="section">
-      <h3>🚚 회수지 주소</h3>
-      <p>{{ pickup_address.zipcode }} {{ pickup_address.address1 }} {{ pickup_address.address2 }}</p>
-    </div>
-
-    <div class="section">
-      <h3>📦 수령지 주소</h3>
-      <p>{{ receive_address.zipcode }} {{ receive_address.address1 }} {{ receive_address.address2 }}</p>
-    </div>
-
-    <a href="/" class="btn">메인으로 돌아가기</a>
+    <a href="https://one00-percent-refund-page.onrender.com/defective_exchange" class="btn">메인으로 돌아가기</a>
   </div>
 </body>
 </html>
