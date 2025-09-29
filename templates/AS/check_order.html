@@ -15,24 +15,28 @@
   </script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      min-height: 100vh;
       background-color: #F4F7FA;
       font-family: "Noto Sans KR", Arial, sans-serif;
     }
 
     body {
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-top: 120px;
     }
 
     .logo {
       position: absolute;
-      top: 65px;
+      top: 40px;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -40,6 +44,8 @@
 
     .logo img {
       height: 28px;
+      max-width: 90%;
+      height: auto;
     }
 
     .wrapper {
@@ -49,12 +55,12 @@
       text-align: center;
       padding: 0 20px;
       box-sizing: border-box;
-      max-width: 600px;
       width: 100%;
+      max-width: 500px;
     }
 
     h2 {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
       color: rgba(20, 73, 124, 0.9);
       margin-bottom: 16px;
@@ -62,25 +68,24 @@
 
     .example-image {
       max-width: 100%;
-      width: 250px;
-      margin-bottom: 20px;
+      height: auto;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      margin-bottom: 20px;
     }
 
     p {
-      font-size: 17px;
+      font-size: 16px;
       color: #333;
       margin-bottom: 30px;
     }
 
     .input-box {
       background-color: #ffffff;
-      padding: 28px 32px;
+      padding: 28px 24px;
       border-radius: 16px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
       width: 100%;
-      box-sizing: border-box;
     }
 
     input[type="text"] {
@@ -90,26 +95,46 @@
       border-radius: 10px;
       border: 1px solid #ccc;
       box-sizing: border-box;
-      margin-bottom: 0;
     }
 
     button {
-      margin-top: 40px;
+      margin-top: 30px;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
       border: none;
       padding: 14px 36px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 600;
       border-radius: 12px;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+      max-width: 300px;
     }
 
     button:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+
+      .input-box {
+        padding: 20px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 12px;
+      }
     }
   </style>
 </head>
