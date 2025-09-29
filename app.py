@@ -438,7 +438,7 @@ def success():
     mapping_list = session.get('mapping_list', [])
 
     # 제외할 키워드 설정
-    exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차", "케이블", "커버"]
+    exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차", "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
 
     # 필터링 적용
     filtered_list = [
