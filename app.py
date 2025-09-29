@@ -378,6 +378,7 @@ def check_order():
     if request.method == 'POST':
         order_number = request.form.get("order_number", "").strip()
 
+        # 숫자가 아닌 경우 → 실패
         if not order_number.isdigit():
             return redirect(url_for('fail'))
 
@@ -398,7 +399,9 @@ def check_order():
             data = response.json()
 
             mapping_data = []
-            if data.get("rows"):
+
+            # rows가 존재하고 비어있지 않을 때만 처리
+            if data.get("rows") and len(data["rows"]) > 0:
                 for row in data["rows"]:
                     items = row.get("items", [])
                     for item in items:
@@ -414,10 +417,14 @@ def check_order():
                         )
                         mapping_data.append(f"{product_name} {quantity}개")
 
-            if mapping_data:
-                session['mapping_list'] = mapping_data
-                session['order_number'] = order_number   # 주문번호 세션에 저장
-                return redirect(url_for("success"))
+                # 상품 데이터가 있는 경우에만 success
+                if mapping_data:
+                    session['mapping_list'] = mapping_data
+                    session['order_number'] = order_number
+                    return redirect(url_for("success"))
+
+            # 실패 처리
+            return redirect(url_for("fail"))
 
         except Exception as e:
             print("API 오류:", e)
