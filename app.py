@@ -436,18 +436,28 @@ def fail():
 @app.route('/success', methods=['GET', 'POST'])
 def success():
     mapping_list = session.get('mapping_list', [])
+
+    # 제외할 키워드 설정
+    exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차", "케이블", "커버"]
+
+    # 필터링 적용
+    filtered_list = [
+        item for item in mapping_list
+        if not any(keyword in item for keyword in exclude_keywords)
+    ]
+
     if request.method == 'POST':
         selected_items = request.form.getlist('selected_items')
         if not selected_items:
             return render_template(
                 'AS/success.html',
-                mapping_list=mapping_list,
+                mapping_list=filtered_list,  # 필터링된 리스트 전달
                 message="상품을 한 개 이상 선택해주세요."
             )
         session['selected_items'] = selected_items
         return redirect(url_for('confirm_selected_products'))
 
-    return render_template("AS/success.html", mapping_list=mapping_list)
+    return render_template("AS/success.html", mapping_list=filtered_list)  # 필터링된 리스트 전달
 
 
 # 4. 선택 상품 확인
