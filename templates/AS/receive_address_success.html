@@ -117,9 +117,7 @@
     <div class="info-card">
       <div class="info-section">
         <h3>🎁 교환 상품</h3>
-        {% for item in selected_items %}
-          <p>{{ item }}</p>
-        {% endfor %}
+        <p>{{ selected_items | join(', ') }}</p>
       </div>
 
       <div class="info-section">
