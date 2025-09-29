@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -68,17 +68,10 @@
       margin-bottom: 8px;
     }
 
-    .info-section p,
-    .info-section li {
+    .info-section p {
       font-size: 14px;
       color: #333;
       margin: 4px 0;
-    }
-
-    .info-section ul {
-      padding-left: 20px;
-      list-style-position: inside;
-      margin: 0;
     }
 
     .btn {
@@ -124,11 +117,9 @@
     <div class="info-card">
       <div class="info-section">
         <h3>선택 상품</h3>
-        <ul>
-          {% for item in selected_items %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul>
+        {% for item in selected_items %}
+          <p>{{ item }}</p>
+        {% endfor %}
       </div>
 
       <div class="info-section">
