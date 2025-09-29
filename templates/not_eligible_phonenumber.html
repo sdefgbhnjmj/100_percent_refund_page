@@ -6,56 +6,67 @@
   <title>참여 제한 안내</title>
   <style>
     body {
+      background-color: #F4F7FA;
       font-family: "Noto Sans KR", Arial, sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
     }
+
     .container {
-      background-color: white;
-      padding: 30px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      max-width: 600px;
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 720px;
       width: 100%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
+
     h1 {
-      font-size: 24px;
-      font-weight: bold;
-      color: rgba(20, 73, 124, 0.9);
-      margin-bottom: 20px;
-    }
-    p {
-      font-size: 16px;
-      color: rgba(85, 85, 85, 0.9);
-      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 16px;
       line-height: 1.6;
     }
-    button {
-      background-color: #6c757d;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.2s;
+
+    p {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 28px;
+      line-height: 1.8;
     }
+
+    button {
+      padding: 14px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      background: #6c757d;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
     button:hover {
       background-color: #5a6268;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>참여 제한 안내</h1>
-    <p>참여 이력이 있어 중복 참여가 불가합니다.<br>첫 구매 고객만 참여 가능합니다.</p>
+    <p>
+      참여 이력이 있어 중복 참여가 불가합니다.<br>
+      첫 구매 고객만 참여 가능합니다.
+    </p>
     <button onclick="window.location.href='{{ url_for('input_phonenumber') }}'">이전</button>
   </div>
 </body>

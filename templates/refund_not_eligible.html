@@ -1,82 +1,86 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>환불 서비스 제한 안내</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>환불 서비스 제한 안내</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QPWTWFSY4H');
+  </script>
 
-      gtag('config', 'G-QPWTWFSY4H');
-    </script>
+  <style>
+    body {
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <style>
-        body {
-            font-family: "Noto Sans KR", Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            color: rgba(20, 73, 124, 0.9);
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 16px;
-            color: rgba(85, 85, 85, 0.9);
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        button {
-            background-color: rgba(20, 73, 124, 0.9);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: rgba(10, 54, 95, 0.9);
-        }
-        .back-button {
-            background-color: #6c757d;
-            color: white;
-            margin-top: 10px;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-    </style>
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    p {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 28px;
+      line-height: 1.8;
+    }
+
+    button {
+      padding: 14px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .back-button {
+      background: #6c757d;
+      color: #fff;
+    }
+
+    .back-button:hover {
+      background-color: #5a6268;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>환불 서비스 제한 안내</h1>
-        <p>환불 서비스는 첫 구매 체험을 위한 서비스로 단 1회, 상품 1종에 대해서만 신청이 가능합니다.</p>
-        <button class="back-button" onclick="window.history.back()">이전</button>
-    </div>
+  <div class="container">
+    <h1>환불 서비스 제한 안내</h1>
+    <p>
+      환불 서비스는 <strong>첫 구매 체험을 위한 서비스</strong>로,<br>
+      <strong>단 1회, 상품 1종</strong>에 대해서만 신청이 가능합니다.
+    </p>
+    <button class="back-button" onclick="window.history.back()">이전</button>
+  </div>
 </body>
 </html>

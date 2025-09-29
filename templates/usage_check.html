@@ -18,8 +18,8 @@
         .container {
             background-color: white;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
             text-align: center;
@@ -28,32 +28,47 @@
             font-size: 22px;
             font-weight: bold;
             color: rgba(20, 73, 124, 0.9);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        p.desc {
+            font-size: 15px;
+            color: rgba(85, 85, 85, 0.85);
+            margin-bottom: 25px;
+            line-height: 1.5;
         }
         .radio-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             text-align: left;
         }
-        label {
-            font-size: 16px;
-            color: rgba(85, 85, 85, 0.9);
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .radio-option:hover {
+            background-color: #f1f7ff;
+            border-color: rgba(20, 73, 124, 0.6);
+        }
+        input[type="radio"] {
+            accent-color: rgba(20, 73, 124, 0.9);
+            transform: scale(1.2);
         }
         .button-group {
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         button {
             flex: 1;
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
             background-color: rgba(20, 73, 124, 0.9);
             color: white;
@@ -76,10 +91,15 @@
 <body>
     <div class="container">
         <h1>제품 수령 후, 30일 이상 꾸준히 사용해 보셨나요?</h1>
+        <p class="desc">100% 환불 이벤트는 <strong>30일 이상 사용 경험</strong>을 전제로 진행됩니다.<br>정확히 선택해 주세요.</p>
         <form method="POST">
             <div class="radio-group">
-                <label><input type="radio" name="usage" value="yes" required> 예</label>
-                <label><input type="radio" name="usage" value="no"> 아니오</label>
+                <label class="radio-option">
+                    <input type="radio" name="usage" value="yes" required> 예
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="usage" value="no"> 아니오
+                </label>
             </div>
             <div class="button-group">
                 <button class="back-button" type="button" onclick="window.history.back()">이전</button>

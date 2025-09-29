@@ -1,108 +1,135 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>배송 완료일 확인 여부</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>배송 완료일 확인 여부</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QPWTWFSY4H');
+  </script>
 
-      gtag('config', 'G-QPWTWFSY4H');
-    </script>
+  <style>
+    body {
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <style>
-        body {
-            font-family: "Noto Sans KR", Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-        h1 {
-            font-size: 22px;
-            font-weight: bold;
-            color: rgba(20, 73, 124, 0.9);
-            margin-bottom: 20px;
-        }
-        .options {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        label {
-            font-size: 16px;
-            color: rgba(85, 85, 85, 0.9);
-            margin-bottom: 10px;
-            display: block;
-            cursor: pointer;
-        }
-        input[type="radio"] {
-            margin-right: 10px;
-        }
-        input[type="radio"]:checked + label {
-            color: rgba(20, 73, 124, 0.9);
-        }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        button {
-            flex: 1;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: rgba(20, 73, 124, 0.9);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: rgba(10, 54, 95, 0.9);
-        }
-        .back-button {
-            background-color: #6c757d;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-    </style>
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .options {
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    label {
+      font-size: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    input[type="radio"] {
+      accent-color: #1e3c72;
+      width: 18px;
+      height: 18px;
+    }
+
+    input[type="radio"]:checked + span {
+      color: #1e3c72;
+      font-weight: 600;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 0;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .submit-button {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .back-button {
+      background: #6c757d;
+      color: #fff;
+    }
+
+    .back-button:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>배송 완료일을 알고 계신가요?</h1>
-        <form method="POST">
-            <div class="options">
-                <label>
-                    <input type="radio" name="know_delivery_date" value="예" required> 예
-                </label>
-                <label>
-                    <input type="radio" name="know_delivery_date" value="아니오"> 아니오
-                </label>
-            </div>
-            <div class="button-group">
-                <button class="back-button" type="button" onclick="window.history.back()">이전</button>
-                <button type="submit">다음</button>
-            </div>
-        </form>
-    </div>
+  <div class="container">
+    <h1>배송 완료일을 알고 계신가요?</h1>
+    <form method="POST">
+      <div class="options">
+        <label>
+          <input type="radio" name="know_delivery_date" value="예" required>
+          <span>예</span>
+        </label>
+        <label>
+          <input type="radio" name="know_delivery_date" value="아니오">
+          <span>아니오</span>
+        </label>
+      </div>
+      <div class="button-group">
+        <button class="back-button" type="button" onclick="window.history.back()">이전</button>
+        <button class="submit-button" type="submit">다음</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>

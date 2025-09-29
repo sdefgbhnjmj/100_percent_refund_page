@@ -1,130 +1,162 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>환불 서비스 상세 안내</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>환불 서비스 상세 안내</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QPWTWFSY4H');
+  </script>
 
-      gtag('config', 'G-QPWTWFSY4H');
-    </script>
+  <style>
+    body {
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <style>
-        body {
-            font-family: "Noto Sans KR", Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-        .title {
-            font-size: 22px;
-            font-weight: bold;
-            color: rgba(20, 73, 124, 0.9);
-            margin-bottom: 20px;
-        }
-        .highlight {
-            background-color: rgba(240, 248, 255, 0.9);
-            border-left: 4px solid rgba(20, 73, 124, 0.9);
-            padding: 20px;
-            border-radius: 6px;
-            margin: 20px 0;
-            text-align: left;
-        }
-        .highlight h2 {
-            font-size: 18px;
-            color: rgba(20, 73, 124, 0.9);
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .highlight ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .highlight li {
-            font-size: 16px;
-            color: rgba(85, 85, 85, 0.9);
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-        .highlight li::before {
-            content: "•";
-            color: rgba(20, 73, 124, 0.9);
-            position: absolute;
-            left: 0;
-            font-size: 20px;
-            line-height: 1;
-        }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        button {
-            flex: 1;
-            padding: 12px 20px;
-            font-size: 16px;
-            background-color: rgba(20, 73, 124, 0.9);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: rgba(10, 54, 95, 0.9);
-        }
-        .back-button {
-            background-color: #6c757d;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-    </style>
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    p {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .highlight {
+      background-color: rgba(240, 248, 255, 0.9);
+      border-left: 4px solid #1e3c72;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: left;
+    }
+
+    .highlight h2 {
+      font-size: 18px;
+      color: #1e3c72;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .highlight ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .highlight li {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .highlight li::before {
+      content: "•";
+      color: #1e3c72;
+      position: absolute;
+      left: 0;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 0;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .back-button {
+      background: #6c757d;
+      color: #fff;
+    }
+
+    .back-button:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">환불 서비스 상세 안내</h1>
-        <p>구성이 다른 세트 상품은 왕복 배송비 제외 후 전액 환불 가능합니다.😊</p>
-        <p>동일한 상품 2개 이상 또는 단품을 구매하신 경우 '이전' 버튼으로 이동해주세요.</p>
-        <p>아래 주의 사항을 꼭 읽으신 후, 동의하시면 '다음' 버튼으로 이동해주세요.</p>
-        <div class="highlight">
-            <h2>구성이 다른 세트 상품 예시</h2>
-            <ul>
-                <li>예시 1: 허리편한케어 + 목편한케어</li>
-                <li>예시 2: 넥숄더 힐링케어 + 허리편한케어</li>
-            <h2>주의 사항</h2>
-            <ul>
-                <li>부분 환불 희망하는 경우, 자사몰 상품 구성 가격 기준의 정가 차감 후 환불됩니다.</li>
-            </ul>
-        </div>
-        <form method="POST">
-            <div class="button-group">
-                <button class="back-button" type="button" onclick="window.history.back()">이전</button>
-                <button type="submit">다음</button>
-            </div>
-        </form>
+  <div class="container">
+    <h1 class="title">환불 서비스 상세 안내</h1>
+    <p>구성이 다른 세트 상품은 <strong>왕복 배송비 제외 후 전액 환불</strong> 가능합니다. 😊</p>
+    <p>동일한 상품 2개 이상 또는 단품을 구매하신 경우<br><strong>‘이전’ 버튼</strong>으로 이동해주세요.</p>
+    <p>아래 주의 사항을 꼭 읽으신 후, 동의하시면 ‘다음’ 버튼을 눌러주세요.</p>
+
+    <div class="highlight">
+      <h2>구성이 다른 세트 상품 예시</h2>
+      <ul>
+        <li>허리편한케어 + 목편한케어</li>
+        <li>넥숄더 힐링케어 + 허리편한케어</li>
+      </ul>
+
+      <h2>주의 사항</h2>
+      <ul>
+        <li>부분 환불을 희망하실 경우, 자사몰 상품 구성 가격 기준의 정가 차감 후 환불됩니다.</li>
+      </ul>
     </div>
+
+    <form method="POST">
+      <div class="button-group">
+        <button class="back-button" type="button" onclick="window.history.back()">이전</button>
+        <button type="submit">다음</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>

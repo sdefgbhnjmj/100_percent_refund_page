@@ -1,116 +1,146 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>환불 상품 구성 선택</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>환불 상품 구성 선택</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QPWTWFSY4H');
+  </script>
 
-      gtag('config', 'G-QPWTWFSY4H');
-    </script>
+  <style>
+    body {
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <style>
-        body {
-            font-family: "Noto Sans KR", Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-        h1 {
-            font-size: 22px;
-            font-weight: bold;
-            color: rgba(20, 73, 124, 0.9);
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            text-align: left;
-        }
-        label {
-            font-size: 16px;
-            color: rgba(85, 85, 85, 0.9);
-        }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        button {
-            flex: 1;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: rgba(20, 73, 124, 0.9);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: rgba(10, 54, 95, 0.9);
-        }
-        .back-button {
-            background-color: #6c757d;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-    </style>
-</head>
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+    }
+
+    label {
+      font-size: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      accent-color: #1e3c72;
+      width: 18px;
+      height: 18px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 0;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .back-button {
+      background: #6c757d;
+      color: #fff;
+    }
+
+    .back-button:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>환불을 희망하시는 상품의 구성을 선택해주세요.</h1>
-        <form method="POST" id="refundForm">
-            <div class="radio-group">
-                <label><input type="radio" name="refund_option" value="set" required> 구성이 다른 세트 상품</label>
-                <label><input type="radio" name="refund_option" value="multiple" required> 동일한 상품 2개 이상</label>
-                <label><input type="radio" name="refund_option" value="single" required> 단품</label>
-            </div>
-            <div class="button-group">
-                <button class="back-button" type="button" onclick="window.history.back()">이전</button>
-                <button type="submit">다음</button>
-            </div>
-        </form>
-    </div>
-    
-    <script>
-        function redirectToSetInfo() {
-            window.location.href = "/refund_set_product_info";
-        }
-        function redirectToMultipleInfo() {
-            window.location.href = "/refund_multiple_product_info";
-        }
-        function redirectToSingleInfo() {
-            window.location.href = "/refund_single_product_info";
-        }
-    </script>
+  <div class="container">
+    <h1>환불을 희망하시는 상품의 구성을 선택해주세요.</h1>
+    <form id="refundForm">
+      <div class="radio-group">
+        <label><input type="radio" name="refund_option" value="set" required> 구성이 다른 세트 상품</label>
+        <label><input type="radio" name="refund_option" value="multiple"> 동일한 상품 2개 이상</label>
+        <label><input type="radio" name="refund_option" value="single"> 단품</label>
+      </div>
+      <div class="button-group">
+        <button class="back-button" type="button" onclick="window.history.back()">이전</button>
+        <button type="submit">다음</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("refundForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const selected = document.querySelector("input[name='refund_option']:checked")?.value;
+
+      if (selected === "set") {
+        window.location.href = "/refund_set_product_info";
+      } else if (selected === "multiple") {
+        window.location.href = "/refund_multiple_product_info";
+      } else if (selected === "single") {
+        window.location.href = "/refund_single_product_info";
+      }
+    });
+  </script>
 </body>
 </html>

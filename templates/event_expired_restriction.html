@@ -1,96 +1,94 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이벤트 신청 기간 경과</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이벤트 신청 기간 경과</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPWTWFSY4H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QPWTWFSY4H');
+  </script>
 
-      gtag('config', 'G-QPWTWFSY4H');
-    </script>
+  <style>
+    body {
+      background-color: #F4F7FA;
+      font-family: "Noto Sans KR", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <style>
-        body {
-            font-family: "Noto Sans KR", Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-        h1 {
-            font-size: 22px;
-            font-weight: bold;
-            color: rgba(20, 73, 124, 0.9);
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 16px;
-            color: rgba(85, 85, 85, 0.9);
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-        span {
-            font-weight: bold;
-            color: red;
-        }
-        a {
-            font-weight: bold;
-            color: rgba(20, 73, 124, 0.9);
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        button {
-            background-color: rgba(20, 73, 124, 0.9);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: rgba(10, 54, 95, 0.9);
-        }
-    </style>
+    .container {
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    p {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    span {
+      font-weight: 600;
+      color: #d9534f; /* 강조 빨강 */
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e3c72;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #2a5298;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>100% 환불 이벤트 신청 기간이 경과하여 반품이 불가합니다.</h1>
-        <p>
-            100% 환불 이벤트는 첫 구매 체험을 위한 서비스로,
-            <span>{{ start_date }} ~ {{ end_date }}</span>에만 신청 가능한 점 양해 부탁드립니다.
-        </p>
-        <p>
-            그 외 문의 사항은 슬룸 고객센터로 문의해 주시면 확인 후 안내 도와드리겠습니다.
-        </p>
-        <p>
-            제품 구성에 따라 이벤트 조건이 상이하므로, 아래 &lt;100% 환불 이벤트&gt; 공지사항에서
-            상세 조건을 확인 부탁드립니다.
-        </p>
-        <a href="https://sleeplab.co.kr/notice/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=13709226&t=board">
-            ➡️ 100% 환불 이벤트 상세 조건 확인하러 가기
-        </a>
-    </div>
+  <div class="container">
+    <h1>100% 환불 이벤트 신청 기간이 경과하여 반품이 불가합니다.</h1>
+    <p>
+      100% 환불 이벤트는 첫 구매 체험을 위한 서비스로,<br>
+      <span>{{ start_date }} ~ {{ end_date }}</span> 기간에만 신청 가능합니다.
+    </p>
+    <p>
+      그 외 문의 사항은 슬룸 고객센터로 문의해 주시면 확인 후 안내 도와드리겠습니다.
+    </p>
+    <p>
+      제품 구성에 따라 이벤트 조건이 상이하므로,<br>
+      아래 <strong>&lt;100% 환불 이벤트&gt;</strong> 공지사항에서 상세 조건을 확인 부탁드립니다.
+    </p>
+    <a href="https://sleeplab.co.kr/notice/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=13709226&t=board">
+      ➡️ 100% 환불 이벤트 상세 조건 확인하러 가기
+    </a>
+  </div>
 </body>
 </html>
