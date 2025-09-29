@@ -116,25 +116,25 @@
 
     <div class="info-card">
       <div class="info-section">
-        <h3>선택 상품</h3>
+        <h3>🎁 교환 상품</h3>
         {% for item in selected_items %}
           <p>{{ item }}</p>
         {% endfor %}
       </div>
 
       <div class="info-section">
-        <h3>주문자 정보</h3>
+        <h3>🙋🏻‍♀️ 주문자 정보</h3>
         <p>이름: {{ orderer_info.name }}</p>
         <p>연락처: {{ orderer_info.phone }}</p>
       </div>
 
       <div class="info-section">
-        <h3>회수지 주소</h3>
+        <h3>🚚 회수지 주소</h3>
         <p>{{ pickup_address.zipcode }} {{ pickup_address.address1 }} {{ pickup_address.address2 }}</p>
       </div>
 
       <div class="info-section">
-        <h3>수령지 주소</h3>
+        <h3>🏠 수령지 주소</h3>
         <p>{{ receive_address.zipcode }} {{ receive_address.address1 }} {{ receive_address.address2 }}</p>
       </div>
     </div>
