@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -116,8 +116,10 @@
 
     <div class="info-card">
       <div class="info-section">
-        <h3>🎁 교환 상품</h3>
-        <p>{{ selected_items | join(', ') }}</p>
+        <h3>🎁 선택 상품</h3>
+        {% for item in selected_items %}
+          <p>{{ item }}</p>
+        {% endfor %}
       </div>
 
       <div class="info-section">
