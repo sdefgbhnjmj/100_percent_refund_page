@@ -534,6 +534,8 @@ def input_receive_address():
 
 
 # 8. 최종 완료 페이지
+from pytz import timezone  # 상단에 추가
+
 @app.route('/receive_success')
 def receive_success():
     selected_items = session.get('selected_items', [])
@@ -542,9 +544,12 @@ def receive_success():
     receive_address = session.get('receive_address', {})
     order_number = session.get('order_number', "")
 
+    # 한국 시간 설정
+    korea_time = datetime.now(timezone('Asia/Seoul'))
+
     # Google Sheets 기록
     sheet.append_row([
-        korea_time.strftime("%Y-%m-%d %H:%M:%S"),   # ← 한국 시간 기록
+        korea_time.strftime("%Y-%m-%d %H:%M:%S"),
         order_number,
         orderer_info.get("name", ""),
         orderer_info.get("phone", ""),
