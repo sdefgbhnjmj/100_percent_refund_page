@@ -544,7 +544,7 @@ def receive_success():
 
     # Google Sheets 기록
     sheet.append_row([
-        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        korea_time.strftime("%Y-%m-%d %H:%M:%S"),   # ← 한국 시간 기록
         order_number,
         orderer_info.get("name", ""),
         orderer_info.get("phone", ""),
