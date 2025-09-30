@@ -417,9 +417,10 @@ def check_order():
                         )
                         mapping_data.append(f"{product_name} {quantity}개")
 
-                    # receiverData.address를 세션에 저장
+                    # receiverData 저장 (우편번호 + 주소)
                     receiverData = row.get("receiverData", {})
                     session['receiverData'] = {
+                        "postcode": receiverData.get("postcode", ""),  # API 필드명 확인
                         "address": receiverData.get("address", "")
                     }
 
@@ -549,6 +550,36 @@ def input_receive_address():
 # 8. 최종 완료 페이지
 from pytz import timezone  # 상단에 추가
 
+@app.route('/success', methods=['GET', 'POST'])
+def success():
+    mapping_list = session.get('mapping_list', [])
+
+    # 제외할 키워드 설정
+    exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차", "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
+
+    # 필터링 적용
+    filtered_list = [
+        item for item in mapping_list
+        if not any(keyword in item for keyword in exclude_keywords)
+    ]
+
+    if request.method == 'POST':
+        selected_items = request.form.getlist('selected_items')
+        if not selected_items:
+            return render_template(
+                'AS/success.html',
+                mapping_list=filtered_list,
+                message="상품을 한 개 이상 선택해주세요."
+            )
+        session['selected_items'] = selected_items
+        return redirect(url_for('confirm_selected_products'))
+
+    return render_template("AS/success.html", mapping_list=filtered_list)
+
+
+# ------------------------------
+# 최종 완료 → 시트 기록
+# ------------------------------
 @app.route('/receive_success')
 def receive_success():
     selected_items = session.get('selected_items', [])
@@ -562,11 +593,11 @@ def receive_success():
 
     # check_order에서 세션에 넣어둔 receiverData 불러오기
     receiverData = session.get('receiverData', {})
-    receiver_zipcode = receiverData.get("zipcode", "")
+    receiver_postcode = receiverData.get("postcode", "")
     receiver_address = receiverData.get("address", "")
 
-    # "08378 서울 구로구 디지털로 306" 형태로 조합
-    receiver_full_address = f"{receiver_zipcode} {receiver_address}".strip()
+    # 우편번호 먼저
+    receiver_full_address = f"{receiver_postcode} {receiver_address}".strip()
 
     # 기록할 값 준비
     values = [[
@@ -577,7 +608,7 @@ def receive_success():
         ", ".join(selected_items),                  # E열: 교환 선택 상품
         f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # F열: 회수 주소
         f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # G열: 수령 주소
-        receiver_full_address                     # H열: API에서 가져온 receiverData.address
+        receiver_full_address                       # H열: API에서 가져온 (08378 + 주소)
     ]]
 
     # 현재 마지막 행 번호 구하기
@@ -593,6 +624,7 @@ def receive_success():
         pickup_address=pickup_address,
         receive_address=receive_address
     )
+
 
 # ------------------------------
 # 실행
