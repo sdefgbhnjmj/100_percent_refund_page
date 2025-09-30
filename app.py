@@ -562,7 +562,11 @@ def receive_success():
 
     # check_order에서 세션에 넣어둔 receiverData 불러오기
     receiverData = session.get('receiverData', {})
-    receiver_address_raw = receiverData.get("address", "")
+    receiver_zipcode = receiverData.get("zipcode", "")
+    receiver_address = receiverData.get("address", "")
+
+    # "08378 서울 구로구 디지털로 306" 형태로 조합
+    receiver_full_address = f"{receiver_zipcode} {receiver_address}".strip()
 
     # 기록할 값 준비
     values = [[
@@ -573,7 +577,7 @@ def receive_success():
         ", ".join(selected_items),                  # E열: 교환 선택 상품
         f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # F열: 회수 주소
         f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # G열: 수령 주소
-        receiver_address_raw                        # H열: API에서 가져온 receiverData.address
+        receiver_full_address                     # H열: API에서 가져온 receiverData.address
     ]]
 
     # 현재 마지막 행 번호 구하기
