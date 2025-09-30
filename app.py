@@ -554,16 +554,27 @@ def receive_success():
     # 한국 시간 설정
     korea_time = datetime.now(timezone('Asia/Seoul'))
 
-    # Google Sheets 기록
-    sheet.append_row([
-        korea_time.strftime("%Y-%m-%d %H:%M:%S"),
-        order_number,
-        orderer_info.get("name", ""),
-        orderer_info.get("phone", ""),
-        ", ".join(selected_items),
-        f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",
-        f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}"
-    ])
+    # receiverData.address (세션이나 다른 API 결과에서 가져온다고 가정)
+    receiverData = session.get('receiverData', {})
+    receiver_address_raw = receiverData.get("address", "")
+
+    # 기록할 값 준비
+    values = [[
+        korea_time.strftime("%Y-%m-%d %H:%M:%S"),   # A열: 기록 시간
+        order_number,                               # B열: 주문번호
+        orderer_info.get("name", ""),               # C열: 주문자 이름
+        orderer_info.get("phone", ""),              # D열: 주문자 연락처
+        ", ".join(selected_items),                  # E열: 교환 선택 상품
+        f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # F열: 회수 주소
+        f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # G열: 수령 주소
+        receiver_address_raw                        # H열: receiverData.address
+    ]]
+
+    # 현재 마지막 행 번호 구하기
+    last_row = len(sheet.get_all_values()) + 1
+
+    # A열~H열에 기록
+    sheet.update(f"A{last_row}:H{last_row}", values)
 
     return render_template(
         'AS/receive_address_success.html',
