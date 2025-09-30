@@ -417,6 +417,12 @@ def check_order():
                         )
                         mapping_data.append(f"{product_name} {quantity}개")
 
+                    # receiverData.address를 세션에 저장
+                    receiverData = row.get("receiverData", {})
+                    session['receiverData'] = {
+                        "address": receiverData.get("address", "")
+                    }
+
                 # 상품 데이터가 있는 경우에만 success
                 if mapping_data:
                     session['mapping_list'] = mapping_data
@@ -554,7 +560,7 @@ def receive_success():
     # 한국 시간 설정
     korea_time = datetime.now(timezone('Asia/Seoul'))
 
-    # receiverData.address (세션이나 다른 API 결과에서 가져온다고 가정)
+    # check_order에서 세션에 넣어둔 receiverData 불러오기
     receiverData = session.get('receiverData', {})
     receiver_address_raw = receiverData.get("address", "")
 
@@ -567,13 +573,13 @@ def receive_success():
         ", ".join(selected_items),                  # E열: 교환 선택 상품
         f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # F열: 회수 주소
         f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # G열: 수령 주소
-        receiver_address_raw                        # H열: receiverData.address
+        receiver_address_raw                        # H열: API에서 가져온 receiverData.address
     ]]
 
     # 현재 마지막 행 번호 구하기
     last_row = len(sheet.get_all_values()) + 1
 
-    # A열~H열에 기록
+    # A열~H열까지 기록
     sheet.update(f"A{last_row}:H{last_row}", values)
 
     return render_template(
@@ -583,7 +589,6 @@ def receive_success():
         pickup_address=pickup_address,
         receive_address=receive_address
     )
-
 
 # ------------------------------
 # 실행
