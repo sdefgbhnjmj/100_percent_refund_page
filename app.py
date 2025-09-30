@@ -550,7 +550,7 @@ def input_receive_address():
 # 8. 최종 완료 페이지
 from pytz import timezone  # 상단에 추가
 
-@app.route('/success', methods=['GET', 'POST'])
+@app.route('/receive_success')
 def success():
     mapping_list = session.get('mapping_list', [])
 
