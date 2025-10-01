@@ -551,36 +551,6 @@ def input_receive_address():
 from pytz import timezone  # 상단에 추가
 
 @app.route('/receive_success')
-def success():
-    mapping_list = session.get('mapping_list', [])
-
-    # 제외할 키워드 설정
-    exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차", "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
-
-    # 필터링 적용
-    filtered_list = [
-        item for item in mapping_list
-        if not any(keyword in item for keyword in exclude_keywords)
-    ]
-
-    if request.method == 'POST':
-        selected_items = request.form.getlist('selected_items')
-        if not selected_items:
-            return render_template(
-                'AS/success.html',
-                mapping_list=filtered_list,
-                message="상품을 한 개 이상 선택해주세요."
-            )
-        session['selected_items'] = selected_items
-        return redirect(url_for('confirm_selected_products'))
-
-    return render_template("AS/success.html", mapping_list=filtered_list)
-
-
-# ------------------------------
-# 최종 완료 → 시트 기록
-# ------------------------------
-@app.route('/receive_success')
 def receive_success():
     selected_items = session.get('selected_items', [])
     orderer_info = session.get('orderer_info', {})
@@ -601,20 +571,17 @@ def receive_success():
 
     # 기록할 값 준비
     values = [[
-        korea_time.strftime("%Y-%m-%d %H:%M:%S"),   # A열: 기록 시간
-        order_number,                               # B열: 주문번호
-        orderer_info.get("name", ""),               # C열: 주문자 이름
-        orderer_info.get("phone", ""),              # D열: 주문자 연락처
-        ", ".join(selected_items),                  # E열: 교환 선택 상품
-        f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # F열: 회수 주소
-        f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # G열: 수령 주소
-        receiver_full_address                       # H열: API에서 가져온 (08378 + 주소)
+        korea_time.strftime("%Y-%m-%d %H:%M:%S"),   # A열
+        order_number,                               # B열
+        orderer_info.get("name", ""),               # C열
+        orderer_info.get("phone", ""),              # D열
+        ", ".join(selected_items),                  # E열
+        f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # F열
+        f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # G열
+        receiver_full_address                       # H열
     ]]
 
-    # 현재 마지막 행 번호 구하기
     last_row = len(sheet.get_all_values()) + 1
-
-    # A열~H열까지 기록
     sheet.update(f"A{last_row}:H{last_row}", values)
 
     return render_template(
