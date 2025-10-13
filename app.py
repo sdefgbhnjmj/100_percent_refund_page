@@ -479,12 +479,29 @@ def success():
 def confirm_selected_products():
     selected_items = session.get('selected_items', [])
     if request.method == 'POST':
-        return redirect(url_for('input_orderer'))
+        # 다음 단계: 불량 증상 선택
+        return redirect(url_for('defect_type_select'))
 
     return render_template(
         'AS/confirm_selected_products.html',
         selected_items=selected_items
     )
+
+
+# 4-1. 불량 증상 선택
+@app.route('/defect_type_select', methods=['GET', 'POST'])
+def defect_type_select():
+    if request.method == 'POST':
+        defect_type = request.form.get('defect_type')
+        if not defect_type:
+            return render_template(
+                'AS/defect_type_select.html',
+                message="불량 증상을 선택해주세요."
+            )
+        session['defect_type'] = defect_type
+        return redirect(url_for('input_orderer'))
+
+    return render_template('AS/defect_type_select.html')
 
 
 # 5. 주문자 정보 입력
@@ -495,7 +512,6 @@ def input_orderer():
         phone = request.form.get('orderer_phone')
         session['orderer_info'] = {"name": name, "phone": phone}
         return redirect(url_for('input_address'))
-
     return render_template('AS/input_orderer.html')
 
 
@@ -519,7 +535,6 @@ def input_address():
             'address2': address2
         }
         return redirect(url_for('input_receive_address'))
-
     return render_template('AS/input_address.html')
 
 
@@ -527,7 +542,6 @@ def input_address():
 @app.route('/input_receive_address', methods=['GET', 'POST'])
 def input_receive_address():
     pickup_address = session.get('pickup_address')
-
     if request.method == 'POST':
         zipcode = request.form.get('zipcode')
         address1 = request.form.get('address1')
@@ -538,7 +552,6 @@ def input_receive_address():
             'address1': address1,
             'address2': address2
         }
-
         return redirect(url_for('receive_success'))
 
     return render_template(
@@ -547,8 +560,8 @@ def input_receive_address():
     )
 
 
-# 8. 최종 완료 페이지
-from pytz import timezone  # 상단에 추가
+# 8. 최종 완료 페이지 (Google Sheet 기록 포함)
+from pytz import timezone
 
 @app.route('/receive_success')
 def receive_success():
@@ -557,39 +570,38 @@ def receive_success():
     pickup_address = session.get('pickup_address', {})
     receive_address = session.get('receive_address', {})
     order_number = session.get('order_number', "")
+    defect_type = session.get('defect_type', "")
 
-    # 한국 시간 설정
     korea_time = datetime.now(timezone('Asia/Seoul'))
 
-    # check_order에서 세션에 넣어둔 receiverData 불러오기
     receiverData = session.get('receiverData', {})
     receiver_postcode = receiverData.get("postcode", "")
     receiver_address = receiverData.get("address", "")
-
-    # 우편번호 먼저
     receiver_full_address = f"{receiver_postcode} {receiver_address}".strip()
 
-    # 기록할 값 준비
+    # 스프레드시트 컬럼 정렬 (A~I)
     values = [[
-        korea_time.strftime("%Y-%m-%d %H:%M:%S"),   # A열
-        order_number,                               # B열
-        orderer_info.get("name", ""),               # C열
-        orderer_info.get("phone", ""),              # D열
-        ", ".join(selected_items),                  # E열
-        f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # F열
-        f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # G열
-        receiver_full_address                       # H열
+        korea_time.strftime("%Y-%m-%d %H:%M:%S"),   # A: 기록시간
+        order_number,                               # B: 주문번호
+        orderer_info.get("name", ""),               # C: 주문자명
+        orderer_info.get("phone", ""),              # D: 주문자 연락처
+        ", ".join(selected_items),                  # E: 선택상품
+        defect_type,                                # F: 불량 유형
+        f"{pickup_address.get('zipcode','')} {pickup_address.get('address1','')} {pickup_address.get('address2','')}",  # G: 회수지
+        f"{receive_address.get('zipcode','')} {receive_address.get('address1','')} {receive_address.get('address2','')}", # H: 수령지
+        receiver_full_address                       # I: 최초 배송주소
     ]]
 
     last_row = len(sheet.get_all_values()) + 1
-    sheet.update(f"A{last_row}:H{last_row}", values)
+    sheet.update(f"A{last_row}:I{last_row}", values)
 
     return render_template(
         'AS/receive_address_success.html',
         selected_items=selected_items,
         orderer_info=orderer_info,
         pickup_address=pickup_address,
-        receive_address=receive_address
+        receive_address=receive_address,
+        defect_type=defect_type
     )
 
 
