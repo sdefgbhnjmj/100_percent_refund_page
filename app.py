@@ -15,7 +15,7 @@ client = gspread.authorize(creds)
 
 # 스프레드시트 ID로 열기
 spreadsheet = client.open_by_key("1t7Oa-rKPY2aYgphNugE5K5gMCP7Hn3joaJYp-bbh7Jw")
-sheet = spreadsheet.worksheet("교환접수데이터")
+sheet = spreadsheet.worksheet("[슬룸] 소음/온열 교환 접수")
 
 
 import requests
