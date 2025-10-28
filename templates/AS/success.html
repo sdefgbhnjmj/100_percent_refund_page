@@ -44,7 +44,7 @@
       text-align: left;
     }
     .mapping-box .item-group {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
     .mapping-box label {
       font-size: 15px;
@@ -87,7 +87,7 @@
 <body>
   <div class="container">
     <h2>교환 희망 상품 선택</h2>
-    <p class="sub-text">주문건 중 교환 희망하시는 상품을 선택해주세요.</p>
+    <p class="sub-text">주문건 중 교환 희망하시는 상품과 수량을 정확히 선택해주세요.</p>
 
     {% if message %}
       <p class="message">{{ message }}</p>
@@ -95,16 +95,24 @@
 
     <form method="POST" action="{{ url_for('success') }}">
       <div class="mapping-box">
-        {% for item, count in mapping_list %}
+        {% for item in mapping_list %}
+          {% set item_parts = item.split() %}
+          {% set qty = 1 %}
+          {% for part in item_parts %}
+            {% if part.endswith("개") %}
+              {% set qty = part.replace("개", "") | int %}
+            {% endif %}
+          {% endfor %}
+
           <div class="item-group">
             <label>
               <input type="checkbox" name="selected_items" value="{{ item }}">
               {{ item }}
             </label>
 
-            {% if count > 1 %}
+            {% if qty > 1 %}
               <select name="quantity_{{ loop.index }}">
-                {% for i in range(1, count + 1) %}
+                {% for i in range(1, qty + 1) %}
                   <option value="{{ i }}">{{ i }}개</option>
                 {% endfor %}
               </select>
