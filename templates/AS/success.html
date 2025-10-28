@@ -49,9 +49,12 @@
       font-size: 15px;
       color: #333;
     }
-    input[type="checkbox"] {
-      margin-right: 10px;
-      transform: scale(1.2);
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
     }
     .btn-submit {
       background: linear-gradient(135deg, #1e3c72, #2a5298);
@@ -86,14 +89,28 @@
     {% endif %}
 
     <form method="POST" action="{{ url_for('success') }}">
-      <div class="mapping-box">
-        {% for item in mapping_list %}
-          <label>
-            <input type="checkbox" name="selected_items" value="{{ item }}">
-            {{ item }}
-          </label>
-        {% endfor %}
-      </div>
+      {% if mapping_list|length >= 2 %}
+        <!-- 2개 이상일 때: 드롭다운 -->
+        <div class="mapping-box">
+          <label for="selected_item">교환 희망 상품을 선택하세요:</label>
+          <select name="selected_item" id="selected_item" required>
+            <option value="">선택하세요</option>
+            {% for item in mapping_list %}
+              <option value="{{ item }}">{{ item }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      {% else %}
+        <!-- 1개 이하일 때: 기존 체크박스 유지 -->
+        <div class="mapping-box">
+          {% for item in mapping_list %}
+            <label>
+              <input type="checkbox" name="selected_items" value="{{ item }}">
+              {{ item }}
+            </label>
+          {% endfor %}
+        </div>
+      {% endif %}
       <button type="submit" class="btn-submit">다음</button>
     </form>
   </div>
