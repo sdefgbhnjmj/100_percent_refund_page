@@ -449,29 +449,50 @@ def fail():
 # 3. 교환 희망 상품 선택
 @app.route('/success', methods=['GET', 'POST'])
 def success():
-    mapping_list = session.get('mapping_list', [])
+    mapping_list_raw = session.get('mapping_list', [])
 
     # 제외할 키워드 설정
     exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차", "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
 
-    # 필터링 적용
-    filtered_list = [
-        item for item in mapping_list
-        if not any(keyword in item for keyword in exclude_keywords)
-    ]
+    # 필터링 및 수량 파싱
+    mapping_list = []
+    for item in mapping_list_raw:
+        if any(keyword in item for keyword in exclude_keywords):
+            continue
+
+        # 예: "허리편한케어 V2 2개" → ("허리편한케어 V2", 2)
+        parts = item.split()
+        count = 1
+        for p in parts:
+            if p.endswith("개"):
+                try:
+                    count = int(p.replace("개", ""))
+                except:
+                    count = 1
+        product_name = item.replace(f"{count}개", "").strip()
+        mapping_list.append((product_name, count))
 
     if request.method == 'POST':
         selected_items = request.form.getlist('selected_items')
         if not selected_items:
             return render_template(
                 'AS/success.html',
-                mapping_list=filtered_list,  # 필터링된 리스트 전달
+                mapping_list=mapping_list,
                 message="상품을 한 개 이상 선택해주세요."
             )
+
+        # 선택한 상품들의 수량도 저장
+        quantities = {}
+        for i, (item_name, count) in enumerate(mapping_list, start=1):
+            qty = request.form.get(f'quantity_{i}', '1')
+            quantities[item_name] = int(qty)
+
         session['selected_items'] = selected_items
+        session['quantities'] = quantities
+
         return redirect(url_for('confirm_selected_products'))
 
-    return render_template("AS/success.html", mapping_list=filtered_list)  # 필터링된 리스트 전달
+    return render_template("AS/success.html", mapping_list=mapping_list)
 
 
 # 4. 선택 상품 확인
