@@ -53,14 +53,6 @@
       margin-right: 10px;
       transform: scale(1.2);
     }
-    select {
-      margin-top: 6px;
-      margin-left: 26px;
-      padding: 4px 10px;
-      font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
     .btn-submit {
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
@@ -87,7 +79,7 @@
 <body>
   <div class="container">
     <h2>교환 희망 상품 선택</h2>
-    <p class="sub-text">주문건 중 교환 희망하시는 상품과 수량을 정확히 선택해주세요.</p>
+    <p class="sub-text">주문건 중 교환 희망하시는 상품을 선택해주세요.</p>
 
     {% if message %}
       <p class="message">{{ message }}</p>
@@ -100,27 +92,6 @@
             <input type="checkbox" name="selected_items" value="{{ item }}">
             {{ item }}
           </label>
-
-          {# 수량이 2개 이상일 경우에만 드롭다운 생성 #}
-          {% set qty = 1 %}
-          {% for word in item.split() %}
-            {% if word.endswith('개') %}
-              {% set num = word.replace('개', '') %}
-              {% if num.isdigit() and num|int > 1 %}
-                {% set qty = num|int %}
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-
-          {% if qty > 1 %}
-            <select name="quantity_{{ loop.index }}">
-              {% for i in range(1, qty + 1) %}
-                <option value="{{ i }}">{{ i }}개</option>
-              {% endfor %}
-            </select>
-          {% else %}
-            <input type="hidden" name="quantity_{{ loop.index }}" value="1">
-          {% endif %}
         {% endfor %}
       </div>
       <button type="submit" class="btn-submit">다음</button>
