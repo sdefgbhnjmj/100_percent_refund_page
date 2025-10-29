@@ -17,69 +17,84 @@
     }
     .container {
       background: #fff;
-      padding: 40px 32px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 48px 40px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       max-width: 600px;
       width: 100%;
       text-align: center;
     }
     h2 {
       font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 16px;
-      color: #14497C;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #163D73;
     }
     .sub-text {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 24px;
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 28px;
     }
     .mapping-box {
-      background-color: #f8f9fc;
-      border: 1px solid #e2e6ea;
+      background-color: #f9fbfd;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
-      padding: 16px;
+      padding: 20px;
       margin-bottom: 30px;
       text-align: left;
     }
     .mapping-box label {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 12px;
       font-size: 15px;
-      color: #333;
+      color: #222;
     }
     input[type="checkbox"] {
       margin-right: 10px;
-      transform: scale(1.2);
+      transform: scale(1.15);
+      accent-color: #1e4fa3;
     }
     select {
       margin-left: 6px;
-      padding: 4px 6px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
       font-size: 14px;
+      background-color: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 4px rgba(37, 99, 235, 0.3);
+      outline: none;
+    }
+    select:disabled {
+      background-color: #f1f5f9;
+      color: #999;
     }
     .btn-submit {
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
       border: none;
-      padding: 14px 36px;
-      font-size: 17px;
+      padding: 14px 38px;
+      font-size: 16px;
       font-weight: 600;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+      transition: all 0.25s ease;
     }
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+      background: linear-gradient(135deg, #203e79, #345cb0);
     }
     .message {
       color: #d9534f;
       font-size: 14px;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
     }
   </style>
 
@@ -94,7 +109,7 @@
           valid = true;
           const select = cb.parentElement.querySelector('select');
           if (select && !select.value) {
-            message = "수량 옵션을 반드시 선택해주세요.";
+            message = "상품의 수량을 선택해주세요.";
             valid = false;
           }
         }
@@ -104,7 +119,6 @@
         alert(message || "상품을 한 개 이상 선택해주세요.");
         return false;
       }
-
       return true;
     }
 
@@ -130,18 +144,19 @@
       <div class="mapping-box">
         {% for item in mapping_list %}
           <label>
-            <input type="checkbox" name="selected_items" value="{{ item.name }}" onchange="toggleSelect(this)">
-            {{ item.name }}
-            {% if item.count > 1 %}
-              <select name="quantity_{{ loop.index }}" disabled required>
-                <option value="">N(옵션)</option>
-                {% for i in range(1, item.count + 1) %}
-                  <option value="{{ i }}">{{ i }}</option>
-                {% endfor %}
-              </select>개
-            {% else %}
-              1개
-            {% endif %}
+            <div style="flex: 1;">
+              <input type="checkbox" name="selected_items" value="{{ item.name }}" onchange="toggleSelect(this)">
+              {{ item.name }}
+              {% if item.count > 1 %}
+                <select name="quantity_{{ loop.index }}" disabled required>
+                  {% for i in range(1, item.count + 1) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                  {% endfor %}
+                </select>개
+              {% else %}
+                1개
+              {% endif %}
+            </div>
           </label>
         {% endfor %}
       </div>
