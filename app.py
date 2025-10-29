@@ -451,16 +451,15 @@ def fail():
 def success():
     mapping_list = session.get('mapping_list', [])
 
-    # 제외할 키워드 설정
     exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차",
                         "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
 
+    # 문자열 → {name, count} 구조로 변환
     structured_list = []
     for item in mapping_list:
         if any(keyword in item for keyword in exclude_keywords):
             continue
 
-        # 상품명 중간에 공백 있어도 마지막 "N개"만 분리
         try:
             name, count_part = item.rsplit(" ", 1)
             count = int(count_part.replace("개", "").strip())
@@ -470,7 +469,7 @@ def success():
 
         structured_list.append({"name": name.strip(), "count": count})
 
-    # ------------------------------
+    # POST 처리
     if request.method == 'POST':
         selected_items = request.form.getlist('selected_items')
         if not selected_items:
@@ -498,7 +497,7 @@ def success():
         session['selected_items'] = selected_with_quantity
         return redirect(url_for('confirm_selected_products'))
 
-    # ------------------------------
+    # GET 요청 시
     return render_template("AS/success.html", mapping_list=structured_list)
 
 
