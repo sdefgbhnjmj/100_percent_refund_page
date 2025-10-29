@@ -7,7 +7,7 @@
 
   <style>
     body {
-      background-color: #F4F7FA;
+      background-color: #F6F8FB;
       font-family: "Noto Sans KR", Arial, sans-serif;
       display: flex;
       justify-content: center;
@@ -15,26 +15,30 @@
       min-height: 100vh;
       margin: 0;
     }
+
     .container {
       background: #fff;
       padding: 48px 40px;
-      border-radius: 18px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
       max-width: 600px;
       width: 100%;
       text-align: center;
     }
+
     h2 {
       font-size: 22px;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       color: #163D73;
     }
+
     .sub-text {
       font-size: 15px;
-      color: #666;
+      color: #555;
       margin-bottom: 28px;
     }
+
     .mapping-box {
       background-color: #f9fbfd;
       border: 1px solid #e2e8f0;
@@ -43,6 +47,7 @@
       margin-bottom: 30px;
       text-align: left;
     }
+
     .mapping-box label {
       display: flex;
       align-items: center;
@@ -51,29 +56,38 @@
       font-size: 15px;
       color: #222;
     }
+
     input[type="checkbox"] {
       margin-right: 10px;
       transform: scale(1.15);
-      accent-color: #1e4fa3;
+      accent-color: #2a55c4;
+      cursor: pointer;
     }
+
     select {
-      margin-left: 6px;
+      margin-left: 8px;
       padding: 6px 10px;
       border-radius: 8px;
       border: 1px solid #cbd5e1;
       font-size: 14px;
       background-color: #fff;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      color: #333;
+      transition: all 0.2s ease;
+      cursor: pointer;
     }
+
     select:focus {
       border-color: #2563eb;
       box-shadow: 0 0 4px rgba(37, 99, 235, 0.3);
       outline: none;
     }
+
     select:disabled {
       background-color: #f1f5f9;
-      color: #999;
+      color: #aaa;
+      cursor: not-allowed;
     }
+
     .btn-submit {
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
@@ -86,11 +100,13 @@
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
       transition: all 0.25s ease;
     }
+
     .btn-submit:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
       background: linear-gradient(135deg, #203e79, #345cb0);
     }
+
     .message {
       color: #d9534f;
       font-size: 14px;
@@ -99,6 +115,7 @@
   </style>
 
   <script>
+    // 수량 미선택 시 경고 커스터마이징
     function validateForm() {
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
       let valid = false;
@@ -122,6 +139,7 @@
       return true;
     }
 
+    // 체크박스 클릭 시 select 활성화
     function toggleSelect(checkbox) {
       const select = checkbox.parentElement.querySelector('select');
       if (select) {
@@ -149,6 +167,7 @@
               {{ item.name }}
               {% if item.count > 1 %}
                 <select name="quantity_{{ loop.index }}" disabled required>
+                  <option value="" hidden selected>수량</option>
                   {% for i in range(1, item.count + 1) %}
                     <option value="{{ i }}">{{ i }}</option>
                   {% endfor %}
