@@ -455,20 +455,21 @@ def success():
     exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차",
                         "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
 
-    # ------------------------------
     structured_list = []
     for item in mapping_list:
         if any(keyword in item for keyword in exclude_keywords):
             continue
 
+        # 상품명 중간에 공백 있어도 마지막 "N개"만 분리
         try:
-            name, count_part = item.split()
-            count = int(count_part.replace("개", ""))
+            name, count_part = item.rsplit(" ", 1)
+            count = int(count_part.replace("개", "").strip())
         except:
             name = item
             count = 1
 
         structured_list.append({"name": name.strip(), "count": count})
+
     # ------------------------------
     if request.method == 'POST':
         selected_items = request.form.getlist('selected_items')
@@ -479,7 +480,6 @@ def success():
                 message="상품을 한 개 이상 선택해주세요."
             )
 
-        # 선택된 수량(드롭다운)도 함께 수집
         selected_with_quantity = []
         for idx, item in enumerate(structured_list, start=1):
             if item["name"] in selected_items:
@@ -495,12 +495,11 @@ def success():
                 else:
                     selected_with_quantity.append(f"{item['name']} 1개")
 
-        # 세션에 선택값 저장
         session['selected_items'] = selected_with_quantity
         return redirect(url_for('confirm_selected_products'))
+
     # ------------------------------
     return render_template("AS/success.html", mapping_list=structured_list)
-
 
 
 # 4. 선택 상품 확인
