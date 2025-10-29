@@ -452,26 +452,55 @@ def success():
     mapping_list = session.get('mapping_list', [])
 
     # 제외할 키워드 설정
-    exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차", "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
+    exclude_keywords = ["쇼핑백", "어댑터", "냉감", "마그네슘", "하루끝차",
+                        "케이블", "커버", "대형", "중형", "소형", "증정", "사은품"]
 
-    # 필터링 적용
-    filtered_list = [
-        item for item in mapping_list
-        if not any(keyword in item for keyword in exclude_keywords)
-    ]
+    # ------------------------------
+    structured_list = []
+    for item in mapping_list:
+        if any(keyword in item for keyword in exclude_keywords):
+            continue
 
+        try:
+            name, count_part = item.split()
+            count = int(count_part.replace("개", ""))
+        except:
+            name = item
+            count = 1
+
+        structured_list.append({"name": name.strip(), "count": count})
+    # ------------------------------
     if request.method == 'POST':
         selected_items = request.form.getlist('selected_items')
         if not selected_items:
             return render_template(
                 'AS/success.html',
-                mapping_list=filtered_list,  # 필터링된 리스트 전달
+                mapping_list=structured_list,
                 message="상품을 한 개 이상 선택해주세요."
             )
-        session['selected_items'] = selected_items
-        return redirect(url_for('confirm_selected_products'))
 
-    return render_template("AS/success.html", mapping_list=filtered_list)  # 필터링된 리스트 전달
+        # 선택된 수량(드롭다운)도 함께 수집
+        selected_with_quantity = []
+        for idx, item in enumerate(structured_list, start=1):
+            if item["name"] in selected_items:
+                if item["count"] > 1:
+                    quantity = request.form.get(f'quantity_{idx}')
+                    if not quantity:
+                        return render_template(
+                            'AS/success.html',
+                            mapping_list=structured_list,
+                            message=f"'{item['name']}' 상품의 수량을 선택해주세요."
+                        )
+                    selected_with_quantity.append(f"{item['name']} {quantity}개")
+                else:
+                    selected_with_quantity.append(f"{item['name']} 1개")
+
+        # 세션에 선택값 저장
+        session['selected_items'] = selected_with_quantity
+        return redirect(url_for('confirm_selected_products'))
+    # ------------------------------
+    return render_template("AS/success.html", mapping_list=structured_list)
+
 
 
 # 4. 선택 상품 확인

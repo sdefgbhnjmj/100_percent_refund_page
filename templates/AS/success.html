@@ -53,6 +53,13 @@
       margin-right: 10px;
       transform: scale(1.2);
     }
+    select {
+      margin-left: 10px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
     .btn-submit {
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
@@ -75,6 +82,43 @@
       margin-bottom: 15px;
     }
   </style>
+
+  <script>
+    function validateForm() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let valid = false;
+      let message = '';
+
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          valid = true;
+          const select = cb.parentElement.querySelector('select');
+          if (select) {
+            const selectedValue = select.value;
+            if (!selectedValue) {
+              message = "수량 옵션을 반드시 선택해주세요.";
+              valid = false;
+            }
+          }
+        }
+      });
+
+      if (!valid) {
+        alert(message || "상품을 한 개 이상 선택해주세요.");
+        return false;
+      }
+
+      return true;
+    }
+
+    function toggleSelect(checkbox) {
+      const select = checkbox.parentElement.querySelector('select');
+      if (select) {
+        select.disabled = !checkbox.checked;
+        if (!checkbox.checked) select.value = '';
+      }
+    }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -85,12 +129,23 @@
       <p class="message">{{ message }}</p>
     {% endif %}
 
-    <form method="POST" action="{{ url_for('success') }}">
+    <form method="POST" action="{{ url_for('success') }}" onsubmit="return validateForm()">
       <div class="mapping-box">
         {% for item in mapping_list %}
           <label>
-            <input type="checkbox" name="selected_items" value="{{ item }}">
-            {{ item }}
+            <input type="checkbox" name="selected_items" value="{{ item.name }}" onchange="toggleSelect(this)">
+            {{ item.name }}
+            {% if item.count > 1 %}
+              {{ item.count }}개 
+              <select name="quantity_{{ loop.index }}" disabled required>
+                <option value="">N(옵션)</option>
+                {% for i in range(1, item.count + 1) %}
+                  <option value="{{ i }}">{{ i }}개</option>
+                {% endfor %}
+              </select>
+            {% else %}
+              1개
+            {% endif %}
           </label>
         {% endfor %}
       </div>
