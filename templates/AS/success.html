@@ -54,7 +54,7 @@
       transform: scale(1.2);
     }
     select {
-      margin-left: 10px;
+      margin-left: 6px;
       padding: 4px 6px;
       border-radius: 6px;
       border: 1px solid #ccc;
@@ -93,12 +93,9 @@
         if (cb.checked) {
           valid = true;
           const select = cb.parentElement.querySelector('select');
-          if (select) {
-            const selectedValue = select.value;
-            if (!selectedValue) {
-              message = "수량 옵션을 반드시 선택해주세요.";
-              valid = false;
-            }
+          if (select && !select.value) {
+            message = "수량 옵션을 반드시 선택해주세요.";
+            valid = false;
           }
         }
       });
@@ -136,13 +133,12 @@
             <input type="checkbox" name="selected_items" value="{{ item.name }}" onchange="toggleSelect(this)">
             {{ item.name }}
             {% if item.count > 1 %}
-              {{ item.count }}개 
               <select name="quantity_{{ loop.index }}" disabled required>
                 <option value="">N(옵션)</option>
                 {% for i in range(1, item.count + 1) %}
-                  <option value="{{ i }}">{{ i }}개</option>
+                  <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
-              </select>
+              </select>개
             {% else %}
               1개
             {% endif %}
